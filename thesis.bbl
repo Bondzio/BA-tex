@@ -1,0 +1,28 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{B{\etalchar{+}}12b}
+  \providebibliographyfont{name}{}%
+  \providebibliographyfont{lastname}{}%
+  \providebibliographyfont{title}{\emph}%
+  \providebibliographyfont{jtitle}{\btxtitlefont}%
+  \providebibliographyfont{etal}{\emph}%
+  \providebibliographyfont{journal}{}%
+  \providebibliographyfont{volume}{}%
+  \providebibliographyfont{ISBN}{\MakeUppercase}%
+  \providebibliographyfont{ISSN}{\MakeUppercase}%
+  \providebibliographyfont{url}{\url}%
+  \providebibliographyfont{numeral}{}%
+  \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
+
+\expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
+\bibitem [{B{\etalchar{+}}12a}]{Beringer:1900zz}
+\btxnamefont {J. \btxlastnamefont {Beringer}} \btxetalfont {\btxetalshort
+  {.}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {{Review of Particle
+  Physics (RPP)}}{{Review of Particle Physics (RPP)}}}.
+\newblock \btxjournalfont {Phys.Rev.}, D86:010001, 2012.
+
+\bibitem [{B{\etalchar{+}}12b}]{LHC_TDR}
+\btxnamefont {O \btxlastnamefont {Br\"uning}} \btxetalfont {\btxetalshort
+  {.}}\btxauthorcolon\ \btxtitlefont {LHC design report}.
+\newblock \btxpublisherfont {CERN 2004-003}, June 27, 2012.
+
+\end{thebibliography}

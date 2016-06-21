@@ -1,0 +1,162 @@
+%% beispielkapitel.tex
+%%
+
+%% ==============
+\chapter{Kapitel 1}
+\label{ch:Kapitel1}
+%% ==============
+
+Der Titel der Kapitel sollte entsprechend angepasst werden, z.B. 
+Kpitel 1 nach 'Das CMS Experiment' und entsprechend die Abschnitte 
+umbenannt werden z.B. 'Der Silizumstreifen Detektor' oder 'Der Pixel 
+Detektor'.  
+
+Es ist eine gute Idee ein eigenes File f\"ur jedes Kapitel anzulegen.
+
+%% ===========================
+\section{Einbinden von Grafiken}
+\label{ch:Kapitel1:sec:Grafiken}
+%% ===========================
+
+Grafiken werden mit 'inlcudegrapghics' eigebunden, f\"ur hier
+benutzte Vorlage sollten 'pdf' Grafiken eingebunden werden.  
+
+\begin{verbatim}
+\begin{figure}[hhh]
+ \begin{center}
+   \includegraphics[width=.3\textwidth]{logos/KITLogo_RGB.pdf}
+   \parbox[b]{12cm}{
+     \caption[Beispiel Abbildung (kurze Unterschrift f\"ur Abbildungsverzeichnis)]
+             {\label{fig:exmaple} \it Beispiel Abbildung
+               (ausf\"uhrliche Bildunterschrift, die unter dem Bild
+               angezeigt wird)}
+   }
+ \end{center}
+\end{figure}
+\end{verbatim}
+
+\begin{figure}[hhh]
+ \begin{center}
+   \includegraphics[width=.3\textwidth]{logos/KITLogo_RGB.pdf}
+   \parbox[b]{12cm}{
+     \caption[Beispiel Abbildung (kurze Unterschrift f\"ur Abbildungsverzeichnis)]
+             {\label{fig:exmaple} \it Beispiel Abbildung
+               (ausf\"uhrliche Bildunterschrift, die unter dem Bild
+               angezeigt wird)}
+   }
+ \end{center}
+\end{figure}
+
+
+
+
+\dots
+
+
+%% ===========================
+\section{Ertellen von Tabellen}
+\label{ch:Kapitel1:sec:Tabellen}
+%% ===========================
+
+\begin{verbatim}
+\begin{table}[hhh]\parbox{12cm}{
+  \caption[Physical constants]
+  {\it Beisspiel: Tabelle physikalischer  Konstanten{\rm \cite{Beringer:1900zz}}
+  }\label{tab:physconst}}
+  \begin{tabular}{lll}
+  \hline
+  {\bf Symbol} & {\bf Beschreibung} & {\bf Einheit}  \\
+  \hline \hline
+     $c$    & Lichtgeschwindigkeit  &  $299792458$~ms$^{-1}$ \\
+     $h$    & Planck Konstante & $6.626098 \times 10^{-34}$~Js \\
+     $\hbar = \frac{h}{2 \pi}$ & Planck Konstante, reduziert &
+            $1.054571 \times 10^{-34}$~Js \\
+     $e$    & elektrische Elementarladung & $1.602176 \times 10^{-19}~C$ \\ 
+  $\epsilon_0$ & elektrische Feldkontante & 
+                  $8.854187 \times 10^{-12}$~Fm$^{-1}$ \\
+  $\mu_0$       & magnetische Feldkonstante & $4\pi \times 
+          10^{-7}$~NA$^{-2} = 12.566270 \times 10^{-7}$~NA$^{-2}$ \\
+   $m_e$  & Elektronen Masse             &  $0.510998$~MeV/c$^2$\\
+   $m_p$  & Protonen Masse               &  $938.271998$~MeV/c$^2$ \\        
+   $N_A$  & Avogadro Zahl         & $6.022144 \cdot 
+                                        10^{23}~{\rm mol}^-1 $ \\
+   $r_e$  & Elektronenradius & $2.817940 \cdot 10^{-13}$~cm \\                                     
+  \hline
+  \end{tabular}
+\end{table}
+\end{verbatim}
+
+\begin{table}[hhh]\parbox{12cm}{
+  \caption[Physical constants]{\it Beisspiel: Tabelle physikalischer  Konstanten{\rm \cite{Beringer:1900zz}}
+  }\label{tab:physconst}}
+  \begin{tabular}{lll}
+  \hline
+  {\bf Symbol} & {\bf Beschreibung} & {\bf Einheit}  \\
+  \hline \hline
+     $c$    & Lichtgeschwindigkeit  &  $299792458$~ms$^{-1}$ \\
+     $h$    & Planck Konstante & $6.626098 \times 10^{-34}$~Js \\
+     $\hbar = \frac{h}{2 \pi}$ & Planck Konstante, reduziert &
+            $1.054571 \times 10^{-34}$~Js \\
+     $e$    & elektrische Elementarladung & $1.602176 \times 10^{-19}~C$ \\ 
+  $\epsilon_0$ & elektrische Feldkontante & 
+                  $8.854187 \times 10^{-12}$~Fm$^{-1}$ \\
+  $\mu_0$       & magnetische Feldkonstante & $4\pi \times 
+          10^{-7}$~NA$^{-2} = 12.566270 \times 10^{-7}$~NA$^{-2}$ \\
+   $m_e$  & Elektronen Masse             &  $0.510998$~MeV/c$^2$\\
+   $m_p$  & Protonen Masse               &  $938.271998$~MeV/c$^2$ \\        
+   $N_A$  & Avogadro Zahl         & $6.022144 \cdot 
+                                        10^{23}~{\rm mol}^-1 $ \\
+   $r_e$  & Elektronenradius & $2.817940 \cdot 10^{-13}$~cm \\                                     
+  \hline
+  \end{tabular}
+\end{table}
+
+
+
+\dots
+
+
+%% ===========================
+\section{Benutzung n\"utzlicher Pakete}
+\label{ch:Kapitel1:sec:Pakete}
+%% ===========================
+
+%% ===========================
+\subsection{SI Einheiten: siunitx}
+\label{ch:Kapitel1:subsec:SiUnit}
+%% ===========================
+
+Das Paket siunitx bietet die M\"oglichkeit Einheiten und Zahlen
+schnell und einfach darzustellen.\\
+Beispiel Code:
+\begin{verbatim}
+\si{kg.m.s^{-1}} \\
+\si{\kilogram\metre\per\second} \\
+\si[per-mode=symbol]{\kilogram\metre\per\second} \\
+\si[per-mode=symbol]{\kilogram\metre\per\ampere\per\second}
+\end{verbatim}
+Ausgabe im Text''\\
+\si{kg.m.s^{-1}} \\
+\si{\kilogram\metre\per\second} \\
+\si[per-mode=symbol]{\kilogram\metre\per\second} \\
+\si[per-mode=symbol]{\kilogram\metre\per\ampere\per\second}
+
+
+Eine Einf\"uhrung in das Paket findet man unter:
+\begin{verbatim}
+ftp://ftp.dante.de/tex-archive/macros/latex/exptl/siunitx/siunitx.pdf
+\end{verbatim}
+
+%% ===========================
+\subsection{amsmath}
+\label{ch:Kapitel1:subsec:amsmath}
+%% ===========================
+
+\begin{verbatim}
+ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf
+\end{verbatim}
+
+%% ===========================
+\subsection{xxx}
+\label{ch:Kapitel1:subsec:xxx}
+%% ===========================
