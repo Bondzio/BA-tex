@@ -1,5 +1,5 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{B{\etalchar{+}}12b}
+\begin{thebibliography}{Pov14}
   \providebibliographyfont{name}{}%
   \providebibliographyfont{lastname}{}%
   \providebibliographyfont{title}{\emph}%
@@ -14,15 +14,37 @@
   \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
 
 \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
-\bibitem [{B{\etalchar{+}}12a}]{Beringer:1900zz}
-\btxnamefont {J. \btxlastnamefont {Beringer}} \btxetalfont {\btxetalshort
-  {.}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {{Review of Particle
-  Physics (RPP)}}{{Review of Particle Physics (RPP)}}}.
-\newblock \btxjournalfont {Phys.Rev.}, D86:010001, 2012.
-
-\bibitem [{B{\etalchar{+}}12b}]{LHC_TDR}
+\bibitem [{B{\etalchar{+}}12}]{LHC_TDR}
 \btxnamefont {O \btxlastnamefont {Br\"uning}} \btxetalfont {\btxetalshort
   {.}}\btxauthorcolon\ \btxtitlefont {LHC design report}.
 \newblock \btxpublisherfont {CERN 2004-003}, June 27, 2012.
+
+\btxselectlanguage {english}
+\bibitem [{O'L12}]{O'Luanaigh:1997201}
+\btxnamefont {Cian \btxlastnamefont {O'Luanaigh}}\btxauthorcolon\
+  \btxjtitlefont {\btxifchangecase {{The Standard Model}}{{The Standard
+  Model}}}.
+\newblock \btxprintmonthyear{.}{Jan}{2012}{long}.
+\newblock {\latintext \btxurlfont{http://cds.cern.ch/record/1997201}}.
+
+\expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
+\bibitem [{Pov14}]{SWB-39819646X}
+\btxnamefont {Bogdan \btxlastnamefont {Povh}}\btxauthorcolon\ \btxtitlefont
+  {\btxifchangecase {Teilchen und kerne : Eine einführung in die
+  physikalischen konzepte}{Teilchen und Kerne : Eine Einführung in die
+  physikalischen Konzepte}}, 2014\ifbtxprintISBN {, \mbox{\btxISBN~\btxISBNfont
+  {978-364-23782-2-5}}}.
+\newblock {\latintext
+  \btxurlfont{http://swbplus.bsz-bw.de/bsz39819646xcov.htmhttp://dx.doi.org/10.1007/978-3-642-37822-5}}.
+
+\bibitem [{Sut16}]{SWB-455193959}
+\btxnamefont {Shan \btxlastnamefont {Suthaharan}}\btxauthorcolon\ \btxtitlefont
+  {\btxifchangecase {Machine learning models and algorithms for big data
+  classification : Thinking with examples for effective learning}{Machine
+  Learning Models and Algorithms for Big Data Classification : Thinking with
+  Examples for Effective Learning}}, 2016\ifbtxprintISBN {,
+  \mbox{\btxISBN~\btxISBNfont {978-1-4899-7641-3}}}.
+\newblock {\latintext
+  \btxurlfont{http://swbplus.bsz-bw.de/bsz455193959cov.htmhttp://dx.doi.org/10.1007/978-1-4899-7641-3}}.
 
 \end{thebibliography}
