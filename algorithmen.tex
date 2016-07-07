@@ -1,0 +1,59 @@
+%% Theorie.tex
+%%
+%\usepackage[ngerman]{babel}
+%% ==============
+\chapter{Verwendete Implementationen der multivariaten Alghorithmen}
+\label{ch:algorithmen}
+%% ==============
+
+{\bibliographystyle{babalpha-fl}}	% german style
+
+
+%% ===========================
+\section{Algorithmen zur multivariaten Analyse}
+\label{ch:Theorie:sec:Algorithmen}
+%% ===========================
+
+Multivariate Analysemethoden bezeichnen Verfahren, mit denen, im Gegensatz zu univariaten Analyse statt jeder Variable einzeln, mehrere Variablen zugleich statistisch untersucht werden.\\
+Aufgrund der sehr komplexen Problemstellungen ist eine Berechnung sehr aufw\"andig und daher manuell nicht zu bewerkstelligen. Mithilfe der zunehmenden Rechenleistung aktueller Computer ist dies jedoch m\"oglich und wird in vielen Bereichen immer wichtiger. Die Erforschung und Entwicklung dieser mathematischen Modelle bezeichnet man auch als maschinelles Lernen (machine learning), da mithilfe der Algorithmen versucht wird, aus Daten zu lernen und Vorhersagen zu treffen. \cite{SWB-455193959}
+
+In der Hochenergiephysik nutzt man diese Methoden, indem man die Algorithmen, mithilfe der, durch theoretische Berechnungen erstellten, Simulationsdaten trainiert und anschlie\ss end die gemessen Daten klassifiziert.\\ 
+Maschinelles Lernen spielt aber auch in vielen anderen Bereichen eine wichtige Rolle, wie beispielsweise im Finanzwesen, bei Studien zum Konsumverhalten, oder der Sprach-, Schrift- und Bilderkennung.
+
+F\"ur diese Algorithmen existieren verschiedene Ans\"atze. Einer dieser Ans\"atze ist das \"uberwachte Lernen (supervised learning). Dabei wird anhand bekannter Trainingseingabewerte eine Klassifizierung der unbekannten Messwerte vorgenommen. Beispiele sind die St\"utzvektormethode, wobei jedoch die englische Bezeichnung support vector machine (SVM) gebr\"auchlich ist, Random Forest (RF), was Zuf\"alliger Wald bedeutet und mehrere zuf\"allig erstellte Entscheidungsb\"aume bezeichnet, oder Neuronale Netze. Ein weiteres Beispiel sind verst\"arkte Entscheidungsb\"aume (Boosted Decision Trees (BDTs)), die im Gegensatz zu Random Forests keine unkorrelierten Entscheidungsb\"aume nutzen.
+
+
+%% ===========================
+\subsection{Boosted Decision Trees (BDTs)}
+\label{ch:Algorithmen:subsec:BDT}
+%% ===========================
+
+Entscheidungsb\"aume unterteilen den Bereich des zu klassifizierenden Objektes anhand gerader Schnitte auf desses Eigenschaften (Variablen) in mehrere Sequenzen. Wieviele dieser Sequenzen ab dem Wurzelknoten erstellt werden, wird durch die Tiefe (depth) des Baumes angegeben. In \ref{fig:DecicionTree} ist ein Beispiel eines Baumes mit der Tiefe zwei zu sehen.\\
+\begin{figure}[hhh]
+ \begin{center}
+   \includegraphics[width=\textwidth]{graphics/tree.pdf}
+   \parbox[b]{12cm}{
+     \caption[Entscheidungsbaumes der Tiefe 2]
+             {\label{fig:DecicionTree} \it schematische Abbildung eines Entscheidungsbaumes der Tiefe 2. X und Y sind die Variablen anhand denen durch cuts (Zahlen nach den Variablen) zwischen Untergrund und Signal unterschieden werden soll.\\Erstellt mit TMVA}
+   }
+ \end{center}
+\end{figure}
+Man unterscheidet zwischen zwei Arten, bin\"aren B\"aumen mit diskreten R\"uckgabewerten zur Unterscheidung mehrerer Klassen (classification trees), zum Beispiel Signal und Untergrund, sowie denjenigen mit kontinuierlicher Antwort (regression trees).\cite{SWB-455193959}
+
+BDTs vereinen durch Boosting und Bagging (aus dem Englischen von bootstrap aggregation abgeleitet) mehrere Entscheidungsb\"aume zu einem starken Klassifikator.
+
+
+%% ===========================
+\section{Toolkit for Multivariate Analysis in ROOT (TMVA)}
+\label{ch:Algorithmen:sec:TMVA}
+%% ===========================
+
+%% ===========================
+\section{scikit-learn - machine learning in python}
+\label{ch:Algorithmen:sec:sklearn}
+%% ===========================
+
+%% ===========================
+\section{Extreme Gradient Boosting (XGBoost)}
+\label{ch:Algorithmen:sec:XGB}
+%% ===========================
