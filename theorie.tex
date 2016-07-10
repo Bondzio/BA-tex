@@ -8,7 +8,7 @@
 
 {\bibliographystyle{babalpha-fl}}	% german style
 
-Das Standardmodell der Teilchenphysik beschreibt die bisher bekannten Bausteine der Materie, sowie deren Wechselwirkungen. In Kapitel \ref{ch:Theorie:sec:Standardmodell} wird ein kurzer \"Uberblickblick dar\"uber gegeben, woraufhin in Abschnitt \cite{ch:Theorie:sec:ttH} genauer auf die Produktion von Higgs-Boson und Topquark eingegangen wird.\\
+Das Standardmodell der Teilchenphysik beschreibt die bisher bekannten Bausteine der Materie, sowie deren Wechselwirkungen. In Kapitel \ref{ch:Theorie:sec:Standardmodell} wird ein kurzer \"Uberblickblick dar\"uber gegeben, woraufhin in Abschnitt \ref{ch:Theorie:sec:ttH} genauer auf die Produktion von Higgs-Boson und Topquark eingegangen wird.\\
 
 
 %% ===========================
@@ -24,7 +24,7 @@ Die bislang entdeckte Materie besteht aus zwei Arten von Elementarteilchen, den 
 Leptonen bilden jeweils zusammen mit dem dazugeh\"origen Neutrino und den jeweiligen Antiteilchen eine Familie. Im Gegensatz zu den Quarks unterliegen Leptonen nicht der starken Wechselwirkung.\\
 Die dritte elementare Wechselwirkung, die im Standardmodell beschrieben ist, ist die elektromagnetische Wechselwirkung. Ihr unterliegen alle geladenen Teilchen. Diese Wechselwirkungen sind in ihrer Struktur sehr \"ahnlich und werden durch den Austausch von Vektorbosonen vermittelt. Diese sind die Gluonen der starken Wechselwirkung, die W- und Z-Bosonen der schwachen Wechselwirkung und die Photonen ($\gamma$) der elektromagnetischen. W\"ahrend die Fermionen aus denen die Materie besteht, einen halbzahligen Spin besitzen, haben die Bosonen einen ganzzahligen Spin.
 
-Der letzte fehlende Baustein im Standardmodell ist ein elementares Spin-0 Teilchen, ohne das keine konsistente Erkl\"arung f\"ur die W und Z$^0$ Massen m\"oglich w\"are. Dieses ist das Higgs-Boson, welches 2012 am CERN entdeckt wurde. Die Kopplung zwischen Higgs-Boson und anderen Elementarteilchen ist proportional zur Fermionenmasse. In \cite{fig:Standardmodell} sind alle elementaren Bosonen und Fermionen dargestellt.
+Der letzte fehlende Baustein im Standardmodell ist ein elementares Spin-0 Teilchen, ohne das keine konsistente Erkl\"arung f\"ur die W und Z$^0$ Massen m\"oglich w\"are. Dieses ist das Higgs-Boson, welches 2012 am CERN entdeckt wurde. Die Kopplung zwischen Higgs-Boson und anderen Elementarteilchen ist proportional zur Fermionenmasse. In \ref{fig:Standardmodell} sind alle elementaren Bosonen und Fermionen dargestellt.
 
 \begin{figure}[hhh]
  \begin{center}
@@ -43,10 +43,11 @@ Insgesamt stimmen die experimentellen Ergebnisse gut mit den Vorhersagen des Sta
 \label{ch:Theorie:sec:ttH}
 %% ===========================
 
-Da die Kopplungskonstante des Higgs-Mechanismus im Standardmodell von der Fermionenmasse abh\"angt, ist eine Untersuchung der Kopplung zwischen Top-Quark und Higgs-Boson aufgrund der hohen Masse des Top-Quarks verglichen mit anderen Quarkmassen, besonders interessant. Diese Kopplung kann w\"ahrend der assoziierten Produktion eines Higgs-Bosons mit einem Paar aus Top-Quark und Anti-Top-Quark untersucht werden. In Tabelle \ref{tab:quarkmasse} sind zum Vergleich die Quarkmassen aufgelistet.
+Da die Kopplungskonstante des Higgs-Mechanismus im Standardmodell von der Fermionenmasse abh\"angt, ist eine Untersuchung der Kopplung zwischen Top-Quark und Higgs-Boson aufgrund der hohen Masse des Top-Quarks verglichen mit anderen Quarkmassen, besonders interessant. In Tabelle \ref{tab:quarkmasse} sind zum Vergleich die Quarkmassen aufgelistet.\\
+
 
 \begin{table}[hhh]\parbox{12cm}{
-  \caption[Quarkmassen]{\it Tabelle mit Quarkmassen, zusammengefasst aus{\rm \cite{Agashe:2014kda}}
+  \caption[Quarkmassen]{\it Tabelle mit Quarkmassen {\rm \cite{Agashe:2014kda}}
   }\label{tab:quarkmasse}}
   \begin{center}
   \begin{tabular}{lll}
@@ -64,19 +65,15 @@ Da die Kopplungskonstante des Higgs-Mechanismus im Standardmodell von der Fermio
   \end{center}
 \end{table}
 
-%% ===========================
-\section{statistische Methoden}
-\label{ch:Theorie:sec:statistischeMethoden}
-%% ===========================
+Diese Kopplung kann w\"ahrend der assoziierten Produktion eines Higgs-Bosons mit einem Paar aus Top-Quark und Anti-Top-Quark untersucht werden.\\
+Wechselwirkungen zwischen Teilchen k\"onnen durch Feynman-Diagramme visualisiert werden. In Abbildung \ref{fig:ttH_feynmans} sind exemplarisch einige Feynmandiagramme zur \ttH-Produktion in f\"uhrender Ordnung abgebildet.
 
-
-%% ===========================
-\subsection{Receiver Operating Characteristic}
-\label{ch:Algorithmen:subsec:ROC}
-%% ===========================
-
-
-%% ===========================
-\subsection{Kolmogorov-Smirnov Test}
-\label{ch:Algorithmen:subsec:KSTest}
-%% ===========================
+\begin{figure}[hhh]
+ \begin{center}
+   \includegraphics[width=\textwidth]{graphics/ttH_feynmans.png}
+   \parbox[b]{12cm}{
+     \caption[\ttH Feynman-Diagramme]
+             {\label{fig:ttH_feynmans} \it Feynman-Diagramme f\"ur die \ttH-Produktion aus Hadronenkollisionen in f\"uhrender Ordnung \cite{hep-ph/0211352}}
+   }
+ \end{center}
+\end{figure}
