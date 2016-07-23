@@ -35,9 +35,36 @@ In Abbildung \ref{fig:LHC} ist der schematische Aufbau des LHC mit den Experimen
 \label{ch:Experiment:sec:CMS}
 %% ===========================
 
+Der Compact-Muon-Solenoid (CMS) ist einer der beiden universellen Teilchendetektoren am LHC. Sein Aufbau ist in Abbildung \ref{fig:cms_sectional} zu sehen. Am CMS-Experiment arbeiten zurzeit etwa 4300 Personen mit \cite{cms_people}. Der Detektor ist mit etwa \num{14000} Tonnen und einem Durchmesser von \num{15} Metern auf circa \num{28,7} Meter L\"ange recht kompakt gebaut. Dies war m\"oglich, da die einzelnen Teile \"uberirdisch gefertigt wurden und erst in der Kaverne ungef\"ahr \num{100} Meter unter der Erde zusammengebaut wurden.\\
+\begin{figure}[hhh]
+ \begin{center}
+   \includegraphics[width=\textwidth]{graphics/cms_sectional.png}
+   \parbox[b]{12cm}{
+     \caption[CMS-Detektor]
+             {\label{fig:cms_sectional} \it\!Der CMS-Detektorv im Querschnitt, \cite{cms_sectional}}
+   }
+ \end{center}
+\end{figure}
 
-
+Der CMS-Detektor ist kein einzelner Detektor, sondern besteht aus mehereren Detektoren, die in zylinderf\"ormigen Lagen, \"ahnlich einer Zwiebel, \"ubereinandergeschichtet sind. Herz- und namensgebendes St\"uck ist der gro\ss e Magnet (solenoid), der ein bis zu \num{4} Tesla starkes homogenes Magnetfeld erzeugt, durch das geladene Teilchen abgelenkt werden, um ihren Impuls bestimmen zu k\"onnen. Die innerste Lage bilden der Spurdetektor. Er besteht aus Silizium-Pixeldetektoren und Silizium-Streifendetektoren. Sie bestimmen die Spuren der bei der Kollision erzeugten Teilchen. Als n\"achste Schicht ist ein elektromagnetisches Kalorimeter (ECAL) aus Bleiwolframat-Kristallen (PbWO$_4$) eingebaut, mit dem Elektronen, Positronen und Photonen nachgewiesen und \"uber die Energie des elektromagnetischen Schauers auch ihre Energie bestimmt werden kann. Das ECAL wird umschlossen von einem hadronischen Kalorimeter (HCAL), das zur Identifizierung und Energiemessung der Hadronen verwendet wird. An diese Lage schlie\ss t sich die Magnetspule an. Au\ss erhalb des Magneten befinden sich das eiserne R\"uckf\"uhrjoch, das von Myonenkammern zum Nachweis von Myonen durchzogen ist.\\
+In Abbildung \ref{fig:cms_slice} ist nochmals ein Ausschnitt des CMS-Detektors mit den Trajektorien der einzelnen Teilchen abgebildet.
+\begin{figure}[hhh]
+ \begin{center}
+   \includegraphics[width=\textwidth]{graphics/cms_slice.png}
+   \parbox[b]{12cm}{
+     \caption[CMS-Detektor]
+             {\label{fig:cms_slice} \it\!Ausschnitt des CMS-Detektors mit verschiedenen Teilchenbahnen, \cite{cms_slice}}
+   }
+ \end{center}
+\end{figure}
 %% ===========================
 \section{\ttH-Analyse}
 \label{ch:Experiment:sec:ttH}
 %% ===========================
+
+Der kleine Wirkungsquerschnitt und die vielen Hintergrundprozesse machen eine Messung der \ttH-Produktionsrate sehr anspruchsvoll. Darum ist es essenziell, in jedem Bereich der Analyse m\"oglichst nahe am Optimum zu sein. Im folgenden soll die \ttH-Analyse am CMS-Experiment kurz erl\"autert werden. Einige der verwendeten und dar\"uberhinausf\"uhrende Informationen finden sich in \cite{Khachatryan:2014qaa}.
+
+Der \ttH-Analyse liegen durch das Standardmodell motivierte Berechnungen zugrunde. Anhand der verschiedenen vorhergesagten Endzust\"ande werden die einzelnen Produktionskan\"ale in verschiedene Kategorien unterteilt, die sich in wesentlichen Punkten unterscheiden. Die experimentell gemessenen Rohdaten werden zun\"achst weiter verarbeitet. Es wird versucht anhand der Endzust\"ande auf Zwischenschritte der Teilchenkollisionen zur\"uckzuschlie\ss en. Dies ist n\"otig, da insbesondere Top-Quarks eine zu hohe Masse haben, um mit anderen Quarks Hadronen zu bilden, sondern viel schneller wieder zerfallen. Mithilfe von Teilchenphysikalischen Methoden wie dem Erkennen von Bottom-Quarks (b-tagging) auf die hier nicht n\"aher eingegangen wird, werden f\"ur die verschiedenen Kollisionsprodukte physikalische Eigenschaften bestimmt. Diese k\"onnen beispielsweise Transversalimpuls oder rekonstruierte Teilchenmasse sein, aber teilweise auch konstruierte Gr\"o\ss en ohne Physikalische Motivation. Diese Eigenschaften sind Variablen, die mithilfe von statistischen Analysemethoden unterschieden werden sollen.\\
+Um die gesuchten Ereignisse aus den anderen Produkten der Teilchenkollissionen herauszufiltern, werden Multivariate Analysemethoden (Kapitel \ref{ch:algorithmen}) verwendet.\\
+Dazu ist es entscheident, die Struktur der aufgenommenen Daten bereits zu kennen. Aus diesem Grund werden mithilfe von Monte-Carlo-Methoden, die auf die theoretischen Werte sowie Wissen \"uber das Detektorverhalten basieren, Simulationsdaten erstellt. Die gew\"unschten und gesuchten Ereignisse sind in den Simulationsdaten daher ebenso wie die unerw\"unschten Untergrunddaten bekannt, so ist es m\"oglich Algorithmen multivariater Methoden darauf anzuwenden. Dadurch lernen die Algorithmen selbst\"andig (mechine learning) verschiedenartige Daten zu Unterscheiden. Damit wird versucht aus den experimentell gemessenen Daten die gesuchten \ttH-Signale zu extrahieren.\\
+Zuletzt werden die verschiedenen Kategorien wieder zusammengefasst.

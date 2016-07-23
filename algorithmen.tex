@@ -2,18 +2,20 @@
 %%
 %\usepackage[ngerman]{babel}
 %% ==============
-\chapter{Verwendete Implementationen der multivariaten Alghorithmen}
+\chapter{Algorithmen zur multivariaten Analyse}
 \label{ch:algorithmen}
 %% ==============
 
 {\bibliographystyle{babalpha-fl}}	% german style
 
+Multivariate Datenanalyse spielt in der experimentellen Hochenergiephysik eine entscheidente Rolle um die gro\ss en gemessenen Datenmengen (big data) untersuchen und auswerten zu k\"onnen. Im folgenden Kapitel \ref{ch:algorithmen} werden zun\"achst einige Grundlagen multivariater Datenanalysen genannt, um sp\"ater genauer auf verschiedene Algorithmen und ihre Implementationen anhand kleinerer Beispiele einzugehen.
 
 %% ===========================
-\section{Algorithmen zur multivariaten Analyse}
+\section{Grundlagen zur multivariaten Datenanalyse}
 \label{ch:Theorie:sec:Algorithmen}
 %% ===========================
 
+Datenanalyse bezeichnet statistische Verfahren, mit deren Hilfe aus numerischen Daten Informationen gewonnen werden sollen.
 Multivariate Analysemethoden bezeichnen Verfahren, mit denen, im Gegensatz zu univariaten Analyse statt jeder Variable einzeln, mehrere Variablen zugleich statistisch untersucht werden.\\
 Aufgrund der sehr komplexen Problemstellungen ist eine Berechnung sehr aufw\"andig und daher manuell nicht zu bewerkstelligen. Mithilfe der zunehmenden Rechenleistung aktueller Computer ist dies jedoch m\"oglich und wird in vielen Bereichen immer wichtiger. Die Erforschung und Entwicklung dieser mathematischen Modelle bezeichnet man auch als maschinelles Lernen (machine learning), da mithilfe der Algorithmen versucht wird, aus Daten zu lernen und Vorhersagen zu treffen. \cite{SWB-455193959}
 
@@ -24,8 +26,8 @@ F\"ur diese Algorithmen existieren verschiedene Ans\"atze. Einer dieser Ans\"atz
 
 
 %% ===========================
-\subsection{Boosted Decision Trees (BDTs)}
-\label{ch:Algorithmen:subsec:BDT}
+\subsection{Entscheidungsb\"aume}
+\label{ch:Algorithmen:subsec:Entscheidungsbaum}
 %% ===========================
 
 Entscheidungsb\"aume unterteilen den Bereich des zu klassifizierenden Objektes anhand gerader Schnitte auf desses Eigenschaften (Variablen) in mehrere Sequenzen. Wieviele dieser Sequenzen ab dem Wurzelknoten erstellt werden, wird durch die Tiefe (depth) des Baumes angegeben. In \ref{fig:DecicionTree} ist ein Beispiel eines Baumes mit der Tiefe zwei zu sehen.\\
@@ -42,18 +44,27 @@ Man unterscheidet zwischen zwei Arten, bin\"aren B\"aumen mit diskreten R\"uckga
 
 BDTs vereinen durch Boosting und Bagging (aus dem Englischen von bootstrap aggregation abgeleitet) mehrere Entscheidungsb\"aume zu einem starken Klassifikator.
 
-
 %% ===========================
-\section{Toolkit for Multivariate Analysis in ROOT (TMVA)}
-\label{ch:Algorithmen:sec:TMVA}
-%% ===========================
-
-%% ===========================
-\section{scikit-learn - machine learning in python}
-\label{ch:Algorithmen:sec:sklearn}
+\subsection{Verst\"arken von Entscheidungsb\"aumen (Boosting)}
+\label{ch:Algorithmen:subsec:Boosting}
 %% ===========================
 
 %% ===========================
-\section{Extreme Gradient Boosting (XGBoost)}
-\label{ch:Algorithmen:sec:XGB}
+\section{Verwendete Algorithmen zur multivariaten Analyse}
+\label{ch:Algorithmen:subsec:Implementationen}
+%% ===========================
+
+%% ===========================
+\subsection{Toolkit for Multivariate Analysis in ROOT (TMVA)}
+\label{ch:Algorithmen:subsec:TMVA}
+%% ===========================
+
+%% ===========================
+\subsection{scikit-learn -- machine learning in python}
+\label{ch:Algorithmen:subsec:sklearn}
+%% ===========================
+
+%% ===========================
+\subsection{Extreme Gradient Boosting (XGBoost)}
+\label{ch:Algorithmen:subsec:XGB}
 %% ===========================
