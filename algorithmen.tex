@@ -8,7 +8,7 @@
 
 {\bibliographystyle{babalpha-fl}}	% german style
 
-Multivariate Datenanalyse spielt in der experimentellen Hochenergiephysik eine entscheidente Rolle um die gro\ss en gemessenen Datenmengen (big data) untersuchen und auswerten zu k\"onnen. Im folgenden Kapitel \ref{ch:algorithmen} werden zun\"achst einige Grundlagen multivariater Datenanalysen genannt, um sp\"ater genauer auf verschiedene Algorithmen und ihre Implementationen anhand kleinerer Beispiele einzugehen.
+Multivariate Datenanalyse spielt in der experimentellen Hochenergiephysik eine entscheidente Rolle um die gr\"o\ss en gemessenen Datenmengen (big data) untersuchen und auswerten zu k\"onnen. Im folgenden Kapitel \ref{ch:algorithmen} werden zun\"achst einige Grundlagen der multivariaten Datenanalyse genannt, um sp\"ater genauer auf verschiedene Algorithmen und ihre Implementationen anhand kleinerer Beispiele einzugehen.
 
 %% ===========================
 \section{Grundlagen zur multivariaten Datenanalyse}
@@ -16,21 +16,24 @@ Multivariate Datenanalyse spielt in der experimentellen Hochenergiephysik eine e
 %% ===========================
 
 Datenanalyse bezeichnet statistische Verfahren, mit deren Hilfe aus numerischen Daten Informationen gewonnen werden sollen.
-Multivariate Analysemethoden bezeichnen Verfahren, mit denen, im Gegensatz zu univariaten Analyse statt jeder Variable einzeln, mehrere Variablen zugleich statistisch untersucht werden.\\
-Aufgrund der sehr komplexen Problemstellungen ist eine Berechnung sehr aufw\"andig und daher manuell nicht zu bewerkstelligen. Mithilfe der zunehmenden Rechenleistung aktueller Computer ist dies jedoch m\"oglich und wird in vielen Bereichen immer wichtiger. Die Erforschung und Entwicklung dieser mathematischen Modelle bezeichnet man auch als maschinelles Lernen (machine learning), da mithilfe der Algorithmen versucht wird, aus Daten zu lernen und Vorhersagen zu treffen. \cite{SWB-455193959}
+Bei multivariaten Analysemethoden werden mehrere Eingabegr\"o\ss en zugleich statistisch untersucht, dadurch ist eine Berechnung sehr aufw\"andig und somit manuell nicht zu bewerkstelligen. Mithilfe der zunehmenden Rechenleistung aktueller Computer ist dies jedoch m\"oglich und wird in vielen Bereichen immer wichtiger, beispielsweise im Finanzwesen, bei Studien zum Konsumverhalten, oder der Sprach-, Schrift- und Bilderkennung.
+Die dazu verwendeten Algorithmen bezeichnet man auch als maschinelles Lernen (machine learning), da mit ihrer hilfe versucht wird, aus den Daten zu lernen und Vorhersagen zu treffen. Man unterscheidet zwischen Regression (regression), bei der eine kontinuirliche Ausgangsgr\"o\ss e gesucht wird und Klassifizierung (classification), bei der eine diskrete Antwort gesucht wird.\cite{SWB-455193959} Im Fall der \ttH-Analyse werden Regre\ss ionsmodelle verwendet um physikalische Gr\"o\ss en wie beispielsweise die Higgsbosonmasse zu rekonstruieren. Bei der Klassifizierung wird dagegen versucht, ein Ereignis einer Klasse zuzuordnen, also entweder Signal (englisch signal) oder Untergrund (englisch background). Im Folgenden werden ausschlie\ss lich Klassifizierungsprobleme behandelt.
 
-In der Hochenergiephysik nutzt man diese Methoden, indem man die Algorithmen, mithilfe der, durch theoretische Berechnungen erstellten, Simulationsdaten trainiert und anschlie\ss end die gemessen Daten klassifiziert.\\ 
-Maschinelles Lernen spielt aber auch in vielen anderen Bereichen eine wichtige Rolle, wie beispielsweise im Finanzwesen, bei Studien zum Konsumverhalten, oder der Sprach-, Schrift- und Bilderkennung.
+Es existieren verschiedene Ans\"atze zur Klassifizierung. Einer dieser Ans\"atze ist das \"uberwachte Lernen (supervised learning). Beispiele sind die St\"utzvektormethode, wobei jedoch die englische Bezeichnung support vector machine (SVM) gebr\"auchlich ist, Random Forest (RF), was Zuf\"alliger Wald bedeutet und mehrere zuf\"allig erstellte Entscheidungsb\"aume (Abschnitt \ref{ch:Algorithmen:subsec:Entscheidungsbaum} bezeichnet, oder Neuronale Netze. Ein weiteres Beispiel sind verst\"arkte Entscheidungsb\"aume (Boosted Decision Trees (BDTs)). Da hiervon verschiedene Implementationen im Kapitel \ref{ch:vergleich} untersucht und getestet werden sollen, werden sie im folgenden Abschnitt \ref{ch:Algorithmen:sec:BDT} genauer beschrieben.
 
-F\"ur diese Algorithmen existieren verschiedene Ans\"atze. Einer dieser Ans\"atze ist das \"uberwachte Lernen (supervised learning). Dabei wird anhand bekannter Trainingseingabewerte eine Klassifizierung der unbekannten Messwerte vorgenommen. Beispiele sind die St\"utzvektormethode, wobei jedoch die englische Bezeichnung support vector machine (SVM) gebr\"auchlich ist, Random Forest (RF), was Zuf\"alliger Wald bedeutet und mehrere zuf\"allig erstellte Entscheidungsb\"aume bezeichnet, oder Neuronale Netze. Ein weiteres Beispiel sind verst\"arkte Entscheidungsb\"aume (Boosted Decision Trees (BDTs)), die im Gegensatz zu Random Forests keine unkorrelierten Entscheidungsb\"aume nutzen.
+%% ===========================
+\section{Boosted Decision Trees (BDTs)}
+\label{ch:Algorithmen:sec:BDT}
+%% ===========================
 
+Boosted Decision Trees sind eine h\"aufig genutze Methode der multivariaten Datenanalyse. Im folgenden werden sie anhand eines einfachen Beispiels erkl\"art. Bei diesem handelt es sich um zwei zweidimensionale Gau\ss kurven die sich \"uberlappen. Eine stellt das Signal dar, die andere dient als Hintergrund. In Abbildung \ref{fig:2dgauss_scatter} ist ein Streudiagramm (scatterplot) dieser Verteilung abgebildet. X und Y dienen hier als trennende Variablen.
 
 %% ===========================
 \subsection{Entscheidungsb\"aume}
 \label{ch:Algorithmen:subsec:Entscheidungsbaum}
 %% ===========================
 
-Entscheidungsb\"aume unterteilen den Bereich des zu klassifizierenden Objektes anhand gerader Schnitte auf desses Eigenschaften (Variablen) in mehrere Sequenzen. Wieviele dieser Sequenzen ab dem Wurzelknoten erstellt werden, wird durch die Tiefe (depth) des Baumes angegeben. In \ref{fig:DecicionTree} ist ein Beispiel eines Baumes mit der Tiefe zwei zu sehen.\\
+Entscheidungsb\"aume unterteilen den Bereich des zu klassifizierenden Objektes anhand gerader Schnitte auf dessen Eigenschaften (Variablen) in mehrere Sequenzen. Wieviele dieser Sequenzen ab dem Wurzelknoten erstellt werden, wird durch die Tiefe (depth) des Baumes angegeben. In Abbildung \ref{fig:DecicionTree} (links) ist ein Beispiel eines Baumes mit der Tiefe zwei zu sehen. An jedem Knoten werden die Objekte aufgrund ihrer Eigenschaften und Kriterien in Signal und Untergrund unterteilt. Im Wurzelknoten ist der erste diskriminierende Schnitt angegeben. Alle Objekte mit einem Y-Wert gr\"o\ss er als 0.33 werden als eher Hintergrundartig eingestuft. In der n\"achsten Stufe des Baumes werden f\"ur jede der beiden zuvor getrennten Mengen Schnitte auf den X-Wert angewendet. In Abbildung \ref{fig:DecicionTree} (rechts) ist die Ausgabe (output) dieses Baumes abgebildet, das heist jedem Punkt wird entsprechend seiner X- und Y-Koordinaten ein Wert zugeordnet, der angibt, ob der Punkt eher als Signal oder als Untergrund klassifieziert wurde. man sieht deutlich die verschiedenen Schnitte.\\
 \begin{figure}[hhh]
  \begin{center}
    \includegraphics[width=\textwidth]{graphics/tree.pdf}
@@ -40,9 +43,9 @@ Entscheidungsb\"aume unterteilen den Bereich des zu klassifizierenden Objektes a
    }
  \end{center}
 \end{figure}
-Man unterscheidet zwischen zwei Arten, bin\"aren B\"aumen mit diskreten R\"uckgabewerten zur Unterscheidung mehrerer Klassen (classification trees), zum Beispiel Signal und Untergrund, sowie denjenigen mit kontinuierlicher Antwort (regression trees).\cite{SWB-455193959}
+Man unterscheidet zwischen zwei Arten, bin\"aren B\"aumen mit diskreten R\"uckgabewerten zur Unterscheidung mehrerer Klassen (classification trees), zum Beispiel Signal und Untergrund, sowie denjenigen mit kontinuierlicher Antwort (regression trees). \cite{SWB-455193959}
 
-BDTs vereinen durch Boosting und Bagging (aus dem Englischen von bootstrap aggregation abgeleitet) mehrere Entscheidungsb\"aume zu einem starken Klassifikator.
+%BDTs vereinen durch Boosting und Bagging (aus dem Englischen von bootstrap aggregation abgeleitet) mehrere Entscheidungsb\"aume zu einem starken Kla\ss ifikator.
 
 %% ===========================
 \subsection{Verst\"arken von Entscheidungsb\"aumen (Boosting)}

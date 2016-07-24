@@ -5,7 +5,7 @@
 %% Adapted by: Timo Rohrberg, 2009
 %% timo.rohrberg@student.kit.edu
 %%
-%% Additions by: Thorsten Haberecht, IPD - Chair Prof. Böhm, 2010
+%% Additions by: Thorsten Haberecht, IPD - Chair Prof. BÃ¶hm, 2010
 %% thorsten.haberecht@kit.edu
 
 
@@ -23,6 +23,7 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc} % Input in ISO 8859-1 (Latin1)
+%\usepackage[utf8]{inputenc}
 
 \usepackage{ae}               % Almost european, virtual T1-Font
 \usepackage[pdftex]{graphicx}
@@ -32,7 +33,7 @@
 \usepackage{url}
 \usepackage[absolute,overlay]{textpos}
 \usepackage{tikz}
-\usepackage[english,ngerman]{babel}
+\usepackage[ngerman]{babel}
 \usepackage{algorithm}		  % Code-Listings
 \usepackage{algorithmic}	  % Code-Listings
 \usepackage{amsmath}
