@@ -86,7 +86,30 @@ In Abbildung \ref{fig:boosting} sind zum Vergleich die R\"uckgabewerte von einem
 \label{fig:boosting}
 \end{figure}
 
-Die einfachste Methode ist, das Gewicht jedes falsch klassifizierten Ereignisses auf die gleiche Weise anzupassen. Eine weitere Verbesserung l\"asst sich erziehlen, indem man eine Ausgleichsfunktion (loss function) einf\"uhrt. Diese ordnet jedem Ereignis ausgehend vom aktuellen BDT-Output einen Wert zu, der bei richtiger Klassifikation minimal ist. Dadurch ist es m\"oglich, die Gewichte so anzupassen, dass die Ausgleichsfunktion minimiert wird.
+Die einfachste Methode ist, das Gewicht jedes falsch klassifizierten Ereignisses auf die gleiche Weise anzupassen. Eine weitere Verbesserung l\"asst sich erziehlen, indem man eine Ausgleichsfunktion (loss function) einf\"uhrt. Diese ordnet jedem Ereignis ausgehend vom aktuellen BDT-Output einen Wert zu, der bei richtiger Klassifikation minimal ist. Dadurch ist es m\"oglich, die Gewichte so anzupassen, dass die Ausgleichsfunktion minimiert wird.\\
+Wenn die zu trennenden Klassen mit $y=\pm1$ bezeichnet werden und $f$ die Vorhersage des BDTs ist, also $sign(f)$ die jeweilige Klasse vorhersagt, so kann man die einfachte Methode der Neugewichtung mathematisch mit
+\beq
+L = I(sign(f)\neq y)
+\label{eq:missclass_loss}
+\eeq
+beschreiben. Dabei nimmt die Funktion den Wert $1$ an, wenn die Vorhersage nicht der wahren Klasse $y$ entspricht oder $0$, wenn die Vorhergesagte mit der wahren Klasse \"ubereinstimmt.\\
+Eine etwas kompliziertere Ausgleichsfunktion ber\"ucksichtigt die quadratischen Fehler.
+\beq
+L = (y-f)^2
+\label{eq:squarederror_loss}
+\eeq
+Diese Fubnktion bildet eine Parabel um den wahren Wert. Je weiter die Vorhersage davon abweicht, desto st\"arker wird das Gewicht angepasst. Nachteilig ist dabei, dass sowohl negative Differenzen, als auch positive gleich stark korrigiert werden, also beispielsweise werden f\"ur $y=1$ BDT-Outputs von $f=0$ und $f=2$ gleich stark korrigiert, obwohl $f=0$ gar keine Klassifizierung zul\"asst, w\"ahrend $f=2$ deutlich auf $y=1$ hinweist. Daher verwendet man meist Funktionen, die negative Abweichungen st\"arker umgewichtet. Ein Beispiel hierf\"ur ist die exponentielle Ausgleichsfunktion.
+\beq
+L = \exp(-y\cdot f)
+\label{eq:exp_loss}
+\eeq
+Diese Ausgleichsfunktion wird beispielsweise von AdaBoost (kurz f\"ur Adaptive Boosting), dem ersten entwickelten Boosting-Algorithmus verwendet. Problematisch an der exponentiellen Ausgleichsfunktion ist, dass sie nicht so robust gegen\"uber Ausrei\ss ern ist.\\
+Dieses Problem behebt der Gradient-Boost-Algorithmus. Dabei wird eine zus\"atzliche Ausgleichsfunktion definiert, die nicht mithilfe der \"ublichen Vorgehensweise minimiert werden kann sondern \"uber einen Ansatz der steilsten Abnahme (steepest-descent) minimiert werden muss. Dazu wird zun\"achst der negative Gradient der Ausgleichsfunktion gebildet.
+\beq
+r_m=\left|\frac{\partial L(y,f(x))}{\partial f(x)}\right|_{f=f_{m-1}}
+\label{eq:pseudo_residual}
+\eeq
+Diese nennt man auch Pseudo-Residuen. $m$ bezeichnet die jeweilige Boosting-Iteration. Danach wird ein zus\"atzlicher Regressionsbaum trainiert, dessen Endknoten dem Wert der Pseudo-Residuen im jeweiligen Bereich der Ausgangsbaumstruktur angepasst sind. \cite{Hocker:2007ht}
 
 %% ===========================
 \section{Verwendete Algorithmen zur multivariaten Analyse}
