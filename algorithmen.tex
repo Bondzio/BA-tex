@@ -15,7 +15,7 @@ Multivariate Datenanalyse spielt in der experimentellen Hochenergiephysik eine e
 \label{ch:Theorie:sec:Algorithmen}
 %% ===========================
 
-Datenanalyse bezeichnet statistische Verfahren, mit deren Hilfe aus numerischen Daten Informationen gewonnen werden sollen.
+Datenanalyse bezeichnet statistische Verfahren, mit deren Hilfe aus numerischen Daten Informationen gewonnen werden.
 Bei multivariaten Analysemethoden werden mehrere Eingabegr\"o\ss en zugleich statistisch untersucht, dadurch ist eine Berechnung sehr aufw\"andig und somit manuell nicht zu bewerkstelligen. Mithilfe der zunehmenden Rechenleistung aktueller Computer ist dies jedoch m\"oglich und wird in vielen Bereichen immer wichtiger, beispielsweise im Finanzwesen, bei Studien zum Konsumverhalten, oder der Sprach-, Schrift- und Bilderkennung.
 Die dazu verwendeten Algorithmen bezeichnet man auch als maschinelles Lernen (machine learning), da mit ihrer hilfe versucht wird, aus den Daten zu lernen und Vorhersagen zu treffen. Man unterscheidet zwischen Regression (regression), bei der eine kontinuirliche Ausgangsgr\"o\ss e gesucht wird und Klassifizierung (classification), bei der eine diskrete Antwort gesucht wird.\cite{SWB-455193959} Im Fall der \ttH-Analyse werden Regre\ss ionsmodelle verwendet um physikalische Gr\"o\ss en wie beispielsweise die Higgsbosonmasse zu rekonstruieren. Bei der Klassifizierung wird dagegen versucht, ein Ereignis einer Klasse zuzuordnen, also entweder Signal (englisch signal) oder Untergrund (englisch background). Im Folgenden werden ausschlie\ss lich Klassifizierungsprobleme behandelt.
 
@@ -26,7 +26,7 @@ Es existieren verschiedene Ans\"atze zur Klassifizierung. Einer dieser Ans\"atze
 \label{ch:Algorithmen:sec:BDT}
 %% ===========================
 
-Boosted Decision Trees sind eine h\"aufig genutze Methode der multivariaten Datenanalyse. Im folgenden werden sie anhand eines einfachen Beispiels erkl\"art. Bei diesem handelt es sich um zwei zweidimensionale Gau\ss kurven die sich \"uberlappen. Eine stellt das Signal dar, die andere dient als Hintergrund. In den Abbildungen \ref{fig:2dgauss_histX} und \ref{fig:2dgauss_histY} sind die Verteilungen der trennenden Variablen X und Y dargestellt.\\
+Boosted Decision Trees sind eine h\"aufig genutze Methode der multivariaten Datenanalyse. Im folgenden werden sie anhand eines einfachen Beispiels erkl\"art. Bei diesem handelt es sich um zwei zweidimensionale Gau\ss verteilungen die sich \"uberlappen. Der Erwartungswert der Signalverteilung ist bei $X=Y=0$, der der Untergrundverteilung bei $X=Y=1$. Beide haben eine Standardabweichung von $1$. Eine stellt das Signal dar, die andere dient als Hintergrund. In den Abbildungen \ref{fig:2dgauss_histX} und \ref{fig:2dgauss_histY} sind die Verteilungen der trennenden Variablen X und Y dargestellt.\\
 Die folgenden Abschnitte sind gr\"o\ss tenteils an \cite{SWB-307748006} angelehnt.
 
 %% ===========================
@@ -110,6 +110,21 @@ r_m=\left|\frac{\partial L(y,f(x))}{\partial f(x)}\right|_{f=f_{m-1}}
 \label{eq:pseudo_residual}
 \eeq
 Diese nennt man auch Pseudo-Residuen. $m$ bezeichnet die jeweilige Boosting-Iteration. Danach wird ein zus\"atzlicher Regressionsbaum trainiert, dessen Endknoten dem Wert der Pseudo-Residuen im jeweiligen Bereich der Ausgangsbaumstruktur angepasst sind. \cite{Hocker:2007ht}
+
+%% ===========================
+\subsection{Variieren der Trainingsereignisse (Bagging)}
+\label{ch:Algorithmen:subsec:Bagging}
+%% ===========================
+
+Bagging (aus dem Englischen von bootstrap aggregation abgeleitet) bezeichnet eine Technik die Trainingsereignisse zu variieren. Dabei wird für jedes Training eine zufällige Teilmenge der Gesamtdaten verwendet. Dadurch unterscheiden sich die einzelnen Bäume voneinander und der Gesamtklassifikator bildet einen Mittelwert der einzelnen schwachen Klassifikatoren. Da Bagging nicht die Güte eines Klassifikators verbessern soll, sondern vorallem zum Stabilisieren der Antwort gedacht ist, handelt es sich beim Bagging nicht um einen Boosting-Algorithmus im klassischen Sinn. \cite{Hocker:2007ht}\\
+Der Ansatz des storastischen Gradient-Boosting vereint Boosting und Bagging.
+
+%% ===========================
+\subsection{Überanpassung (overtraining}
+\label{ch:Algorithmen:subsec:overtraining}
+%% ===========================
+
+
 
 %% ===========================
 \section{Verwendete Algorithmen zur multivariaten Analyse}
