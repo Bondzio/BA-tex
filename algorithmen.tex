@@ -124,7 +124,10 @@ Der Ansatz des storastischen Gradient-Boosting vereint Boosting und Bagging.
 \label{ch:Algorithmen:subsec:overtraining}
 %% ===========================
 
-
+\"Uberanpassung tritt auf, wenn die MVA-Methode zu wenige Freiheitsgrade zur Verf\"ugung hat, weil zu viele Modellparameter an zu wenige Datenpunkte angepasst werden. So werden Statistiken des Trainingsdatensatzes vom Algorithmus gelernt.Dadurch wird zwar die Klassifikation der Trainingsdaten sehr gut, aber die Vorhersage von unbekannten Daten wird deutlich schlechter.\\
+Dies kann beispielsweise auftreten, wenn nur einzelne Ereignisse auf den Knoten eines Entscheidungsbaumes fallen.\\
+In Abbildung \todo{figure scatterplot overtraining or not in training/testing} ist ein Streudiagramm mit der Klassifikation eines stark \"uberangepassten BDTs im Vergleich zu einer realistischeren Vorhersage abgebildet. In            und           sind au\ss erdem die BDT-Ausgaben f\"ur unbekannte Testdaten zu sehen.\\
+Es gibt verschiedene Ans\"atze \"Uberanpassung zu vermeiden. Dazu z\"ahlt das Verwerfen von Entscheidungsbaum\"asten mit zu wenigen Eintr\"agen, gewisserma\ss en das "Abschneiden" (pruning) des Astes am letzten Knoten mit gen\"ugend Ereignissen. Au\ss erdem ist es \"ublich, den Trainingsdatensatz nochmals zu trennen. Man spricht dann von Trainings- und Validierungsdatensatz. Mithilfe des Trainingsdatensatzes wird der MVA-Algorithmus trainiert, dann wird die G\"ute des Trainings anhand des Validierungsdatensatzes bestimmt. Sobald man mit der G\"ute der Klassifikation zufrieden ist, kann man den trainierten Algorithmus nutzen um Vorhersagen f\"ur unbekannte Daten, zum Beispiel die experimentell gemessenen Daten zu machen.
 
 %% ===========================
 \section{Verwendete Algorithmen zur multivariaten Analyse}
