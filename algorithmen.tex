@@ -134,17 +134,49 @@ Es gibt verschiedene Ans\"atze \"Uberanpassung zu vermeiden. Dazu z\"ahlt das Ve
 \label{ch:Algorithmen:subsec:Implementationen}
 %% ===========================
 
+In diesem Abschnitt werden kurz verschiedene Implementationen von multivariaten Algorithmen vorgestellt, die im weiteren Verlauf der Arbeit miteinander verglichen werden.
+
 %% ===========================
 \subsection{Toolkit for Multivariate Analysis in ROOT (TMVA)}
 \label{ch:Algorithmen:subsec:TMVA}
 %% ===========================
+
+Das Toolkit f\"ur multivariate Datenanalyse in ROOT (TMVA) ist ein Softwarepaket, das ins Analyseframework ROOT integriert ist und eine Vielzahl an multivariaten Analysealgorithmen zur Verf\"ugung stellt. Die TMVA-Algorithmen sind speziell f\"ur eine Anwendung in der Hochenergiephysik ausgelegt.\\
+Im Vergleich wird der BDT-Algorithmus mit Gradient-Boosting verwendet. TMVA BDTs nutzen die binomiale Log-Likelyhood-Ausgleichsfunktion
+\beq
+L(f,y)=\ln{\left(1+\exp{\left(-2F(x)y\right)}\right)}
+\label{eq:tmva_loss}
+\eeq
+
 
 %% ===========================
 \subsection{scikit-learn -- machine learning in python}
 \label{ch:Algorithmen:subsec:sklearn}
 %% ===========================
 
+Scikit-Learn ist ein Python-Programm-Paket. Es bietet ebenfalls eine Reihe von Verschiedenen Klassifikatoren. Scikit-learn stellt eine Gro\ss zahl von machine learning Algorithmen zur Verf\"ugung. Im Gegnsatz zu TMVA ist das Programmpaket scikit-kearn nicht speziell f\"ur physikalische Problemstellungen entwickelt, sondern an eine breite Nutzergruppe in allen Bereichen des maschinellen Lernens.\\
+Der zum Vergleich genutzte GradientBoostingClassifier nutzt die Deviance-Ausgleichsfunktion
+\beq
+L\left(y,f)\right)=-2\left(y\cdot f-\ln{\left(1+\exp{f}\right)}\right)
+\label{eq:deviance}
+\eeq
+
 %% ===========================
 \subsection{Extreme Gradient Boosting (XGBoost)}
 \label{ch:Algorithmen:subsec:XGB}
 %% ===========================
+
+Extreme Gradient Boosting (XGBoost) ist ein Gradient-Boosting-Algorithmus, der sich stark am theoretischen Modell des Gradient-Boosting von Leo Breitmann orientiert. Er ist f\"ur mehrere frameworks implementiert. Beispielsweise R und python.\\
+Es werden CART trees verwendet, die in jedem Knoten nicht nur die Trennung der Klassen speichern, sondern jedem Knoten auch einen Wert zuweisen um die Vorhersage quantitativer zu machen.\\
+XGBoost verwendet als Ausgleichsfunktion die mittleren Fehlerquadrate, au\ss erdem ist eine Regularisations-Funktion mit implementiert. Insgesamt erh\"alt man eine zu minimierende Zielfunktion von
+\beq
+F=\sum_{i=1}^n\left[2\left(\hat y_i^{t-1}-y_i\right)f_t+f_t^2\right]+\Omega\left(f_t\right)+Konstante
+\label{eq:xgb_zielfkt}
+\eeq.
+Dabei ist
+\beq
+\Omega\left(f_t\right)=\gamma T+\frac12\lambda\sum_{j_1}^T w_t^2
+\label{eq:complexity}
+\eeq
+die Komplexit\"at des Baumes mit der Anzahl Endknoten T.\\
+Die zum Vergleich genutzte Version von XGBoost ist in Python implementiert und wird mit einer Maske f\"ur scikit-learn aufgerufen.
