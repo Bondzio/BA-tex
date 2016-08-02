@@ -8,11 +8,34 @@
 
 {\bibliographystyle{babalpha-fl}}	% german style
 
+In diesem Kapitel wird zun\"achst erl\"autert, anhand welcher Kriterien die verwendeten Algorithmen miteinander verglichen werden k\"onnen. Anschlie\ss end werden verschiedene Datens\"atze mithilfe der Algorithmen untersucht und die Ergebnisse verglichen.
 
 %% ===========================
 \section{Vergleichbarkeit der Algorithmen}
 \label{ch:Vergleich:sec:Vergleichbarkeit}
 %% ===========================
+
+Bevor die verschiedenen Implementationen der Algorithmen verglichen werden k\"onnen, m\"ussen zun\"achst einige Vergleichskriterien festgelegt werden und \"uberpr\"uft werden inwieweit sich die Parameter der Algorithmen unterscheiden.\\
+In Tabelle \ref{tab:parameter} sind die Einstellungsm\"oglichkeiten der drei Algorithmen dargestellt.
+
+\begin{table}[hhh]\parbox{12cm}{
+  \caption[Algorithmenparameter]{\it Tabelle mit einstellbaren Parametern der verschiedenen Algorithmen}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:parameter}
+  \begin{center}
+  \begin{tabular}{llll}
+  \hline
+  {\bf TMVA} & {\bf scikit-learn} & {\bf XGBoost} & {\bf Funktion} \\
+  \hline \hline
+     NTrees	& n\_estimators & n\_estimators & Anzahl der Entscheidungsb\"aume \\
+     Shrinkage	& learning\_rate & learning\_rate & Lernrate des Gradient Boosting \\
+     MaxDepth & max\_depth & max\_depth & Tiefe der Entscheidungsb\"aume\\
+     nCuts & -- & -- & Anzahl an getesteten Schnitten\\ 
+  	 MinNodeSize & min_samples_leaf & -- & Minimalanzahl Ereignisse pro Knoten\\                             
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
 
 %% ===========================
 \section{Verwendete Datens\"atze}
