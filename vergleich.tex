@@ -30,12 +30,20 @@ In Tabelle \ref{tab:parameter} sind die Einstellungsm\"oglichkeiten der drei Alg
      Shrinkage	& learning\_rate & learning\_rate & Lernrate des Gradient Boosting \\
      MaxDepth & max\_depth & max\_depth & Tiefe der Entscheidungsb\"aume\\
      nCuts & -- & -- & Anzahl an getesteten Schnitten\\ 
-  	 MinNodeSize & min_samples_leaf & -- & Minimalanzahl Ereignisse pro Knoten\\                             
+  	 MinNodeSize & min\_samples\_leaf & -- & Minimalanzahl Ereignisse pro Knoten\\ 
+  	 BaggedSampleFraction & subsampling & -- & Größe der Teilmengen des Trainingsdatensatzes für Bagging                     
   \hline
   \end{tabular}
   \end{center}
 \end{table}
 
+Die Lernrate, die Anzahl an Entscheidungsbäumen sowie die Tiefe der Bäume haben bei allen drei Algorithmen die gleiche Funktion. Die Anzahl der zu testenden Schnitte ist nur in TMVA regelbar. Dies könnte daran liegen, dass in TMVA viele Berechnungen mithilfe von den in ROOT implementierten Histogrammen durchgeführt werden, während Scikit-Learn Arrays verwendet, die keine Schnitte benötigen sondern eine kontinuierliche Überprüfung der Ausgabe ermöglichen. 
+
+Die minimale Anzahl an Ereignissen pro Knoten legt fest, ab wann ein Entscheidungsbaum beschnitten werden soll. In TMVA wird dies über einen Prozentsatz des Trainingsdatensatzes festgelegt, während in Scikit-Learn und XGBoost ein Absolutwert genutzt wird.
+
+Um nur die Größe der zufälligen Teilmenge einzustellen, die jeder Entscheidungsbaum durch Bagging zum Training nutzt, dient die BaggedSampleFraction sowie das subsampling. Beide sind Parameter im Bereich zwischen 0 und 1 und werden mit der Gesamtanzahl der Trainingsereignisse multipliziert um die Anzahl der Ereignisse pro Baum zu erhalten.\\
+
+Außerdem müssen zunächst Kriterien gefunden werden anhand deren die BDT-Ausgaben miteinander verglichen werden können. In dieser Arbeit werden ROC-Kurve (Abschnitt \ref{ch:Vergleich:subsec:ROC}) sowie das Integral der ROC-Kurven zum Vergleich der Klassifikationsqualität und der Kolmogorov-Smirnoff-Test (Abschnitt \ref{ch:Vergleich:subsec:KSTest}) zur Untersuchung ob Overtraining vorliegt verwendet.
 
 %% ===========================
 \section{Verwendete Datens\"atze}
