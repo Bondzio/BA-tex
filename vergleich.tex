@@ -31,19 +31,62 @@ In Tabelle \ref{tab:parameter} sind die Einstellungsm\"oglichkeiten der drei Alg
      MaxDepth & max\_depth & max\_depth & Tiefe der Entscheidungsb\"aume\\
      nCuts & -- & -- & Anzahl an getesteten Schnitten\\ 
   	 MinNodeSize & min\_samples\_leaf & -- & Minimalanzahl Ereignisse pro Knoten\\ 
-  	 BaggedSampleFraction & subsampling & -- & Größe der Teilmengen des Trainingsdatensatzes für Bagging                     
+  	 BaggedSampleFraction & subsampling & -- & Gr\"o\ss e der Teilmengen des Trainingsdatensatzes f\"ur Bagging\\                     
   \hline
   \end{tabular}
   \end{center}
 \end{table}
 
-Die Lernrate, die Anzahl an Entscheidungsbäumen sowie die Tiefe der Bäume haben bei allen drei Algorithmen die gleiche Funktion. Die Anzahl der zu testenden Schnitte ist nur in TMVA regelbar. Dies könnte daran liegen, dass in TMVA viele Berechnungen mithilfe von den in ROOT implementierten Histogrammen durchgeführt werden, während Scikit-Learn Arrays verwendet, die keine Schnitte benötigen sondern eine kontinuierliche Überprüfung der Ausgabe ermöglichen. 
+Die Lernrate, die Anzahl an Entscheidungsb\"aumen sowie die Tiefe der B\"aume haben bei allen drei Algorithmen die gleiche Funktion. Die Anzahl der zu testenden Schnitte ist nur in TMVA regelbar. Dies k\"onnte daran liegen, dass in TMVA viele Berechnungen mithilfe von den in ROOT implementierten Histogrammen durchgef\"uhrt werden, w\"ahrend Scikit-Learn Arrays verwendet, die keine Schnitte ben\"otigen sondern eine kontinuierliche \"Uberpr\"ufung der Ausgabe erm\"oglichen. 
 
-Die minimale Anzahl an Ereignissen pro Knoten legt fest, ab wann ein Entscheidungsbaum beschnitten werden soll. In TMVA wird dies über einen Prozentsatz des Trainingsdatensatzes festgelegt, während in Scikit-Learn und XGBoost ein Absolutwert genutzt wird.
+Die minimale Anzahl an Ereignissen pro Knoten legt fest, ab wann ein Entscheidungsbaum beschnitten werden soll. In TMVA wird dies \"uber einen Prozentsatz des Trainingsdatensatzes festgelegt, w\"ahrend in Scikit-Learn und XGBoost ein Absolutwert genutzt wird.
 
-Um nur die Größe der zufälligen Teilmenge einzustellen, die jeder Entscheidungsbaum durch Bagging zum Training nutzt, dient die BaggedSampleFraction sowie das subsampling. Beide sind Parameter im Bereich zwischen 0 und 1 und werden mit der Gesamtanzahl der Trainingsereignisse multipliziert um die Anzahl der Ereignisse pro Baum zu erhalten.\\
+Um nur die Gr\"o\ss e der zuf\"alligen Teilmenge einzustellen, die jeder Entscheidungsbaum durch Bagging zum Training nutzt, dient die BaggedSampleFraction sowie das subsampling. Beide sind Parameter im Bereich zwischen 0 und 1 und werden mit der Gesamtanzahl der Trainingsereignisse multipliziert um die Anzahl der Ereignisse pro Baum zu erhalten.\\
 
-Außerdem müssen zunächst Kriterien gefunden werden anhand deren die BDT-Ausgaben miteinander verglichen werden können. In dieser Arbeit werden ROC-Kurve (Abschnitt \ref{ch:Vergleich:subsec:ROC}) sowie das Integral der ROC-Kurven zum Vergleich der Klassifikationsqualität und der Kolmogorov-Smirnoff-Test (Abschnitt \ref{ch:Vergleich:subsec:KSTest}) zur Untersuchung ob Overtraining vorliegt verwendet.
+Au\ss erdem m\"ussen zun\"achst Kriterien gefunden werden anhand deren die BDT-Ausgaben miteinander verglichen werden k\"onnen. In dieser Arbeit werden ROC-Kurve (Abschnitt \ref{ch:Vergleich:subsec:ROC}) sowie das Integral der ROC-Kurven zum Vergleich der Klassifikationsqualit\"at und der Kolmogorov-Smirnoff-Test (Abschnitt \ref{ch:Vergleich:subsec:KSTest}) zur Untersuchung ob ein Generalisierungsfehler vorliegt verwendet.
+
+%% ===========================
+\subsection{ROC-Kurve}
+\label{ch:Vergleich:subsec:ROC}
+%% ===========================
+
+\begin{table}[hhh]\parbox{12cm}{
+  \caption[TMVA 6j4t Ergebnisse]{\it Tabelle mit BDT-Ausgaben}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:tmva}
+  \begin{center}
+  \begin{tabular}{llll}
+  \hline
+  Trainingszeit in $s$ & ROC-Integral & KS-Test Signal & KS-Test Untergrund\\
+  \hline
+179.72 & 0.7292 & 0.20 & 0.34\\ 
+176.39 & 0.7315 & 0.28 & 0.97\\ 
+177.61 & 0.7329 & 0.21 & 0.99\\ 
+177.02 & 0.7337 & 0.22 & 0.99\\ 
+174.75 & 0.7342 & 0.11 & 1.0\\ 
+201.52 & 0.7294 & 0.23 & 0.86\\ 
+204.64 & 0.7319 & 0.23 & 0.99\\ 
+195.36 & 0.7332 & 0.19 & 0.99\\ 
+193.92 & 0.7339 & 0.17 & 0.99\\ 
+200.38 & 0.7343 & 0.17 & 0.98\\ 
+211.11 & 0.7297 & 0.26 & 0.78\\ 
+218.64 & 0.7321 & 0.26 & 0.99\\ 
+219.69 & 0.7335 & 0.20 & 0.98\\ 
+226.88 & 0.7341 & 0.16 & 0.99\\ 
+215.05 & 0.7344 & 0.23 & 0.98\\ 
+246.53 & 0.7300 & 0.23 & 0.72\\ 
+243.78 & 0.7325 & 0.23 & 0.99\\
+253.18 & 0.7337 & 0.17 & 0.98\\ 
+244.71 & 0.7342 & 0.18 & 0.99\\ 
+248.4  & 0.7345 & 0.29 & 0.94\\ 
+286.38 & 0.7302 & 0.26 & 0.90\\ 
+281.77 & 0.7327 & 0.21 & 0.98\\ 
+286.48 & 0.7339 & 0.15 & 1.0\\ 
+285.86 & 0.7344 & 0.20 & 1.0\\ 
+289.66 & 0.7345 & 0.20 & 0.97\\ 
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
 
 %% ===========================
 \section{Verwendete Datens\"atze}
