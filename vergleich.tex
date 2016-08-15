@@ -22,7 +22,7 @@ In Tabelle \ref{tab:parameter} sind die Einstellungsm\"oglichkeiten der drei Alg
   \caption[Algorithmenparameter]{\it Tabelle mit einstellbaren Parametern der verschiedenen Algorithmen}% {\rm \cite{Agashe:2014kda}}
   }\label{tab:parameter}
   \begin{center}
-  \begin{tabular}{llll}
+  \begin{tabular}{p{3.75cm}p{2.75cm}p{2.25cm}p{4.5cm}}
   \hline
   {\bf TMVA} & {\bf scikit-learn} & {\bf XGBoost} & {\bf Funktion} \\
   \hline \hline
@@ -41,9 +41,9 @@ Die Lernrate, die Anzahl an Entscheidungsb\"aumen sowie die Tiefe der B\"aume ha
 
 Die minimale Anzahl an Ereignissen pro Knoten legt fest, ab wann ein Entscheidungsbaum beschnitten werden soll. In TMVA wird dies \"uber einen Prozentsatz des Trainingsdatensatzes festgelegt, w\"ahrend in Scikit-Learn und XGBoost ein Absolutwert genutzt wird.
 
-Um nur die Gr\"o\ss e der zuf\"alligen Teilmenge einzustellen, die jeder Entscheidungsbaum durch Bagging zum Training nutzt, dient die BaggedSampleFraction sowie das subsampling. Beide sind Parameter im Bereich zwischen 0 und 1 und werden mit der Gesamtanzahl der Trainingsereignisse multipliziert um die Anzahl der Ereignisse pro Baum zu erhalten.\\
+Um nur die Gr\"o\ss e der zuf\"alligen Teilmenge einzustellen, die jeder Entscheidungsbaum durch Bagging zum Training nutzt, dient die BaggedSampleFraction sowie das subsampling. Beide sind Parameter im Bereich zwischen 0 und 1 und werden mit der Gesamtanzahl der Trainingsereignisse multipliziert um die Anzahl der Ereignisse pro Baum zu erhalten.
 
-Au\ss erdem m\"ussen zun\"achst Kriterien gefunden werden anhand deren die BDT-Ausgaben miteinander verglichen werden k\"onnen. In dieser Arbeit werden ROC-Kurve (Abschnitt \ref{ch:Vergleich:subsec:ROC}) sowie das Integral der ROC-Kurven zum Vergleich der Klassifikationsqualit\"at und der Kolmogorov-Smirnoff-Test (Abschnitt \ref{ch:Vergleich:subsec:KSTest}) zur Untersuchung ob ein Generalisierungsfehler vorliegt verwendet.
+Au\ss erdem m\"ussen zun\"achst Kriterien gefunden werden, anhand deren die BDT-Ausgaben miteinander verglichen werden k\"onnen. In dieser Arbeit werden ROC-Kurve (Abschnitt \ref{ch:Vergleich:subsec:ROC}) sowie das Integral der ROC-Kurven zum Vergleich der Klassifikationsqualit\"at und der Kolmogorov-Smirnoff-Test (Abschnitt \ref{ch:Vergleich:subsec:KSTest}) zur Untersuchung ob ein Generalisierungsfehler vorliegt verwendet.
 
 %% ===========================
 \subsection{ROC-Kurve}

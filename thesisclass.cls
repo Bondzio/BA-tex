@@ -40,6 +40,7 @@
 \usepackage{booktabs}
 \usepackage{dcolumn}
 \usepackage{siunitx}
+\usepackage{multirow}
 \sisetup{range-units = single, range-phrase = {-}, separate-uncertainty = true,multi-part-units=brackets, product-units=brackets, locale=DE}
 % see http://www.ctan.org/tex-archive/macros/latex/contrib/algorithm2e/algorithm2e.pdf
 % for more sophisticated algorithm listings
