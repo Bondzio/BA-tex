@@ -6,7 +6,8 @@
 \label{ch:vergleich}
 %% ==============
 
-{\bibliographystyle{babalpha-fl}}	% german style
+%{\bibliographystyle{babalpha-fl}}	% german style
+{\bibliographystyle{babunsrt-fl}}
 
 In diesem Kapitel wird zun\"achst erl\"autert, anhand welcher Kriterien die verwendeten Algorithmen miteinander verglichen werden k\"onnen. Anschlie\ss end werden verschiedene Datens\"atze mithilfe der Algorithmen untersucht und die Ergebnisse verglichen.
 
@@ -30,8 +31,8 @@ In Tabelle \ref{tab:parameter} sind die Einstellungsm\"oglichkeiten der drei Alg
      Shrinkage	& learning\_rate & learning\_rate & Lernrate des Gradient Boosting \\
      MaxDepth & max\_depth & max\_depth & Tiefe der Entscheidungsb\"aume\\
      nCuts & -- & -- & Anzahl an getesteten Schnitten\\ 
-  	 MinNodeSize & min\_samples\_leaf & -- & Minimalanzahl Ereignisse pro Knoten\\ 
-  	 BaggedSampleFraction & subsampling & -- & Gr\"o\ss e der Teilmengen des Trainingsdatensatzes f\"ur Bagging\\                     
+  	 MinNodeSize & min\_samples\_leaf & reg\_lambda & Minimalanzahl Ereignisse pro Knoten\\ 
+  	 BaggedSampleFraction & subsample & subsample & Gr\"o\ss e der Teilmengen des Trainingsdatensatzes f\"ur Bagging\\                     
   \hline
   \end{tabular}
   \end{center}
@@ -39,9 +40,9 @@ In Tabelle \ref{tab:parameter} sind die Einstellungsm\"oglichkeiten der drei Alg
 
 Die Lernrate, die Anzahl an Entscheidungsb\"aumen sowie die Tiefe der B\"aume haben bei allen drei Algorithmen die gleiche Funktion. Die Anzahl der zu testenden Schnitte ist nur in TMVA regelbar. Dies k\"onnte daran liegen, dass in TMVA viele Berechnungen mithilfe von den in ROOT implementierten Histogrammen durchgef\"uhrt werden, w\"ahrend Scikit-Learn Arrays verwendet, die keine Schnitte ben\"otigen sondern eine kontinuierliche \"Uberpr\"ufung der Ausgabe erm\"oglichen. 
 
-Die minimale Anzahl an Ereignissen pro Knoten legt fest, ab wann ein Entscheidungsbaum beschnitten werden soll. In TMVA wird dies \"uber einen Prozentsatz des Trainingsdatensatzes festgelegt, w\"ahrend in Scikit-Learn und XGBoost ein Absolutwert genutzt wird.
+Die minimale Anzahl an Ereignissen pro Knoten legt fest, ab wann ein Entscheidungsbaum beschnitten werden soll. In TMVA wird dies \"uber einen Prozentsatz des Trainingsdatensatzes festgelegt, w\"ahrend in Scikit-Learn ein Absolutwert genutzt wird. In XGBoost wird dies durch einen Vergleich der Ereignisgewichte erreicht.
 
-Um nur die Gr\"o\ss e der zuf\"alligen Teilmenge einzustellen, die jeder Entscheidungsbaum durch Bagging zum Training nutzt, dient die BaggedSampleFraction sowie das subsampling. Beide sind Parameter im Bereich zwischen 0 und 1 und werden mit der Gesamtanzahl der Trainingsereignisse multipliziert um die Anzahl der Ereignisse pro Baum zu erhalten.
+Um nur die Gr\"o\ss e der zuf\"alligen Teilmenge einzustellen, die jeder Entscheidungsbaum durch Bagging zum Training nutzt, dient die \glqq BaggedSampleFraction\grqq~sowie das \glqq subsample\grqq. Beide sind Parameter im Bereich zwischen 0 und 1 und werden mit der Gesamtanzahl der Trainingsereignisse multipliziert um die Anzahl der Ereignisse pro Baum zu erhalten.
 
 Au\ss erdem m\"ussen zun\"achst Kriterien gefunden werden, anhand deren die BDT-Ausgaben miteinander verglichen werden k\"onnen. In dieser Arbeit werden ROC-Kurve (Abschnitt \ref{ch:Vergleich:subsec:ROC}) sowie das Integral der ROC-Kurven zum Vergleich der Klassifikationsqualit\"at und der Kolmogorov-Smirnoff-Test (Abschnitt \ref{ch:Vergleich:subsec:KSTest}) zur Untersuchung ob ein Generalisierungsfehler vorliegt verwendet.
 
@@ -50,7 +51,43 @@ Au\ss erdem m\"ussen zun\"achst Kriterien gefunden werden, anhand deren die BDT-
 \label{ch:Vergleich:subsec:ROC}
 %% ===========================
 
-Die Receiver Operating Characteristic
+Receiver-Operating-Characteristic-Kurven (ROC-Kurven) sind Kennlinien, die sich als n\"utzliche Technik zur Visualisierung der G\"ute eines Klassifikators herausgestellt haben.
+
+In einem ROC-Graphen wird die Sensitivit\"at (true-positive-rate) \"uber der Spezifit\"at (1 - false-positive-rate) aufgetragen. Dabei ist die Sensitivit\"at definiert als
+\beq
+tpr = \frac{korrekt~klassifizierte~Signalereignisse}{Gesamtanzahl~Signalereignisse}
+\label{eq:TPR}
+\eeq
+und die Spezitivit\"at als
+\beq
+1-fpr = 1-\frac{falsch~klassifizierte~Untergrundereignisse}{Gesamtanzahl~Untergrundereignisse}.
+\label{eq:1-FPR}
+\eeq
+%
+Manchmal wird auch die true-positive-rate \"uber der false-positive-rate aufgetragen. Dadurch erh\"alt man eine ansteigende ROC-Kurve. An den Eigenschaften der ROC-Kurve \"andert das allerdings nichts.
+
+F\"ur jeden diskrete Unterscheidung wird ein Punkt der ROC-Kurve erzeugt. Dieser Punkt besteht aus einem Wertepaar der Form $((1-fpr),tpr)$. F\"ur einen Entscheidungsbaum der Tiefe zwei erh\"alt man also zwei Punkte. Au\ss erdem enth\"alt jede ROC-Kurve die Punkte $(0,1)$, was bedeutet, dass kein Ereignis als Signal eingestuft wird und $(1,0)$, an dem alle Ereignisse als Signal eingestuft werden. Diese Punkte werden durch Geraden verbunden, um eine gemittelte Kurve zu erhalten.\\
+Die schlechtest m\"ogliche Klassifikation w\"urde eine Gerade zwischen diesen beiden Punkten ergeben und entspricht einer zuf\"alligen Einteilung in Signal und Untergrund. Eine Perfekte Klassifikation w\"urde den Punkt $(1,1)$ ergeben. Somit w\"urde man eine Fl\"ache unter der ROC-Kurve von eins erhalten. Bei einem Zufallsprozess w\"are diese Fl\"ache \num{0,5}. Diese Fl\"ache wird ebenfalls als Vergleichskriterium f\"ur Klassifikatoren benutzt. Man nennt sie auch ROC-Integral oder ROC-AUC (f\"ur area under curve) \cite{ROC_Graphs}.
+
+%% ===========================
+\subsection{Kolmogorow-Smirnow-Test}
+\label{ch:Vergleich:subsec:KSTest}
+%% ===========================
+
+Der Kolmogorow-Smirnow-Test ist ein statistischer Test, mit dem gepr\"uft wird, wie gut zwei verschiedene Verteilungsfunnktionen \"ubereinstimmen.\\
+Um Eine Klassifikation eines BDTs auf Overtraining zu testen wird jeweils eine Verteilungsfunktion der BDT-Ausgabe auf den Trainingsdatensatz und auf den Testdatensatz erstellt. Dies geschieht indem man die BDT-Ausgaben $x_i$ der Gr\"o\ss e nach sortiert. Die Verteilungsfunktionen sind dann
+\beq
+F_{train}(x) = \frac{Anzahl~der~x_i\text{\it-}Werte \leq x}{n}
+\label{eq:CDF_train}
+\eeq
+und f\"ur den Testdatensatz entsprechend.\\
+Gesucht wird die gr\"o\ss te Differenz zwischen diesen beiden Verteilungen
+\beq
+t = \sqrt{n}\cdot\max\left|F_{train}(x)-F_{test}(x)\right|.
+\label{eq:KSTest}
+\eeq
+D.h. je kleiner dieser Wert ist, desto besser stimmen die Verteilungsfunktionen \"uberein. Wenn dieser Wert f\"ur Test- und Trainingsdaten gro\ss  wird, so liegt ein Generalisierungsfehler vor \cite{Blobel}.\\
+Oft wird auch die Wahrscheinlichkeit berechnet, einen Wert kleiner t zu erhalten, dies ist z. B. bei der in ROOT implementierten Funktion der Fall. In diesem Fall sind die Verteilungen bei kleinen Wahrscheinlichkeiten nicht kompatibel \cite{ROOT:TH1F}.
 
 \begin{table}[hhh]\parbox{12cm}{
   \caption[TMVA 6j4t Ergebnisse]{\it Tabelle mit TMVA BDT-Ausgaben}% {\rm \cite{Agashe:2014kda}}

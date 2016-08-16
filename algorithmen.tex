@@ -6,7 +6,8 @@
 \label{ch:algorithmen}
 %% ==============
 
-{\bibliographystyle{babalpha-fl}}	% german style
+%{\bibliographystyle{babalpha-fl}}	% german style
+{\bibliographystyle{babunsrt-fl}}
 
 Multivariate Datenanalyse spielt in der experimentellen Hochenergiephysik eine entscheidente Rolle um die gro\ss en gemessenen Datenmengen untersuchen und auswerten zu k\"onnen. In diesem Kapitel \ref{ch:algorithmen} werden zun\"achst einige Grundlagen der multivariaten Datenanalyse genannt, um sp\"ater genauer auf verschiedene Algorithmen und ihre Implementierungen anhand kleinerer Beispiele einzugehen.
 
@@ -24,14 +25,14 @@ Man unterscheidet zwischen Regression (regression), bei der eine kontinuierliche
 
 Im Fall der \ttH-Analyse werden Regressionsmodelle verwendet um physikalische Gr\"o\ss en wie beispielsweise die Higgsbosonmasse zu rekonstruieren. Bei der Klassifikation wird dagegen versucht, ein Ereignis einer Klasse zuzuordnen, also entweder Signal (signal) oder Untergrund (background). Im Folgenden werden ausschlie\ss lich Klassifikationsprobleme behandelt.
 
-Es existieren verschiedene Ans\"atze zur Klassifikation. Beispiele sind die St\"utzvektormethode, wobei jedoch die englische Bezeichnung support vector machine (SVM) gebr\"auchlich ist, Random Forest (RF), was Zuf\"alliger Wald bedeutet und mehrere zuf\"allig erstellte Entscheidungsb\"aume (Abschnitt \ref{ch:Algorithmen:subsec:Entscheidungsbaum}) bezeichnet, oder Neuronale Netze. Ein weiteres Beispiel sind verst\"arkte Entscheidungsb\"aume (Boosted Decision Trees (BDTs)). Da hiervon verschiedene Implementationen im Kapitel \ref{ch:vergleich} untersucht und getestet werden sollen, werden sie im folgenden Abschnitt \ref{ch:Algorithmen:sec:BDT} genauer beschrieben.
+Es existieren verschiedene Ans\"atze zur Klassifikation. Beispiele sind die St\"utzvektormethode, wobei jedoch die englische Bezeichnung support vector machine (SVM) gebr\"auchlich ist, Random Forest (RF), was zuf\"alliger Wald bedeutet und mehrere zuf\"allig erstellte Entscheidungsb\"aume (Abschnitt \ref{ch:Algorithmen:subsec:Entscheidungsbaum}) bezeichnet, oder Neuronale Netze. Ein weiteres Beispiel sind verst\"arkte Entscheidungsb\"aume (Boosted Decision Trees (BDTs)). Da hiervon verschiedene Implementationen im Kapitel \ref{ch:vergleich} untersucht und getestet werden sollen, werden sie im folgenden Abschnitt \ref{ch:Algorithmen:sec:BDT} genauer beschrieben.
 
 %% ===========================
 \section{Verst\"arkte Entscheidungsb\"aume (Boosted Decision Trees)}
 \label{ch:Algorithmen:sec:BDT}
 %% ===========================
 
-Boosted Decision Trees sind eine h\"aufig genutze Methode der multivariaten Datenanalyse. Im folgenden werden sie anhand eines einfachen Beispiels erkl\"art. Bei diesem handelt es sich um zwei zweidimensionale Gau\ss verteilungen die sich \"uberlappen. Der Erwartungswert der Signalverteilung ist bei $X=Y=0$, der der Untergrundverteilung bei $X=Y=1$. Beide haben eine Standardabweichung von $1$. Eine stellt das Signal dar, die andere dient als Untergrund. In Abbildung \ref{fig:2dgauss_scat} ist ein Streudiagramm (scatterplot) der Datenpunkte dargestellt.\\
+Boosted Decision Trees sind eine h\"aufig genutze Methode der multivariaten Datenanalyse. Im folgenden werden sie anhand eines einfachen Beispiels erkl\"art. Bei diesem handelt es sich um zwei zweidimensionale Gau\ss verteilungen die sich \"uberlappen. Eine stellt das Signal dar, die andere dient als Untergrund. Der Erwartungswert der Signalverteilung ist bei $X=Y=0$, der der Untergrundverteilung bei $X=Y=1$. Beide haben eine Standardabweichung von $1$. In Abbildung \ref{fig:2dgauss_scat} ist ein Streudiagramm (scatterplot) der Datenpunkte dargestellt.\\
 Die folgenden Abschnitte sind gr\"o\ss tenteils an \cite{SWB-307748006} angelehnt.
 \todo{scatterplot einf\"ugen}
 
@@ -41,7 +42,7 @@ Die folgenden Abschnitte sind gr\"o\ss tenteils an \cite{SWB-307748006} angelehn
 %% ===========================
 
 Entscheidungsb\"aume unterteilen den Bereich der zu klassifizierenden Objekte anhand gerader Schnitte auf dessen Eigenschaften (Variablen) in mehrere Sequenzen. Wieviele dieser Sequenzen ab dem Wurzelknoten erstellt werden, wird durch die Tiefe (depth) des Baumes angegeben. Man unterscheidet zwischen zwei Arten, bin\"aren B\"aumen mit diskreten R\"uckgabewerten zur Unterscheidung mehrerer Klassen (classification trees), zum Beispiel Signal und Untergrund, sowie denjenigen mit kontinuierlicher Antwort (regression trees). \cite{SWB-455193959} Eine h\"aufige Implementation von Entscheidungsb\"aumen ist CART (classification and regression trees), so implementierte B\"aume eignen sich sowohl f\"ur Klassifikationen als auch f\"ur Regressionen \cite{CART}.\\
-In Abbildung \ref{fig:DecicionTree} ist ein Beispiel eines Baumes mit der Tiefe zwei zu sehen. An jedem Knoten werden die Objekte aufgrund ihrer Eigenschaften und Kriterien in Signal und Untergrund unterteilt. Im Wurzelknoten ist der erste diskriminierende Schnitt angegeben. Alle Objekte mit einem Y-Wert gr\"o\ss er als 0.33 werden als eher Hintergrundartig eingestuft. In der n\"achsten Stufe des Baumes werden f\"ur jede der beiden zuvor getrennten Mengen Schnitte auf den X-Wert angewendet. In Abbildung \ref{fig:depht2} ist die Ausgabe (output) dieses Baumes abgebildet. Das hei\ss t jedem Punkt wird entsprechend seiner X- und Y-Koordinaten ein Wert zugeordnet, der angibt, ob der Punkt eher als Signal oder als Untergrund klassifiziert wurde. H\"ohere Werte (rote F\"arbung) werden f\"ur signalartige Punkte verwendet, niedrigere (blaue F\"arbung) f\"ur hintergrundartige. Man erkennt deutlich die verschiedenen Schnitte des Baumes.\\
+In Abbildung \ref{fig:DecicionTree} ist ein Beispiel eines Baumes mit der Tiefe zwei zu sehen. An jedem Knoten werden die Objekte aufgrund ihrer Eigenschaften und Kriterien in Signal und Untergrund unterteilt. Im Wurzelknoten ist der erste diskriminierende Schnitt angegeben. Alle Objekte mit einem Y-Wert gr\"o\ss er als 0.33 werden als eher Hintergrundartig eingestuft. In der n\"achsten Stufe des Baumes werden f\"ur jede der beiden zuvor getrennten Mengen Schnitte auf den X-Wert angewendet. In Abbildung \ref{fig:depht2} ist die Ausgabe (output) dieses Baumes abgebildet. Das hei\ss t jedem Punkt wird entsprechend seiner X- und Y-Koordinaten ein Wert zugeordnet, der angibt, ob der Punkt eher als Signal oder als Untergrund klassifiziert wurde. H\"ohere Werte (rote F\"arbung) werden f\"ur signalartige Punkte verwendet, niedrigere (blaue F\"arbung) f\"ur untergrundartige. Man erkennt deutlich die verschiedenen Schnitte des Baumes.\\
 %\begin{figure}[hhh]
 % \begin{center}
 %  \begin{minipage}[b]{0.5\textwidth}  
@@ -114,7 +115,7 @@ f_m(x) = f_{m-1}+\nu\cdot\sum_{j=1}^J\gamma_{jm}I(x \in R_{jm})
 \eeq
 berechnet wird.\\
 Dabei ist $\gamma_{jm}$ die Stelle, an der die Ausgleichsfunktion minimal wird.
-Der Parameter $\nu$ ist die Lernrate (shrinkage oder learning rate), der Werte von Null bis Eins annehmen kann. Mit diesem Parameter kann die Boosting Prozedur kontrolliert werden. Je kleiner der Wert ist, desto geringer werden die neu trainierten B\"aume gewichtet. Somit kann einem Erlernen von statistischen Fluktuationen entgegengewirkt werden (\ref{ch:Algorithmen:subsec:overtraining}). Die Gesamtanzahl der trainierten B\"aume ist M. Bei kleiner Lernrate sollte die Anzahl an B\"aumen h\"oher gew\"ahlt werden als bei gr\"o\ss erer. Die Bezeichnungen dieser und weiterer Optionen mit kurzer Erkl\"arung sind in Abschnitt \ref{ch:Vergleich:sec:Vergleichbarkeit} beschrieben.\\
+Der Parameter $\nu$ ist die Lernrate (shrinkage oder learning rate), der Werte von Null bis Eins annehmen kann. Mit diesem Parameter kann die Boosting Prozedur kontrolliert werden. Je kleiner der Wert ist, desto geringer werden die neu trainierten B\"aume gewichtet. Somit kann einem Erlernen von statistischen Fluktuationen entgegengewirkt werden (siehe auch Abschnitt \ref{ch:Algorithmen:subsec:overtraining}). Die Gesamtanzahl der trainierten B\"aume ist M. Bei kleiner Lernrate sollte die Anzahl an B\"aumen h\"oher gew\"ahlt werden als bei gr\"o\ss erer. Die Bezeichnungen dieser und weiterer Optionen mit kurzer Erkl\"arung sind in Abschnitt \ref{ch:Vergleich:sec:Vergleichbarkeit} beschrieben.\\
 In Abbildung \ref{fig:boosting} sind zum Vergleich die R\"uckgabewerte von einem einzelnen Entscheidungsbaum der Tiefe 100 (\ref{fig:tree_depht100}) sowie diejenigen von BDTs der Tiefe zwei mit zwei (\ref{fig:BDT_nTree2}), zehn (\ref{fig:BDT_nTree10}) und hundert (\ref{fig:BDT_nTree100}) Boosting-Schritten gezeigt. Man erkennt, dass bei diesem einfachen Beispiel die Ausgabe der BDTs schon ab zehn Einzelb\"aumen deutlich glatter wird und sie so eine st\"arkere Unterscheidung erm\"oglichen. Alle diese Klassifikatoren wurden mit dem Gradient-Boosting-Algorithmus von TMVA \ref{ch:Algorithmen:subsec:TMVA} erstellt.
 
 \begin{figure}[hhh]
@@ -152,7 +153,7 @@ Es gibt verschiedene Ans\"atze \"Uberanpassung zu vermeiden. Dazu z\"ahlt das Ve
 
 Bagging (aus dem Englischen von bootstrap aggregation abgeleitet) bezeichnet eine Technik die Trainingsereignisse zu variieren. Dabei wird f\"ur das Training jedes Baumes eine zuf\"allige Teilmenge der f\"ur das Training verwendbaren Daten benutzt. Dadurch unterscheiden sich die einzelnen B\"aume voneinander und der Gesamtklassifikator bildet einen Mittelwert der einzelnen schwachen Klassifikatoren.
 %Da Bagging nicht die G\"ute eines Klassifikators verbessern soll, sondern vorallem zum Stabilisieren der Antwort gedacht ist, handelt es sich beim Bagging nicht um einen Boosting-Algorithmus im klassischen Sinn. \cite{Hocker:2007ht}\\
-Beim Bagging habndelt es sich nicht um einen klassischen Boosting-Algorithmus, da er nicht die Klassifikation verbessern soll, sondern in erster Linie eine stabilere Antwort erzeugen soll \cite{Hocker:2007ht}.\\
+Beim Bagging handelt es sich nicht um einen klassischen Boosting-Algorithmus, da er nicht die Klassifikation verbessern soll, sondern in erster Linie eine stabilere Antwort erzeugen soll \cite{Hocker:2007ht}.\\
 Durch Bagging wird der Generalisierungsfehler ebenfalls reduziert.
 Der Ansatz des stochastischen Gradient-Boosting vereint Boosting und Bagging.
 
@@ -182,8 +183,8 @@ L(f,y)=\ln{\left(1+\exp{\left(-2F(x)y\right)}\right)}.
 \label{ch:Algorithmen:subsec:sklearn}
 %% ===========================
 
-Scikit-Learn ist ein Python-Programm-Paket. Es bietet ebenfalls eine Reihe von Verschiedenen Klassifikatoren. Scikit-Learn stellt eine Gro\ss zahl von machine learning Algorithmen zur Verf\"ugung. Im Gegnsatz zu TMVA ist das Programmpaket scikit-kearn nicht speziell f\"ur physikalische Problemstellungen entwickelt, sondern ist auf eine breite Nutzergruppe in allen Bereichen des maschinellen Lernens ausgerichtet.\\
-Der zum Vergleich verwendete \glqq GradientBoostingClassifier\grqq nutzt die \glqq Deviance\grqq-Ausgleichsfunktion
+Scikit-Learn ist ein Python-Programm-Paket. Es bietet ebenfalls eine Reihe von Verschiedenen Klassifikatoren. Scikit-Learn stellt eine Gro\ss zahl von multivariaten Algorithmen zur Verf\"ugung. Im Gegnsatz zu TMVA ist das Programmpaket scikit-kearn nicht speziell f\"ur physikalische Problemstellungen entwickelt, sondern ist auf eine breite Nutzergruppe in allen Bereichen des maschinellen Lernens ausgerichtet \cite{DBLP:journals/corr/abs-1201-0490}.\\
+Der zum Vergleich verwendete \glqq GradientBoostingClassifier\grqq~nutzt die \glqq Deviance\grqq-Aus-gleichsfunktion
 \beq
 L\left(y,f)\right)=-2\left(y\cdot f-\ln{\left(1+\exp{f}\right)}\right).
 \label{eq:deviance}
@@ -196,7 +197,7 @@ L\left(y,f)\right)=-2\left(y\cdot f-\ln{\left(1+\exp{f}\right)}\right).
 
 Extreme Gradient Boosting (XGBoost) \cite{DBLP:journals/corr/ChenG16} ist ein Gradient-Boosting-Algorithmus, der sich stark am theoretischen Modell des Gradient-Boosting von Jerome H. Friedman \cite{Friedman00greedyfunction} orientiert. Er ist f\"ur mehrere Programmierplattformen implementiert, beispielsweise R und python.\\
 Es werden CART trees verwendet, die in jedem Knoten nicht nur die Trennung der Klassen speichern, sondern jedem Knoten auch einen kontinuierlichen Ausgabewert zuweisen um die Vorhersage quantitativer zu machen.\\
-XGBoost verwendet als Ausgleichsfunktion die mittleren Fehlerquadrate, au\ss erdem ist ein Zusatzterm mit Regularisierungsfunktion implementiert. Insgesamt erh\"alt man eine zu minimierende Zielfunktion von
+XGBoost verwendet als Ausgleichsfunktion die mittleren Fehlerquadrate, au\ss erdem ist ein Zusatzterm mit Regularisierungsfunktion implementiert. Insgesamt erh\"alt man f\"ur jeden Boosting-Schritt $t$ eine zu minimierende Zielfunktion mit der Vorhersage $\hat y_i^{t-1}$ des letzten Schrittes von
 \beq
 F=\sum_{i=1}^n\left[2\left(\hat y_i^{t-1}-y_i\right)f_t+f_t^2\right]+\Omega\left(f_t\right)+Konstante.
 \label{eq:xgb_zielfkt}
