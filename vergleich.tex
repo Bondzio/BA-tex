@@ -9,7 +9,7 @@
 %{\bibliographystyle{babalpha-fl}}	% german style
 {\bibliographystyle{babunsrt-fl}}
 
-In diesem Kapitel wird zun\"achst erl\"autert, anhand welcher Kriterien die verwendeten Algorithmen miteinander verglichen werden k\"onnen. Anschlie\ss end werden verschiedene Datens\"atze mithilfe der Algorithmen untersucht und die Ergebnisse verglichen.
+In diesem Kapitel wird zun\"achst erl\"autert, anhand welcher Kriterien die verwendeten Algorithmen miteinander verglichen werden k\"onnen. Anschlie\ss end werden die Algorithmen auf zwei verschiedene S\"atze von CMS-Simulationsdaten angewendet und die Ergebnisse verglichen.
 
 %% ===========================
 \section{Vergleichbarkeit der Algorithmen}
@@ -19,8 +19,8 @@ In diesem Kapitel wird zun\"achst erl\"autert, anhand welcher Kriterien die verw
 Bevor die verschiedenen Implementationen der Algorithmen verglichen werden k\"onnen, m\"ussen zun\"achst einige Vergleichskriterien festgelegt werden. Au\ss erdem muss \"uberpr\"uft werden, inwieweit sich die Parameter der Algorithmen unterscheiden.\\
 In Tabelle \ref{tab:parameter} sind die Einstellungsm\"oglichkeiten der drei Algorithmen dargestellt.
 
-\begin{table}[hhh]\parbox{12cm}{
-  \caption[Algorithmenparameter]{\it Tabelle mit einstellbaren Parametern der verschiedenen Algorithmen}% {\rm \cite{Agashe:2014kda}}
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[Algorithmenparameter]{Tabelle mit einstellbaren Parametern der verschiedenen Algorithmen}% {\rm \cite{Agashe:2014kda}}
   }\label{tab:parameter}
   \begin{center}
   \begin{tabular}{p{3.75cm}p{2.75cm}p{2.25cm}p{4.5cm}}
@@ -90,8 +90,8 @@ D.h. je kleiner dieser Wert ist, desto besser stimmen die Verteilungsfunktionen 
 
 Oft wird auch die Wahrscheinlichkeit berechnet, einen Wert kleiner t zu erhalten. In diesem Fall sind die Verteilungen bei kleinen Wahrscheinlichkeiten nicht kompatibel. Diese Wahrscheinlichkeit wird zum Beispiel von der in ROOT implementierten Funktion des KS-Tests als R\"uckgabewert genutzt \cite{ROOT:TH1F}.
 
-\begin{table}[hhh]\parbox{12cm}{
-  \caption[TMVA 6j4t Ergebnisse]{\it Tabelle mit TMVA BDT-Ausgaben}% {\rm \cite{Agashe:2014kda}}
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[TMVA 6j4t Ergebnisse]{Tabelle mit TMVA BDT-Ausgaben}% {\rm \cite{Agashe:2014kda}}
   }\label{tab:tmva}
   \begin{center}
   \begin{tabular}{llll}
@@ -137,6 +137,36 @@ Oft wird auch die Wahrscheinlichkeit berechnet, einen Wert kleiner t zu erhalten
 Um die 
 
 %% ===========================
-\section{Anwendung und Vergleich der Algorithmen zur ttH Analyse}
+\section{Vorgehensweise w\"ahrend der Untersuchung}
 \label{ch:Vergleich:sec:ttH}
 %% ===========================
+
+Wie in Tabelle \ref{tab:parameter} gezeigt, gibt es f\"ur den TMVA-Parameter nCuts keine entsprechenden in Scikit-Learn und XGBoost. Daher soll zun\"achst untersucht werden welchen Einfluss dieser Parameter hat. Dazu wird der TMVA-Algorithmus mehrfach auf den ersten Datensatz angewendet und nur der Parameter nCuts variiert. Die \"ubrigen Parameter sind jeweils NTrees=1000, MinNodeSize=2.5\%, Shrinkage=0.01, BaggedSampleFraction=0.6 und MaxDepth=2.
+In Tabelle \ref{tab:nCuts} sind f\"ur jedes dieser Trainings das ROC-Integral, sowie die Wahrscheinlichkeit des Kolmogorow-Smirnow-Test, sowohl f\"ur die Signalverteilungen als auch f\"ur die Untergrundverteilungen, dargestellt.
+
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[Variation des TMVA-nCuts-Parameters]{Tabelle mit TMVA BDT-Ausgaben mit den festen Einstellungen NTrees=1000, MinNodeSize=2.5\%, Shrinkage=0.01, BaggedSampleFraction=0.6, MaxDepth=2 und in Abh\"angigkeit des Parameters nCuts}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:nCuts}
+  \begin{center}
+  \begin{tabular}{llll}
+  \hline
+  nCuts & ROC-Integral & KS-Test Signal & KS-Test Untergrund\\
+  \hline
+  \num{2} & \num{0,7300} & \num{0,34} & \num{0,99}\\
+ \num{20} & \num{0,7335} & \num{0,19} & \num{1}\\
+ \num{50} & \num{0,7338} & \num{0,14} & \num{1}\\
+\num{500} & \num{0,7338} & \num{0,27} & \num{1}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+Solange nCuts ausreichend gro\ss  gew\"ahlt wird, hat dieser Parameter bei diesem Datensatz also nur einen geringen Einfluss auf die Klassifikation. Im Folgenden wird daher immer nCuts=\num{50} verwendet.
+
+Als n\"achstes wird versucht die anderen Parameter sinnvoll einzugrenzen. Da die BaggedSampleFraction beziehungsweise das subsample nur zur Stabilisierung des Klassifikators gedacht ist, wird diese auf den Standardwert aus TMVA, BaggedSampleFraction=\num{0,6}, gesetzt.\\
+Wie in \cite{SWB-307748006} beschrieben, haben bisherige Erfahrungen gezeigt, dass BDTs die besten Resultate liefern, wenn die Anzahl an Knoten der einzelnen B\"aume zwischen vier und acht liegt, eine Lernrate unter \num{0,1} verwendet wird und die Anzahl der Entscheidungsb\"aume so gro\ss  wie m\"oglich gew\"ahlt werden soll, ohne in einen Bereich der \"Uberanpassung zu gelangen.\\
+Der vorgeschlagenenen Anzahl an Knoten pro Baum entspricht eine Tiefe von zwei, daher wird die Tiefe ebenfalls auf zwei festgesetzt.
+
+Die Lernrate und die Antahl von Entscheidungsb\"aumen beeinflussen sich gegenseitig. So kann man beispielsweise nicht beiden Parametern einen hohen Wert zuweisen, ohne einen Generalisierungsfehler in Kauf zu nehmen. W\"ahlt man jedoch eine kleine Lernrate, so kann man die Anzahl an Entscheidungsb\"aumen h\"oher w\"ahlen ohne das ein Generalisierungsfehler entsteht.
+
+Obwohl diese beiden Parameter in den drei Implementierungen der Algorithmen gleich definiert sind, kann es durch die Unterschiede der Algorithmen auch unterschiedliche Ergebnisse bei gleicher Parameterwahl geben. Aus diesen Gr\"unden werden die Algorithmen nicht anhand eines einzelnen Trainings mit gleichen Parametern verglichen, sondern die Lernrate und die Anzahl B\"aume wird in einem sinnvollen Bereich variiert. Anschlie\ss end werden die besten Ergebnisse der drei Klassifikatoren miteinander verglichen.
