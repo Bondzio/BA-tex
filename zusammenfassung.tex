@@ -2,8 +2,18 @@
 %%
 
 %% ==================
-\chapter{Zusammenfassung}
-\label{ch:Zusammenfassung}
+\chapter{Fazit und Ausblick}
+\label{ch:Fazit}
 %% ==================
 
-\dots
+{\bibliographystyle{babunsrt-fl}}
+
+In diesem Kapitel sollen nochmals alle Resultate zusammengefasst und ein Fazit gezogen werden. Anschließend wird ein kurzer Ausblick gegeben.
+
+Insgesamt sind in der Kategorie mit 6 Jets und 4 B-Tags alle drei Algorithmen gleich gut. In der Kategorie mit 6 Jets und 4 B-Tags, die sehr viel Untergrund und nur wenig Signal aufweist, ist der TMVA-Algorithmus etwas schlechter geeignet. Die Unterschiede sind allerdings nicht signifikant genug, als dass eine Umstellung unumgänglich wäre.
+
+Auf jeden Fall sollte weiterhin getestet werden ob es Klassifikatoren gibt die besser geeignet sind. Es wäre beispielsweise auch interessant komplett andere Klassifikatoren wie Random Forests oder Neuronale Netze zu testen.
+
+Weitere Ansätze die Klassifikations zu verbessern wäre es, die eigenständige Version von XGBoost zu testen.
+
+Der nächste Schritt sollte auf jeden Fall sein, weitere multivariate Algorithmen neben TMVA in das CMSSW-Framework zu integrieren, um weitere Tests zu vereinfachen.

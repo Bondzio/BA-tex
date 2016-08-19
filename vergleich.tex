@@ -66,16 +66,26 @@ und die Spezitivit\"at als
 %
 Manchmal wird auch die true-positive-rate \"uber der false-positive-rate aufgetragen. Dadurch erh\"alt man eine ansteigende ROC-Kurve. An den Eigenschaften der ROC-Kurve \"andert das allerdings nichts.
 
-F\"ur jeden diskrete Unterscheidung wird ein Punkt der ROC-Kurve erzeugt. Dieser Punkt besteht aus einem Wertepaar der Form $((1-fpr),tpr)$. F\"ur einen Entscheidungsbaum der Tiefe zwei erh\"alt man also zwei Punkte. Au\ss erdem enth\"alt jede ROC-Kurve die Punkte $(0,1)$, was bedeutet, dass kein Ereignis als Signal eingestuft wird und $(1,0)$, an dem alle Ereignisse als Signal eingestuft werden. Diese Punkte werden durch Geraden verbunden, um eine gemittelte Kurve zu erhalten.\\
+F\"ur jede diskrete Unterscheidung wird ein Punkt der ROC-Kurve erzeugt. Dieser Punkt besteht aus einem Wertepaar der Form $((1-fpr),tpr)$. F\"ur einen Entscheidungsbaum der Tiefe zwei erh\"alt man also drei Punkte. Au\ss erdem enth\"alt jede ROC-Kurve die Punkte $(0,1)$, was bedeutet, dass kein Ereignis als Signal eingestuft wird und $(1,0)$, an dem alle Ereignisse als Signal eingestuft werden. Diese Punkte werden durch Geraden verbunden, um eine gemittelte Kurve zu erhalten.\\
 Die schlechtest m\"ogliche Klassifikation w\"urde eine Gerade zwischen diesen beiden Punkten ergeben und entspricht einer zuf\"alligen Einteilung in Signal und Untergrund. Eine perfekte Klassifikation w\"urde den Punkt $(1,1)$ ergeben. Somit w\"urde man eine Fl\"ache unter der ROC-Kurve von eins erhalten. Diese Fl\"ache wird ebenfalls als Vergleichskriterium f\"ur Klassifikatoren benutzt. Man nennt sie auch ROC-Integral oder ROC-AUC (f\"ur area under curve) \cite{ROC_Graphs}.
+
+\begin{figure}[tbp]
+\centering     %%% not \center
+\subfigure[ROC-Kurve eines Baumes der Tiefe zwei]{\label{fig:ROC_1}\includegraphics[width=0.49\textwidth]{graphics/ROC_1tree_depth2.pdf}}
+\subfigure[ROC-Kurve eines BDT mit 1000 B\"aumen der Tiefe zwei]{\label{fig:ROC_1000}\includegraphics[width=0.49\textwidth]{graphics/ROC_1000tree_depth2.pdf}}
+\caption{Links sieht man die ROC-Kurve einer Klassifikation mit einem einzelnen Baum der Tiefe zwei. Rechts ist eine ROC-Kurve eines BDTs mit 1000 B\"aumen der Tiefe zwei abgebildet.}
+\end{figure}
+
+In Abbildung \ref{fig:ROC_1} ist eine ROC-Kurve der Klassifikation eines einzelnen Entscheidungsbaumes zu sehen. In Abbildung \ref{fig:ROC_1000} ist eine ROC-Kurve der Klassifikation eines BDTs mit 1000 B\"aumen der Tiefe zwei zu sehen. Die Kurve wird deutlich runder, da mehr Unterscheidungen getroffen werden k\"onnen und somit mehr Wertepaare f\"ur die ROC-Kurve erzeugt werden. Au\ss erdem wird die Fl\"ache unter der Kurve gr\"o\ss er, was auf die bessere Klassifikation hinweist.
+Erzeugt wurden beide ROC-Kurven mit einer Pythonfunktion anhand einer Klassifikation des Beispiels aus \ref{ch:Algorithmen:sec:BDT} mit Scikit-Learn.
 
 %% ===========================
 \subsection{Kolmogorow-Smirnow-Test}
 \label{ch:Vergleich:subsec:KSTest}
 %% ===========================
 
-Der Kolmogorow-Smirnow-Test ist ein statistischer Test mit dem gepr\"uft wird, wie gut zwei verschiedene Verteilungsfunnktionen \"ubereinstimmen.\\
-Um eine Klassifikation eines BDTs auf Overtraining zu testen wird jeweils eine Verteilungsfunktion der BDT-Ausgabe auf den Trainingsdatensatz und auf den Testdatensatz erstellt. Dies geschieht indem man die BDT-Ausgaben $x_i$ der Gr\"o\ss e nach sortiert. Die Verteilungsfunktionen sind dann
+Der Kolmogorow-Smirnow-Test ist ein statistischer Test mit dem gepr\"uft wird, wie gut zwei verschiedene Verteilungsfunktionen \"ubereinstimmen.\\
+Um eine Klassifikation eines BDTs auf \"Uberanpassung zu testen wird jeweils eine Verteilungsfunktion der BDT-Ausgabe auf den Trainingsdatensatz und auf einen unabh\"angigen Testdatensatz erstellt. Dies geschieht indem man die BDT-Ausgaben $x_i$ der Ereignisse $i$ der Gr\"o\ss e nach sortiert. Die Verteilungsfunktionen sind dann
 \beq
 F_{train}(x) = \frac{\text{Anzahl~der~x$_i$-Werte} \leq x}{n}
 \label{eq:CDF_train}
@@ -86,63 +96,36 @@ Gesucht wird die gr\"o\ss te Differenz zwischen diesen beiden Verteilungen
 t = \sqrt{n}\cdot\max\left|F_{train}(x)-F_{test}(x)\right|.
 \label{eq:KSTest}
 \eeq
-D.h. je kleiner dieser Wert ist, desto besser stimmen die Verteilungsfunktionen \"uberein \cite{Blobel}. Wenn dieser Wert f\"ur Test- und Trainingsdaten gro\ss  wird, so liegt ein Generalisierungsfehler vor.
+D.h. je kleiner dieser Wert ist, desto besser stimmen die Verteilungsfunktionen \"uberein \cite{Blobel}. Wenn dieser Wert f\"ur Test- und Trainingsdaten gro\ss~wird, so ist dies ein Hinweis darauf, dass ein Generalisierungsfehler vorliegt.
 
 Oft wird auch die Wahrscheinlichkeit berechnet, einen Wert kleiner t zu erhalten. In diesem Fall sind die Verteilungen bei kleinen Wahrscheinlichkeiten nicht kompatibel. Diese Wahrscheinlichkeit wird zum Beispiel von der in ROOT implementierten Funktion des KS-Tests als R\"uckgabewert genutzt \cite{ROOT:TH1F}.
-
-\begin{table}[tbp]\parbox{12cm}{
-  \caption[TMVA 6j4t Ergebnisse]{Tabelle mit TMVA BDT-Ausgaben}% {\rm \cite{Agashe:2014kda}}
-  }\label{tab:tmva}
-  \begin{center}
-  \begin{tabular}{llll}
-  \hline
-  Trainingszeit in $s$ & ROC-Integral & KS-Test Signal & KS-Test Untergrund\\
-  \hline
-  \hline
-179.72 & 0.7292 & 0.20 & 0.34\\ 
-176.39 & 0.7315 & 0.28 & 0.97\\ 
-177.61 & 0.7329 & 0.21 & 0.99\\ 
-177.02 & 0.7337 & 0.22 & 0.99\\ 
-174.75 & 0.7342 & 0.11 & 1.0\\ 
-201.52 & 0.7294 & 0.23 & 0.86\\ 
-204.64 & 0.7319 & 0.23 & 0.99\\ 
-195.36 & 0.7332 & 0.19 & 0.99\\ 
-193.92 & 0.7339 & 0.17 & 0.99\\ 
-200.38 & 0.7343 & 0.17 & 0.98\\ 
-211.11 & 0.7297 & 0.26 & 0.78\\ 
-218.64 & 0.7321 & 0.26 & 0.99\\ 
-219.69 & 0.7335 & 0.20 & 0.98\\ 
-226.88 & 0.7341 & 0.16 & 0.99\\ 
-215.05 & 0.7344 & 0.23 & 0.98\\ 
-246.53 & 0.7300 & 0.23 & 0.72\\ 
-243.78 & 0.7325 & 0.23 & 0.99\\
-253.18 & 0.7337 & 0.17 & 0.98\\ 
-244.71 & 0.7342 & 0.18 & 0.99\\ 
-248.4  & 0.7345 & 0.29 & 0.94\\ 
-286.38 & 0.7302 & 0.26 & 0.90\\ 
-281.77 & 0.7327 & 0.21 & 0.98\\ 
-286.48 & 0.7339 & 0.15 & 1.0\\ 
-285.86 & 0.7344 & 0.20 & 1.0\\ 
-289.66 & 0.7345 & 0.20 & 0.97\\ 
-  \hline
-  \end{tabular}
-  \end{center}
-\end{table}
 
 %% ===========================
 \section{Verwendete Datens\"atze}
 \label{ch:Vergleich:sec:Daten}
 %% ===========================
 
-Um die 
+Um die multivariaten Algorithmen zu vergleichen werden diese auf CMS-Simulationsdaten angewendet. Als Untergrunddatensatz wird ein simulierter \ttb-Datensatz, mit in Powheq simuliertem Matrixelement \cite{} und mit Pythia simuliertem Partonshower, verwendet. Die offizielle Bezeichnung des Simulationsdatensatzes lautet {\it/TT TuneCUETP8M1 13TeV-powheg-pythia8/RunIIFall15MiniAODv2-PU25nsData2015v1-76X mcRun2 asymptotic RunIIFall15DR76 v0 ext3-v1}.\\
+Als Signaldatensatz wird ein simulierter \ttH-Datensatz verwendetr, bei dem das Matrixelement ebenfalls mit Powheq und der Partonschauer mit Pythia simuliert wurde. Die offizielle Bezeichnung lautet \begin{it}/ttHTobb M125 13TeV powheg pythia8/RunIIFall15MiniAODv1-PU25nsData2015v1 76X mcRun2 asymptotic v12v1/MINIAODSIM\end{it}.\\
+Beide Datens\"atze wurden f\"ur eine Schwerpunktsenergie von \num{13}\si{13\tera\electronvolt} simuliert. Danach wurden die Prozesse auf ihre Standardmodell Wirkungsquerschnitte umgewichtet.
+
+Wie in \ref{ch:Experiment:sec:ttH} beschrieben, unterteilt man die \ttH-Analyse in verschiedene Kategorien. Details k\"onnen in \cite{CMS-PAS-HIG-16-004} nachgeschlagen werden. Der Vergleich der multivariaten Algorithmen wird f\"ur zwei dieser Kategorien durchgef\"uhrt. F\"ur die erste Auswahl wird genau ein Lepton mit einem Transversalimpuls von $p_T\geq \num{30}\si{\giga\electronvolt}$ und mindestens sechs Jets mit $p_T\geq \num{30}\si{\giga\electronvolt}$, von denen vier als b-Quark identifiziert wurden, gefordert (6 Jets und 4 B-Tags). Alle Ereignisse mit gerader Ereignisidentifikationsnummer werden zum trainieren der BDTs verwendet, die mit ungerader zum testen der Klassifikation. Dadurch erh\"alt man einen \ttH-Trainingsdatensatz mit 17026 Ereignissen und einen \ttb-Trainingsdatensatz mit 42378 Ereignissen.
+
+F\"ur die zweite Auswahl wird ebenfalls genau ein Lepton mit $p_T\geq \num{30}\si{\giga\electronvolt}$ und mindestens sechs Jets mit $p_T\geq \num{30}\si{\giga\electronvolt}$ gefordert, allerdings sollen nur zwei der Jets zu b-Quarks geh\"oren (6 Jets und 2 B-Tags). Trainings- und Testdatens\"atze werden wieder anhand gerader und ungerader Ereignisse unterschieden. Dadurch erh\"alt man insgesamt 1901054 Untergrundereignisse und 38074 Signalereignisse als Trainingsdaten. Allerdings wurden nur 2364 Signalereignisse und 119823 Untergrundereignisse verwendet, um das Verhalten der Algorithmen bei geringer Statistik zu untersuchen. 
+
+Als trennende Variablen werden in der Kategorie mit 6 Jets und 4 B-Tags\\{\it BDT\_common5\_input\_Evt\_Deta\_JetsAverage,\\BDT\_common5\_input\_avg\_btag\_disc\_btags,\\BDT\_common5\_input\_avg\_dr\_tagged\_jets, \\BDT\_common5\_input\_dEta\_fn, \\BDT\_common5\_input\_h3, \\BDT\_common5\_input\_maxeta\_jet\_tag, \\BDT\_common5\_input\_pt\_all\_jets\_over\_E\_all\_jets, \\BDT\_common5\_input\_sphericity, \\BDT\_common5\_output, \\Evt\_CSV\_Average\_Tagged und \\Evt\_Deta\_TaggedJetsAverage}\\verwendet.
+
+In der Kategorie mit 6 Jets und 2 B-Tags werden \\ {\it BDT\_common5\_input\_h1, \\BDT\_common5\_input\_avg\_dr\_tagged\_jets, \\BDT\_common5\_input\_sphericity, \\BDT\_common5\_input\_third\_highest\_btag, \\BDT\_common5\_input\_h3, \\BDT\_common5\_input\_HT, \\BDT\_common5\_input\_Mlb, \\BDT\_common5\_input\_fifth\_highest\_CSV und \\BDT\_common5\_input\_fourth\_highest\_btag}\\als trennende Variablen verwendet.
+
+Alle diese Variablen haben eine physikalische Bedeutung, auf diese wird hier allerdings nicht n\"aher eingegangen, da sie f\"ur den Vergleich der multivariaten Algorithmen nicht relevant sind.
 
 %% ===========================
 \section{Vorgehensweise w\"ahrend der Untersuchung}
-\label{ch:Vergleich:sec:ttH}
+\label{ch:Vergleich:sec:Vorgehensweise}
 %% ===========================
 
-Wie in Tabelle \ref{tab:parameter} gezeigt, gibt es f\"ur den TMVA-Parameter nCuts keine entsprechenden in Scikit-Learn und XGBoost. Daher soll zun\"achst untersucht werden welchen Einfluss dieser Parameter hat. Dazu wird der TMVA-Algorithmus mehrfach auf den ersten Datensatz angewendet und nur der Parameter nCuts variiert. Die \"ubrigen Parameter sind jeweils NTrees=1000, MinNodeSize=2.5\%, Shrinkage=0.01, BaggedSampleFraction=0.6 und MaxDepth=2.
-In Tabelle \ref{tab:nCuts} sind f\"ur jedes dieser Trainings das ROC-Integral, sowie die Wahrscheinlichkeit des Kolmogorow-Smirnow-Test, sowohl f\"ur die Signalverteilungen als auch f\"ur die Untergrundverteilungen, dargestellt.
+Wie in Tabelle \ref{tab:parameter} gezeigt, gibt es f\"ur den TMVA-Parameter nCuts keine Entsprechung in Scikit-Learn und XGBoost. Daher soll zun\"achst untersucht werden welchen Einfluss dieser Parameter hat. Dazu wird der TMVA-Algorithmus mehrfach auf den ersten Datensatz angewendet und nur der Parameter nCuts variiert. Die \"ubrigen Parameter sind jeweils NTrees=1000, MinNodeSize=2.5\%, Shrinkage=0.01, BaggedSampleFraction=0.6 und MaxDepth=2.
+In Tabelle \ref{tab:nCuts} sind f\"ur jedes dieser Trainings das ROC-Integral auf die Testdaten, sowie die Wahrscheinlichkeit des Kolmogorow-Smirnow-Test, sowohl f\"ur die Signalverteilungen als auch f\"ur die Untergrundverteilungen, dargestellt.
 
 \begin{table}[tbp]\parbox{12cm}{
   \caption[Variation des TMVA-nCuts-Parameters]{Tabelle mit TMVA BDT-Ausgaben mit den festen Einstellungen NTrees=1000, MinNodeSize=2.5\%, Shrinkage=0.01, BaggedSampleFraction=0.6, MaxDepth=2 und in Abh\"angigkeit des Parameters nCuts}% {\rm \cite{Agashe:2014kda}}
@@ -150,12 +133,12 @@ In Tabelle \ref{tab:nCuts} sind f\"ur jedes dieser Trainings das ROC-Integral, s
   \begin{center}
   \begin{tabular}{llll}
   \hline
-  nCuts & ROC-Integral & KS-Test Signal & KS-Test Untergrund\\
+  nCuts & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
   \hline
-  \num{2} & \num{0,7300} & \num{0,34} & \num{0,99}\\
- \num{20} & \num{0,7335} & \num{0,19} & \num{1}\\
- \num{50} & \num{0,7338} & \num{0,14} & \num{1}\\
-\num{500} & \num{0,7338} & \num{0,27} & \num{1}\\
+  \num{2} & \num{0,730} & \num{0,34} & \num{0,99}\\
+ \num{20} & \num{0,734} & \num{0,19} & \num{1}\\
+ \num{50} & \num{0,734} & \num{0,14} & \num{1}\\
+\num{500} & \num{0,734} & \num{0,27} & \num{1}\\
   \hline
   \end{tabular}
   \end{center}
@@ -164,9 +147,282 @@ In Tabelle \ref{tab:nCuts} sind f\"ur jedes dieser Trainings das ROC-Integral, s
 Solange nCuts ausreichend gro\ss  gew\"ahlt wird, hat dieser Parameter bei diesem Datensatz also nur einen geringen Einfluss auf die Klassifikation. Im Folgenden wird daher immer nCuts=\num{50} verwendet.
 
 Als n\"achstes wird versucht die anderen Parameter sinnvoll einzugrenzen. Da die BaggedSampleFraction beziehungsweise das subsample nur zur Stabilisierung des Klassifikators gedacht ist, wird diese auf den Standardwert aus TMVA, BaggedSampleFraction=\num{0,6}, gesetzt.\\
-Wie in \cite{SWB-307748006} beschrieben, haben bisherige Erfahrungen gezeigt, dass BDTs die besten Resultate liefern, wenn die Anzahl an Knoten der einzelnen B\"aume zwischen vier und acht liegt, eine Lernrate unter \num{0,1} verwendet wird und die Anzahl der Entscheidungsb\"aume so gro\ss  wie m\"oglich gew\"ahlt werden soll, ohne in einen Bereich der \"Uberanpassung zu gelangen.\\
+Wie in \cite{SWB-307748006} beschrieben, haben bisherige Erfahrungen gezeigt, dass BDTs die besten Resultate liefern, wenn die Anzahl an Knoten der einzelnen B\"aume zwischen vier und acht liegt, eine Lernrate unter \num{0,1} verwendet wird und die Anzahl der Entscheidungsb\"aume so gro\ss  wie m\"oglich gew\"ahlt wird, ohne in einen Bereich der \"Uberanpassung zu gelangen.\\
 Der vorgeschlagenenen Anzahl an Knoten pro Baum entspricht eine Tiefe von zwei, daher wird die Tiefe ebenfalls auf zwei festgesetzt.
 
-Die Lernrate und die Antahl von Entscheidungsb\"aumen beeinflussen sich gegenseitig. So kann man beispielsweise nicht beiden Parametern einen hohen Wert zuweisen, ohne einen Generalisierungsfehler in Kauf zu nehmen. W\"ahlt man jedoch eine kleine Lernrate, so kann man die Anzahl an Entscheidungsb\"aumen h\"oher w\"ahlen ohne das ein Generalisierungsfehler entsteht.
+Die Lernrate und die Anzahl von Entscheidungsb\"aumen beeinflussen sich gegenseitig. So kann man beispielsweise nicht beiden Parametern einen hohen Wert zuweisen, ohne einen hohen Generalisierungsfehler in Kauf zu nehmen. W\"ahlt man jedoch eine kleine Lernrate, so kann man die Anzahl an Entscheidungsb\"aumen h\"oher w\"ahlen und den Generalisierungsfehler trotzdem gering halten. W\"ahrend einigen Tests stellte sich heraus, dass die besten Ergebnisse mit einer Lernrate unter \num{0,01} zustande kommen.
 
 Obwohl diese beiden Parameter in den drei Implementierungen der Algorithmen gleich definiert sind, kann es durch die Unterschiede der Algorithmen auch unterschiedliche Ergebnisse bei gleicher Parameterwahl geben. Aus diesen Gr\"unden werden die Algorithmen nicht anhand eines einzelnen Trainings mit gleichen Parametern verglichen, sondern die Lernrate und die Anzahl B\"aume wird in einem sinnvollen Bereich variiert. Anschlie\ss end werden die besten Ergebnisse der drei Klassifikatoren miteinander verglichen.
+
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[TMVA 6j4t Ergebnisse]{Tabelle mit Trainingsresultaten des TMVA-Algorithmus in der 6 Jets 4 B-Tags Kategorie}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:tmva_6j4t}
+  \begin{center}
+  \begin{tabular}{lllll}
+  \hline
+  NTrees & Shrinkage & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
+  \hline
+ \num{1500}  & \num{0,001}   & \num{0,729} & \num{0,2}  & \num{0,34}\\
+ \num{1500}  & \num{0,0028}  & \num{0,732} & \num{0,28} & \num{0,97}\\
+ \num{1500}  & \num{0,0046}  & \num{0,733} & \num{0,21} & \num{0,99}\\
+ \num{1500}  & \num{0,0064}  & \num{0,734} & \num{0,22} & \num{0,99}\\
+ \num{1500}  & \num{0,0082}  & \num{0,734} & \num{0,11} & \num{1}\\
+ \num{1700}  & \num{0,001}   & \num{0,729} & \num{0,22} & \num{0,86}\\
+ \num{1700}  & \num{0,0028}  & \num{0,732} & \num{0,23} & \num{0,99}\\
+ \num{1700}  & \num{0,0046}  & \num{0,733} & \num{0,19} & \num{0,99}\\
+ \num{1700}  & \num{0,0064}  & \num{0,734} & \num{0,17} & \num{0,99}\\
+ \num{1700}  & \num{0,0082}  & \num{0,734} & \num{0,17} & \num{0,98}\\
+ \num{1900}  & \num{0,001}   & \num{0,73}  & \num{0,26} & \num{0,78}\\
+ \num{1900}  & \num{0,0028}  & \num{0,732} & \num{0,26} & \num{0,99}\\
+ \num{1900}  & \num{0,0046}  & \num{0,733} & \num{0,2}  & \num{0,98}\\
+ \num{1900}  & \num{0,0064}  & \num{0,734} & \num{0,16} & \num{1}\\
+ \num{1900}  & \num{0,0082}  & \num{0,734} & \num{0,23} & \num{0,98}\\
+ \num{2100}  & \num{0,001}   & \num{0,73}  & \num{0,23} & \num{0,72}\\
+ \num{2100}  & \num{0,0028}  & \num{0,732} & \num{0,23} & \num{0,99}\\
+ \num{2100}  & \num{0,0046}  & \num{0,734} & \num{0,17} & \num{0,98}\\
+ \num{2100}  & \num{0,0064}  & \num{0,734} & \num{0,18} & \num{0,99}\\
+ \num{2100}  & \num{0,0082}  & \num{0,735} & \num{0,29} & \num{0,94}\\
+ \num{2300}  & \num{0,001}   & \num{0,730} & \num{0,26} & \num{0,9}\\
+ \num{2300}  & \num{0,0028}  & \num{0,733} & \num{0,21} & \num{0,98}\\
+ \num{2300}  & \num{0,0046}  & \num{0,734} & \num{0,15} & \num{1}\\
+ \num{2300}  & \num{0,0064}  & \num{0,734} & \num{0,2}  & \num{1}\\
+ \num{2300}  & \num{0,0082}  & \num{0,735} & \num{0,20} & \num{0,97}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+In Tabelle \ref{tab:tmva_6j4t} sind die Resultate der mit TMVA in der Kategorie mit 6 Jets und 4 B-Tags durchgef\"uhrten Trainings dargestellt. In der ersten Spalte ist die Anzahl der trainierten Entscheidungsb\"aume und in der zweiten die Lernrate eingetragen. In der mittleren Spalte ist die Fl\"ache unter der ROC-Kurve eingetragen, in den letzten beiden Spalten sind die Wahrscheinlichkeiten des Kolmogorow-Smirnow-Tests f\"ur Signal- und Untergrundverteilung eingetragen.
+
+Man erkennt, dass das ROC-Integral f\"ur gro\ss e Lernraten und eine hohe Anzahl von Entscheidungsb\"aumen zunimmt, allerdings nur geringf\"ugig. Die besten Ergebnisse liefern die BDTs mit einer Lernrate von \num{0,0082} und 2100 beziehungsweise 2300 B\"aumen. Die Wahrscheinlichkeiten, dass der Kolmogorow-Smirnow-Tests angenommen wird, befinden sich f\"ur die Signalverteilungen im Bereich von \num{0,11} bis \num{0,29}. Aus Erfahrungen hat sich gezeigt, dass diese Werte nicht auf einen gravierenden Generalisierungsfehler hindeuten. Dies w\"are der Fall wenn die Wahrscheinlichkeit gegen Null geht. Daher wird jeweils ein Wert gr\"o\ss er \num{0,1} gefordert.
+
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[Scikit-Learn 6j4t Ergebnisse]{Tabelle mit Trainingsresultaten des Scikit-Learn-Algorithmus in der 6 Jets 4 B-Tags Kategorie}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:sklearn_6j4t}
+  \begin{center}
+  \begin{tabular}{lllll}
+  \hline
+  learning\_rate & n\_estimators & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
+  \hline
+\num{0,001}  & \num{1500} & \num{0,729} & \num{0,13} & \num{0,59}\\
+\num{0,0028} & \num{1500} & \num{0,732} & \num{0,27} & \num{0,83}\\
+\num{0,0046} & \num{1500} & \num{0,733} & \num{0,31} & \num{0,75}\\
+\num{0,0064} & \num{1500} & \num{0,733} & \num{0,21} & \num{0,82}\\
+\num{0,0082} & \num{1500} & \num{0,734} & \num{0,08} & \num{0,77}\\
+\num{0,001}  & \num{1700} & \num{0,73}  & \num{0,11} & \num{0,6}\\
+\num{0,0028} & \num{1700} & \num{0,732} & \num{0,24} & \num{0,82}\\
+\num{0,0046} & \num{1700} & \num{0,733} & \num{0,34} & \num{0,78}\\
+\num{0,0064} & \num{1700} & \num{0,734} & \num{0,14} & \num{0,77}\\
+\num{0,0082} & \num{1700} & \num{0,734} & \num{0,04} & \num{0,7}\\
+\num{0,001}  & \num{1900} & \num{0,73}  & \num{0,09} & \num{0,74}\\
+\num{0,0028} & \num{1900} & \num{0,732} & \num{0,25} & \num{0,85}\\
+\num{0,0046} & \num{1900} & \num{0,733} & \num{0,23} & \num{0,85}\\
+\num{0,0064} & \num{1900} & \num{0,734} & \num{0,08} & \num{0,72}\\
+\num{0,0082} & \num{1900} & \num{0,734} & \num{0,03} & \num{0,67}\\
+\num{0,001}  & \num{2100} & \num{0,730} & \num{0,13} & \num{0,77}\\
+\num{0,0028} & \num{2100} & \num{0,733} & \num{0,27} & \num{0,81}\\
+\num{0,0046} & \num{2100} & \num{0,733} & \num{0,19} & \num{0,83}\\
+\num{0,0064} & \num{2100} & \num{0,734} & \num{0,04} & \num{0,69}\\
+\num{0,0082} & \num{2100} & \num{0,734} & \num{0,02} & \num{0,6}\\
+\num{0,001}  & \num{2300} & \num{0,730} & \num{0,17} & \num{0,81}\\
+\num{0,0028} & \num{2300} & \num{0,733} & \num{0,32} & \num{0,81}\\
+\num{0,0046} & \num{2300} & \num{0,734} & \num{0,14} & \num{0,8}\\
+\num{0,0064} & \num{2300} & \num{0,734} & \num{0,02} & \num{0,66}\\
+\num{0,0082} & \num{2300} & \num{0,734} & \num{0,01} & \num{0,45}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+In Tabelle \ref{tab:sklearn_6j4t} sind die Resultate der mit Scikit-Learn in der Kategorie mit 6 Jets und 4 B-Tags  durchgef\"uhrten Trainings dargestellt. In der ersten Spalte ist die Lernrate und in der zweiten die Anzahl der trainierten Entscheidungsb\"aume eingetragen. In der mittleren Spalte ist wieder die Fl\"ache unter der ROC-Kurve eingetragen, in den letzten beiden Spalten sind die Wahrscheinlichkeiten des Kolmogorow-Smirnow-Tests f\"ur Signal- und Untergrundverteilung eingetragen.
+
+Wie bei den Trainings mit TMVA wird die Fl\"ache unter der ROC-Kurve gr\"o\ss er, je h\"oher die Lernrate und die Anzahl der Entscheidungsb\"aume sind. Allerdings werden die Wahrscheinlichkeiten des Kolmogorow-Smirnow-Tests deutlich kleiner als bei den TMVA-Trainings. So fallen relativ viele unterhalb der bei \num{0,1} gesetzten Marke und werden nicht ber\"ucksichtigt. Aufgrund dessen ist die Beste Einstellung die f\"ur Scikit-Learn gefunden wurde eine Lernrate von \num{0,0046} und \num{2300} Entscheidungsb\"aumen.
+
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[XGBoost 6j4t Ergebnisse]{Tabelle mit Trainingsresultaten des XGBoost-Algorithmus in der 6 Jets 4 B-Tags Kategorie}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:xgboost_6j4t}
+  \begin{center}
+  \begin{tabular}{lllll}
+  \hline
+  learning\_rate & n\_estimators & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
+  \hline
+\num{0,001}  & \num{1500} & \num{0,729} & \num{0,13} & \num{0,68}\\
+\num{0,0028} & \num{1500} & \num{0,731} & \num{0,20} & \num{0,89}\\
+\num{0,0046} & \num{1500} & \num{0,733} & \num{0,24} & \num{0,90}\\
+\num{0,0064} & \num{1500} & \num{0,734} & \num{0,25} & \num{0,67}\\
+\num{0,0082} & \num{1500} & \num{0,734} & \num{0,15} & \num{0,65}\\
+\num{0,001}  & \num{1700} & \num{0,729} & \num{0,11} & \num{0,67}\\
+\num{0,0028} & \num{1700} & \num{0,732} & \num{0,24} & \num{0,88}\\
+\num{0,0046} & \num{1700} & \num{0,733} & \num{0,29} & \num{0,84}\\
+\num{0,0064} & \num{1700} & \num{0,734} & \num{0,26} & \num{0,59}\\
+\num{0,0082} & \num{1700} & \num{0,734} & \num{0,11} & \num{0,62}\\
+\num{0,001}  & \num{1900} & \num{0,73}  & \num{0,13} & \num{0,67}\\
+\num{0,0028} & \num{1900} & \num{0,732} & \num{0,19} & \num{0,89}\\
+\num{0,0046} & \num{1900} & \num{0,733} & \num{0,33} & \num{0,77}\\
+\num{0,0064} & \num{1900} & \num{0,734} & \num{0,15} & \num{0,57}\\
+\num{0,0082} & \num{1900} & \num{0,734} & \num{0,09} & \num{0,63}\\
+\num{0,001}  & \num{2100} & \num{0,73}  & \num{0,15} & \num{0,62}\\
+\num{0,0028} & \num{2100} & \num{0,732} & \num{0,26} & \num{0,89}\\
+\num{0,0046} & \num{2100} & \num{0,734} & \num{0,28} & \num{0,74}\\
+\num{0,0064} & \num{2100} & \num{0,734} & \num{0,12} & \num{0,57}\\
+\num{0,0082} & \num{2100} & \num{0,734} & \num{0,08} & \num{0,55}\\
+\num{0,001}  & \num{2300} & \num{0,73}  & \num{0,16} & \num{0,70}\\
+\num{0,0028} & \num{2300} & \num{0,733} & \num{0,25} & \num{0,89}\\
+\num{0,0046} & \num{2300} & \num{0,734} & \num{0,24} & \num{0,74}\\
+\num{0,0064} & \num{2300} & \num{0,734} & \num{0,11} & \num{0,61}\\
+\num{0,0082} & \num{2300} & \num{0,734} & \num{0,07} & \num{0,63}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+In Tabelle \ref{tab:xgboost_6j4t} sind die Resultate der mit XGBoost in der Kategorie mit 6 Jets und 4 B-Tags  durchgef\"uhrten Trainings dargestellt. In der ersten Spalte ist die Lernrate und in der zweiten die Anzahl der trainierten Entscheidungsb\"aume eingetragen. In der mittleren Spalte ist wieder die Fl\"ache unter der ROC-Kurve eingetragen, in den letzten beiden Spalten sind die Wahrscheinlichkeiten des Kolmogorow-Smirnow-Tests f\"ur Signal- und Untergrundverteilung eingetragen.
+
+Auch XGBoost erreicht die besten Ergebnisse mit gr\"o\ss eren Lernraten und vielen Entscheidungsb\"aumen. Hier liegen die Wahrscheinlichkeiten aus dem Kolmogorow-Smirnow-Tests weiter auseinander als bei den anderen beiden Algorithmen. Es gibt auch Trainings, die aufgrund des schlechten Ergebnisses beim Kolmogorow-Smirnow-Test nicht ber\"ucksichtigt werden, mit drei sind dies aber deutlich weniger als bei Scikit-Learn. Das beste Ergebnis wird mit einer Lernrate von \num{0,0064} und \num{2300} Entscheidungsb\"aumen erreicht.
+
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[TMVA 6j2t Ergebnisse]{Tabelle mit Trainingsresultaten des TMVA-Algorithmus in der 6 Jets 2 B-Tags Kategorie}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:tmva_6j2t}
+  \begin{center}
+  \begin{tabular}{lllll}
+  \hline
+  NTrees & Shrinkage & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
+  \hline
+\num{1500} & \num{0.001}  & \num{0,684} & \num{0,77} & \num{0,99}\\
+\num{1500} & \num{0.0028} & \num{0,687} & \num{0,86} & \num{1}\\
+\num{1500} & \num{0.0046} & \num{0,69}  & \num{0,73} & \num{1}\\
+\num{1500} & \num{0.0064} & \num{0,692} & \num{0,82} & \num{1}\\
+\num{1500} & \num{0.0082} & \num{0,695} & \num{0,67} & \num{0,99}\\
+\num{1700} & \num{0.001}  & \num{0,684} & \num{0,70} & \num{1}\\
+\num{1700} & \num{0.0028} & \num{0,688} & \num{0,51} & \num{1}\\
+\num{1700} & \num{0.0046} & \num{0,691} & \num{0,82} & \num{0,92}\\
+\num{1700} & \num{0.0064} & \num{0,694} & \num{0,82} & \num{0,94}\\
+\num{1700} & \num{0.0082} & \num{0,697} & \num{0,58} & \num{1}\\
+\num{1900} & \num{0.001}  & \num{0,685} & \num{0,55} & \num{0,5}\\
+\num{1900} & \num{0.0028} & \num{0,688} & \num{0,55} & \num{0,98}\\
+\num{1900} & \num{0.0046} & \num{0,692} & \num{0,73} & \num{1}\\
+\num{1900} & \num{0.0064} & \num{0,695} & \num{0,82} & \num{1}\\
+\num{1900} & \num{0.0082} & \num{0,699} & \num{0,68} & \num{1}\\
+\num{2100} & \num{0.001}  & \num{0,685} & \num{0,53} & \num{0,97}\\
+\num{2100} & \num{0.0028} & \num{0,689} & \num{0,73} & \num{1}\\
+\num{2100} & \num{0.0046} & \num{0,693} & \num{0,84} & \num{1}\\
+\num{2100} & \num{0.0064} & \num{0,696} & \num{0,73} & \num{0,99}\\
+\num{2100} & \num{0.0082} & \num{0,700} & \num{0,77} & \num{1}\\
+\num{2300} & \num{0.001}  & \num{0,685} & \num{0,57} & \num{0,45}\\
+\num{2300} & \num{0.0028} & \num{0,689} & \num{0,70} & \num{1}\\
+\num{2300} & \num{0.0046} & \num{0,694} & \num{0,8}  & \num{0,99}\\
+\num{2300} & \num{0.0064} & \num{0,698} & \num{0,73} & \num{1}\\
+\num{2300} & \num{0.0082} & \num{0,701} & \num{0,70} & \num{1}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+In Tabelle \ref{tab:tmva_6j2t} sind die Resultate der mit TMVA in der Kategorie mit 6 Jets und 2 B-Tags  durchgef\"uhrten Trainings dargestellt. In der ersten Spalte ist die Anzahl der trainierten Entscheidungsb\"aume und in der zweiten die Lernrate eingetragen. In der mittleren Spalte ist die Fl\"ache unter der ROC-Kurve eingetragen, in den letzten beiden Spalten sind die Wahrscheinlichkeiten des Kolmogorow-Smirnow-Tests f\"ur Signal- und Untergrundverteilung eingetragen.
+
+Generell sind die ROC-Integrale kleiner als in der Kategorie mit 6 Jets und 4 B-Tags. Dies liegt vor allem daran, dass die Kategorie stark Untergrund dominiert ist, also nur wenige Signalereignisse auf viele Untergrundereignisse fallen.
+
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[Scikit-Learn 6j2t Ergebnisse]{Tabelle mit Trainingsresultaten des Scikit-Learn-Algorithmus in der 6 Jets 2 B-Tags Kategorie}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:sklearn_6j2t}
+  \begin{center}
+  \begin{tabular}{lllll}
+  \hline
+  learning\_rate & n\_estimators & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
+  \hline
+\num{0,001}  & \num{1500} & \num{0,692} & \num{0,36} & \num{0,75}\\
+\num{0,0028} & \num{1500} & \num{0,708} & \num{0}    & \num{0,67}\\
+\num{0,0046} & \num{1500} & \num{0,713} & \num{0}    & \num{0,54}\\
+\num{0,0064} & \num{1500} & \num{0,715} & \num{0}    & \num{0,72}\\
+\num{0,0082} & \num{1500} & \num{0,716} & \num{0}    & \num{0,62}\\
+\num{0,001}  & \num{1700} & \num{0,694} & \num{0,32} & \num{0,7}\\
+\num{0,0028} & \num{1700} & \num{0,709} & \num{0}    & \num{0,80}\\
+\num{0,0046} & \num{1700} & \num{0,713} & \num{0}    & \num{0,69}\\
+\num{0,0064} & \num{1700} & \num{0,716} & \num{0}    & \num{0,71}\\
+\num{0,0082} & \num{1700} & \num{0,716} & \num{0}    & \num{0,57}\\
+\num{0,001}  & \num{1900} & \num{0,695} & \num{0,27} & \num{0,59}\\
+\num{0,0028} & \num{1900} & \num{0,710} & \num{0}    & \num{0,78}\\
+\num{0,0046} & \num{1900} & \num{0,714} & \num{0}    & \num{0,7}\\
+\num{0,0064} & \num{1900} & \num{0,716} & \num{0}    & \num{0,68}\\
+\num{0,0082} & \num{1900} & \num{0,717} & \num{0}    & \num{0,50}\\
+\num{0,001}  & \num{2100} & \num{0,697} & \num{0,25} & \num{0,71}\\
+\num{0,0028} & \num{2100} & \num{0,711} & \num{0}    & \num{0,74}\\
+\num{0,0046} & \num{2100} & \num{0,715} & \num{0}    & \num{0,74}\\
+\num{0,0064} & \num{2100} & \num{0,716} & \num{0}    & \num{0,67}\\
+\num{0,0082} & \num{2100} & \num{0,717} & \num{0}    & \num{0,55}\\
+\num{0,001}  & \num{2300} & \num{0,699} & \num{0,18} & \num{0,69}\\
+\num{0,0028} & \num{2300} & \num{0,712} & \num{0}    & \num{0,50}\\
+\num{0,0046} & \num{2300} & \num{0,715} & \num{0}    & \num{0,69}\\
+\num{0,0064} & \num{2300} & \num{0,716} & \num{0}    & \num{0,70}\\
+\num{0,0082} & \num{2300} & \num{0,717} & \num{0}    & \num{0,55}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+In Tabelle \ref{tab:tmva_6j2t} sind die Resultate der mit Scikit-Learn in der Kategorie mit 6 Jets und 2 B-Tags  durchgef\"uhrten Trainings dargestellt. In der ersten Spalte ist die Anzahl der trainierten Entscheidungsb\"aume und in der zweiten die Lernrate eingetragen. In der mittleren Spalte ist die Fl\"ache unter der ROC-Kurve eingetragen, in den letzten beiden Spalten sind die Wahrscheinlichkeiten des Kolmogorow-Smirnow-Tests f\"ur Signal- und Untergrundverteilung eingetragen.
+
+Die Fl\"ache unter der ROC-Kurve ist in dieser Kategorie mit Scikit-Learn immer etwa \num{0,01} gr\"o\ss er als bei TMVA. Allerdings f\"allt der Kolmogorow-Smirnow-Test sehr schlecht aus, allerdings kann dies über andere Einstellungen, beispielsweise bei min\_samples\_leaf, noch verbessert werden.
+
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[XGBoost 6j2t Ergebnisse]{Tabelle mit Trainingsresultaten des XGBoost-Algorithmus in der 6 Jets 2 B-Tags Kategorie}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:xgboost_6j2t}
+  \begin{center}
+  \begin{tabular}{lllll}
+  \hline
+  learning\_rate & n\_estimators & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
+  \hline
+\num{0,001}  & \num{1500} & \num{0,679} & \num{0,34} & \num{0,99}\\
+\num{0,0028} & \num{1500} & \num{0,697} & \num{0,28} & \num{0,83}\\
+\num{0,0046} & \num{1500} & \num{0,713} & \num{0,14} & \num{0,82}\\
+\num{0,0064} & \num{1500} & \num{0,718} & \num{0,06} & \num{0,93}\\
+\num{0,0082} & \num{1500} & \num{0,718} & \num{0,01} & \num{0,91}\\
+\num{0,001}  & \num{1700} & \num{0,680} & \num{0,35} & \num{0,99}\\
+\num{0,0028} & \num{1700} & \num{0,701} & \num{0,31} & \num{0,91}\\
+\num{0,0046} & \num{1700} & \num{0,715} & \num{0,13} & \num{0,81}\\
+\num{0,0064} & \num{1700} & \num{0,718} & \num{0,02} & \num{0,9}\\
+\num{0,0082} & \num{1700} & \num{0,718} & \num{0}    & \num{0,91}\\
+\num{0,001}  & \num{1900} & \num{0,681} & \num{0,31} & \num{0,96}\\
+\num{0,0028} & \num{1900} & \num{0,705} & \num{0,23} & \num{0,73}\\
+\num{0,0046} & \num{1900} & \num{0,716} & \num{0,09} & \num{0,83}\\
+\num{0,0064} & \num{1900} & \num{0,718} & \num{0,02} & \num{0,93}\\
+\num{0,0082} & \num{1900} & \num{0,718} & \num{0}    & \num{0,87}\\
+\num{0,001}  & \num{2100} & \num{0,682} & \num{0,32} & \num{0,85}\\
+\num{0,0028} & \num{2100} & \num{0,709} & \num{0,2}  & \num{0,83}\\
+\num{0,0046} & \num{2100} & \num{0,717} & \num{0,06} & \num{0,92}\\
+\num{0,0064} & \num{2100} & \num{0,718} & \num{0,01} & \num{0,93}\\
+\num{0,0082} & \num{2100} & \num{0,718} & \num{0}    & \num{0,80}\\
+\num{0,001}  & \num{2300} & \num{0,683} & \num{0,33} & \num{0,89}\\
+\num{0,0028} & \num{2300} & \num{0,711} & \num{0,24} & \num{0,77}\\
+\num{0,0046} & \num{2300} & \num{0,718} & \num{0,03} & \num{0,93}\\
+\num{0,0064} & \num{2300} & \num{0,718} & \num{0}    & \num{0,86}\\
+\num{0,0082} & \num{2300} & \num{0,718} & \num{0}    & \num{0,82}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+In Tabelle \ref{tab:tmva_6j2t} sind die Resultate der mit XGBoost in der Kategorie mit 6 Jets und 2 B-Tags  durchgef\"uhrten Trainings dargestellt. In der ersten Spalte ist die Anzahl der trainierten Entscheidungsb\"aume und in der zweiten die Lernrate eingetragen. In der mittleren Spalte ist die Fl\"ache unter der ROC-Kurve eingetragen, in den letzten beiden Spalten sind die Wahrscheinlichkeiten des Kolmogorow-Smirnow-Tests f\"ur Signal- und Untergrundverteilung eingetragen.
+
+XGBoost schneidet in dieser Kategorie ebenfalls besser ab als TMVA und der Kolmogorow-Smirnow-Test f\"allt etwas besser aus, als bei Scikit-Learn.
+
+Urspr\"unglich sollte auch die zum Trainieren der BDTs ben\"otigte Zeit verglichen werden. Allerdings wurde alle Trainings auf einem Rechencluster durchgef\"uhrt. Je nach Auslastung des Clusters varierten die Trainingszeiten, daher ist kein objektiver Vergleich m\"oglich.
+
+%% ===========================
+\section{Nutzbarkeit der Algorithmen in der \ttH-Analyse}
+\label{ch:Vergleich:sec:ttH}
+%% ===========================
+
+In diesem Abschnitt soll gekl\"art werden, inwieweit sich die getesteten Algorithmen in der \ttH-Analyse einsetzen lassen.
+
+Eine der wichtigsten Anforderungen an die multivariaten Algorithmen in der \ttH-Analyse ist die M\"oglichkeit den Klassifikator zu speichern, sodass die im Detektor gemessenen Daten mit einem zuvor auf Simulationsdaten trainierten Klassifikator analysiert werden k\"onnen.
+
+Bei dem zur Zeit verwendeten TMVA BDT werden die Schnitte und Gewichte des Trainings in eine .xml-Datei gespeichert. Diese kann mithilfe einer eigenen Reader-Klasse geladen werden. Durch die geladenen BDT Gewichte, kann der TMVA-Reader dann eine Vorhersage f\"ur unbekannte Daten \"ubernehmen.
+
+In Scikit-Learn besteht die M\"oglichkeit direkt den Klassifikator als .pkl-Datei zu Speichern und wieder zu laden. Der Klassifikator stellt hier selbst Funktionen bereit, mit denen Vorhersagen auf unbekannte Daten erstellt werden k\"onnen, ohne dass eine separates Objekt erstellt werden muss.
+
+Bei der mit dem Transformationsskript aufgerufenen Implementation von XGBoost besteht die gleiche M\"oglichkeit, den Klassifikator zu speichern. Allerdings war dies w\"ahrend der Tests aufgrund von Kompatibilit\"atsproblemen nicht m\"oglich.
+
+Dies f\"uhrt zu einem weiteren wichtigen Punkt, der beachtet werden muss. In der CMS-Kollaboration wird das CMSSW Application Framework genutzt. Dies kann man sich als eine Art virtuelles System vorstellen, auf dem in einem modularen Aufbau Software bereitgestellt wird. W\"ahrend ROOT inklusive TMVA in CMSSW integriert sind, wird zur Zeit weder Scikit-Learn noch XGBoost bereit gestellt. F\"ur die Untersuchungen im Rahmen dieser Arbeit wurde teils auf Softwaremodule des CMSSW-Framework zur\"uckgegriffen, die mit lokalen Installationen von Scikit-Learn und XGBoost erg\"anzt wurden. Allerdings war die Installation und Konfiguration kompliziert und fehleranf\"allig und konnte ohne Weiteres auch nicht reproduziert werden.
+
+Dies stellt einen klaren Nachteil f\"ur Scikit-Learn und XGBoost dar. Solange diese Pakete nicht ins CMSSW-Framework integriert werden ist eine Nutzung in der \ttH-Analyse nicht sinnvoll.
