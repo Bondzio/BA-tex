@@ -13,23 +13,201 @@
 {\addchap{Anhang}}	% german style
 
 
-\iflanguage{english}
-{\section{First Appendix Section}
-		\label{Anhang-Implementierung}}
-{\section{Anhang 1}
-		\label{Anhang-Implementierung}}
-		
-\setcounter{figure}{0}
-		
-\begin{figure} [ht]
-  \centering
-   ein Bild
-  \caption{A figure}
-  \label{fig:BPMNBeispiela}
-\end{figure}
+%\iflanguage{english}
+%{\section{First Appendix Section}
+%		\label{Anhang-Implementierung}}
+%{\section{Anhang}
+%		\label{Anhang-Implementierung}}
 
 
-\dots
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[Scikit-Learn 6j4t Ergebnisse]{Tabelle mit Trainingsresultaten des Scikit-Learn-Algorithmus f\"ur verschiedene Parametereinstellungen in der 6 Jets 4 B-Tags Kategorie}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:sklearn_6j4t}
+  \begin{center}
+  \begin{tabular}{lllll}
+  \hline
+  learning\_rate & n\_estimators & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
+  \hline
+\num{0,001}  & \num{1500} & \num{0,729} & \num{0,13} & \num{0,59}\\
+\num{0,0028} & \num{1500} & \num{0,732} & \num{0,27} & \num{0,83}\\
+\num{0,0046} & \num{1500} & \num{0,733} & \num{0,31} & \num{0,75}\\
+\num{0,0064} & \num{1500} & \num{0,733} & \num{0,21} & \num{0,82}\\
+\num{0,0082} & \num{1500} & \num{0,734} & \num{0,08} & \num{0,77}\\
+\num{0,001}  & \num{1700} & \num{0,73}  & \num{0,11} & \num{0,6}\\
+\num{0,0028} & \num{1700} & \num{0,732} & \num{0,24} & \num{0,82}\\
+\num{0,0046} & \num{1700} & \num{0,733} & \num{0,34} & \num{0,78}\\
+\num{0,0064} & \num{1700} & \num{0,734} & \num{0,14} & \num{0,77}\\
+\num{0,0082} & \num{1700} & \num{0,734} & \num{0,04} & \num{0,7}\\
+\num{0,001}  & \num{1900} & \num{0,73}  & \num{0,09} & \num{0,74}\\
+\num{0,0028} & \num{1900} & \num{0,732} & \num{0,25} & \num{0,85}\\
+\num{0,0046} & \num{1900} & \num{0,733} & \num{0,23} & \num{0,85}\\
+\num{0,0064} & \num{1900} & \num{0,734} & \num{0,08} & \num{0,72}\\
+\num{0,0082} & \num{1900} & \num{0,734} & \num{0,03} & \num{0,67}\\
+\num{0,001}  & \num{2100} & \num{0,730} & \num{0,13} & \num{0,77}\\
+\num{0,0028} & \num{2100} & \num{0,733} & \num{0,27} & \num{0,81}\\
+\num{0,0046} & \num{2100} & \num{0,733} & \num{0,19} & \num{0,83}\\
+\num{0,0064} & \num{2100} & \num{0,734} & \num{0,04} & \num{0,69}\\
+\num{0,0082} & \num{2100} & \num{0,734} & \num{0,02} & \num{0,6}\\
+\num{0,001}  & \num{2300} & \num{0,730} & \num{0,17} & \num{0,81}\\
+\num{0,0028} & \num{2300} & \num{0,733} & \num{0,32} & \num{0,81}\\
+\num{0,0046} & \num{2300} & \num{0,734} & \num{0,14} & \num{0,8}\\
+\num{0,0064} & \num{2300} & \num{0,734} & \num{0,02} & \num{0,66}\\
+\num{0,0082} & \num{2300} & \num{0,734} & \num{0,01} & \num{0,45}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
 
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[XGBoost 6j4t Ergebnisse]{Tabelle mit Trainingsresultaten des XGBoost-Algorithmus f\"ur verschiedene Parametereinstellungen in der 6 Jets 4 B-Tags Kategorie}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:xgboost_6j4t}
+  \begin{center}
+  \begin{tabular}{lllll}
+  \hline
+  learning\_rate & n\_estimators & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
+  \hline
+\num{0,001}  & \num{1500} & \num{0,729} & \num{0,13} & \num{0,68}\\
+\num{0,0028} & \num{1500} & \num{0,731} & \num{0,20} & \num{0,89}\\
+\num{0,0046} & \num{1500} & \num{0,733} & \num{0,24} & \num{0,90}\\
+\num{0,0064} & \num{1500} & \num{0,734} & \num{0,25} & \num{0,67}\\
+\num{0,0082} & \num{1500} & \num{0,734} & \num{0,15} & \num{0,65}\\
+\num{0,001}  & \num{1700} & \num{0,729} & \num{0,11} & \num{0,67}\\
+\num{0,0028} & \num{1700} & \num{0,732} & \num{0,24} & \num{0,88}\\
+\num{0,0046} & \num{1700} & \num{0,733} & \num{0,29} & \num{0,84}\\
+\num{0,0064} & \num{1700} & \num{0,734} & \num{0,26} & \num{0,59}\\
+\num{0,0082} & \num{1700} & \num{0,734} & \num{0,11} & \num{0,62}\\
+\num{0,001}  & \num{1900} & \num{0,73}  & \num{0,13} & \num{0,67}\\
+\num{0,0028} & \num{1900} & \num{0,732} & \num{0,19} & \num{0,89}\\
+\num{0,0046} & \num{1900} & \num{0,733} & \num{0,33} & \num{0,77}\\
+\num{0,0064} & \num{1900} & \num{0,734} & \num{0,15} & \num{0,57}\\
+\num{0,0082} & \num{1900} & \num{0,734} & \num{0,09} & \num{0,63}\\
+\num{0,001}  & \num{2100} & \num{0,73}  & \num{0,15} & \num{0,62}\\
+\num{0,0028} & \num{2100} & \num{0,732} & \num{0,26} & \num{0,89}\\
+\num{0,0046} & \num{2100} & \num{0,734} & \num{0,28} & \num{0,74}\\
+\num{0,0064} & \num{2100} & \num{0,734} & \num{0,12} & \num{0,57}\\
+\num{0,0082} & \num{2100} & \num{0,734} & \num{0,08} & \num{0,55}\\
+\num{0,001}  & \num{2300} & \num{0,73}  & \num{0,16} & \num{0,70}\\
+\num{0,0028} & \num{2300} & \num{0,733} & \num{0,25} & \num{0,89}\\
+\num{0,0046} & \num{2300} & \num{0,734} & \num{0,24} & \num{0,74}\\
+\num{0,0064} & \num{2300} & \num{0,734} & \num{0,11} & \num{0,61}\\
+\num{0,0082} & \num{2300} & \num{0,734} & \num{0,07} & \num{0,63}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[TMVA 6j2t Ergebnisse]{Tabelle mit Trainingsresultaten des TMVA-Algorithmus f\"ur verschiedene Parametereinstellungen in der 6 Jets 2 B-Tags Kategorie}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:tmva_6j2t}
+  \begin{center}
+  \begin{tabular}{lllll}
+  \hline
+  NTrees & Shrinkage & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
+  \hline
+\num{1500} & \num{0.001}  & \num{0,684} & \num{0,77} & \num{0,99}\\
+\num{1500} & \num{0.0028} & \num{0,687} & \num{0,86} & \num{1}\\
+\num{1500} & \num{0.0046} & \num{0,69}  & \num{0,73} & \num{1}\\
+\num{1500} & \num{0.0064} & \num{0,692} & \num{0,82} & \num{1}\\
+\num{1500} & \num{0.0082} & \num{0,695} & \num{0,67} & \num{0,99}\\
+\num{1700} & \num{0.001}  & \num{0,684} & \num{0,70} & \num{1}\\
+\num{1700} & \num{0.0028} & \num{0,688} & \num{0,51} & \num{1}\\
+\num{1700} & \num{0.0046} & \num{0,691} & \num{0,82} & \num{0,92}\\
+\num{1700} & \num{0.0064} & \num{0,694} & \num{0,82} & \num{0,94}\\
+\num{1700} & \num{0.0082} & \num{0,697} & \num{0,58} & \num{1}\\
+\num{1900} & \num{0.001}  & \num{0,685} & \num{0,55} & \num{0,5}\\
+\num{1900} & \num{0.0028} & \num{0,688} & \num{0,55} & \num{0,98}\\
+\num{1900} & \num{0.0046} & \num{0,692} & \num{0,73} & \num{1}\\
+\num{1900} & \num{0.0064} & \num{0,695} & \num{0,82} & \num{1}\\
+\num{1900} & \num{0.0082} & \num{0,699} & \num{0,68} & \num{1}\\
+\num{2100} & \num{0.001}  & \num{0,685} & \num{0,53} & \num{0,97}\\
+\num{2100} & \num{0.0028} & \num{0,689} & \num{0,73} & \num{1}\\
+\num{2100} & \num{0.0046} & \num{0,693} & \num{0,84} & \num{1}\\
+\num{2100} & \num{0.0064} & \num{0,696} & \num{0,73} & \num{0,99}\\
+\num{2100} & \num{0.0082} & \num{0,700} & \num{0,77} & \num{1}\\
+\num{2300} & \num{0.001}  & \num{0,685} & \num{0,57} & \num{0,45}\\
+\num{2300} & \num{0.0028} & \num{0,689} & \num{0,70} & \num{1}\\
+\num{2300} & \num{0.0046} & \num{0,694} & \num{0,8}  & \num{0,99}\\
+\num{2300} & \num{0.0064} & \num{0,698} & \num{0,73} & \num{1}\\
+\num{2300} & \num{0.0082} & \num{0,701} & \num{0,70} & \num{1}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[Scikit-Learn 6j2t Ergebnisse]{Tabelle mit Trainingsresultaten des Scikit-Learn-Algorithmus f\"ur verschiedene Parametereinstellungen in der 6 Jets 2 B-Tags Kategorie}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:sklearn_6j2t}
+  \begin{center}
+  \begin{tabular}{lllll}
+  \hline
+  learning\_rate & n\_estimators & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
+  \hline
+\num{0,001}  & \num{1500} & \num{0,692} & \num{0,36} & \num{0,75}\\
+\num{0,0028} & \num{1500} & \num{0,708} & \num{0}    & \num{0,67}\\
+\num{0,0046} & \num{1500} & \num{0,713} & \num{0}    & \num{0,54}\\
+\num{0,0064} & \num{1500} & \num{0,715} & \num{0}    & \num{0,72}\\
+\num{0,0082} & \num{1500} & \num{0,716} & \num{0}    & \num{0,62}\\
+\num{0,001}  & \num{1700} & \num{0,694} & \num{0,32} & \num{0,7}\\
+\num{0,0028} & \num{1700} & \num{0,709} & \num{0}    & \num{0,80}\\
+\num{0,0046} & \num{1700} & \num{0,713} & \num{0}    & \num{0,69}\\
+\num{0,0064} & \num{1700} & \num{0,716} & \num{0}    & \num{0,71}\\
+\num{0,0082} & \num{1700} & \num{0,716} & \num{0}    & \num{0,57}\\
+\num{0,001}  & \num{1900} & \num{0,695} & \num{0,27} & \num{0,59}\\
+\num{0,0028} & \num{1900} & \num{0,710} & \num{0}    & \num{0,78}\\
+\num{0,0046} & \num{1900} & \num{0,714} & \num{0}    & \num{0,7}\\
+\num{0,0064} & \num{1900} & \num{0,716} & \num{0}    & \num{0,68}\\
+\num{0,0082} & \num{1900} & \num{0,717} & \num{0}    & \num{0,50}\\
+\num{0,001}  & \num{2100} & \num{0,697} & \num{0,25} & \num{0,71}\\
+\num{0,0028} & \num{2100} & \num{0,711} & \num{0}    & \num{0,74}\\
+\num{0,0046} & \num{2100} & \num{0,715} & \num{0}    & \num{0,74}\\
+\num{0,0064} & \num{2100} & \num{0,716} & \num{0}    & \num{0,67}\\
+\num{0,0082} & \num{2100} & \num{0,717} & \num{0}    & \num{0,55}\\
+\num{0,001}  & \num{2300} & \num{0,699} & \num{0,18} & \num{0,69}\\
+\num{0,0028} & \num{2300} & \num{0,712} & \num{0}    & \num{0,50}\\
+\num{0,0046} & \num{2300} & \num{0,715} & \num{0}    & \num{0,69}\\
+\num{0,0064} & \num{2300} & \num{0,716} & \num{0}    & \num{0,70}\\
+\num{0,0082} & \num{2300} & \num{0,717} & \num{0}    & \num{0,55}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+\begin{table}[tbp]\parbox{12cm}{
+  \caption[XGBoost 6j2t Ergebnisse]{Tabelle mit Trainingsresultaten des XGBoost-Algorithmus f\"ur verschiedene Parametereinstellungen in der 6 Jets 2 B-Tags Kategorie}% {\rm \cite{Agashe:2014kda}}
+  }\label{tab:xgboost_6j2t}
+  \begin{center}
+  \begin{tabular}{lllll}
+  \hline
+  learning\_rate & n\_estimators & ROC-Integral & P(KS) Signal & P(KS) Untergrund\\
+  \hline
+\num{0,001}  & \num{1500} & \num{0,679} & \num{0,34} & \num{0,99}\\
+\num{0,0028} & \num{1500} & \num{0,697} & \num{0,28} & \num{0,83}\\
+\num{0,0046} & \num{1500} & \num{0,713} & \num{0,14} & \num{0,82}\\
+\num{0,0064} & \num{1500} & \num{0,718} & \num{0,06} & \num{0,93}\\
+\num{0,0082} & \num{1500} & \num{0,718} & \num{0,01} & \num{0,91}\\
+\num{0,001}  & \num{1700} & \num{0,680} & \num{0,35} & \num{0,99}\\
+\num{0,0028} & \num{1700} & \num{0,701} & \num{0,31} & \num{0,91}\\
+\num{0,0046} & \num{1700} & \num{0,715} & \num{0,13} & \num{0,81}\\
+\num{0,0064} & \num{1700} & \num{0,718} & \num{0,02} & \num{0,9}\\
+\num{0,0082} & \num{1700} & \num{0,718} & \num{0}    & \num{0,91}\\
+\num{0,001}  & \num{1900} & \num{0,681} & \num{0,31} & \num{0,96}\\
+\num{0,0028} & \num{1900} & \num{0,705} & \num{0,23} & \num{0,73}\\
+\num{0,0046} & \num{1900} & \num{0,716} & \num{0,09} & \num{0,83}\\
+\num{0,0064} & \num{1900} & \num{0,718} & \num{0,02} & \num{0,93}\\
+\num{0,0082} & \num{1900} & \num{0,718} & \num{0}    & \num{0,87}\\
+\num{0,001}  & \num{2100} & \num{0,682} & \num{0,32} & \num{0,85}\\
+\num{0,0028} & \num{2100} & \num{0,709} & \num{0,2}  & \num{0,83}\\
+\num{0,0046} & \num{2100} & \num{0,717} & \num{0,06} & \num{0,92}\\
+\num{0,0064} & \num{2100} & \num{0,718} & \num{0,01} & \num{0,93}\\
+\num{0,0082} & \num{2100} & \num{0,718} & \num{0}    & \num{0,80}\\
+\num{0,001}  & \num{2300} & \num{0,683} & \num{0,33} & \num{0,89}\\
+\num{0,0028} & \num{2300} & \num{0,711} & \num{0,24} & \num{0,77}\\
+\num{0,0046} & \num{2300} & \num{0,718} & \num{0,03} & \num{0,93}\\
+\num{0,0064} & \num{2300} & \num{0,718} & \num{0}    & \num{0,86}\\
+\num{0,0082} & \num{2300} & \num{0,718} & \num{0}    & \num{0,82}\\
+  \hline
+  \end{tabular}
+  \end{center}
+\end{table}
 
 

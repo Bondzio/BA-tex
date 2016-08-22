@@ -8,12 +8,14 @@
 
 {\bibliographystyle{babunsrt-fl}}
 
-In diesem Kapitel sollen nochmals alle Resultate zusammengefasst und ein Fazit gezogen werden. Anschließend wird ein kurzer Ausblick gegeben.
+In diesem Kapitel sollen nochmals alle Resultate zusammengefasst und ein Fazit gezogen werden. Anschlie\ss end wird ein kurzer Ausblick gegeben.
 
-Insgesamt sind in der Kategorie mit 6 Jets und 4 B-Tags alle drei Algorithmen gleich gut. In der Kategorie mit 6 Jets und 4 B-Tags, die sehr viel Untergrund und nur wenig Signal aufweist, ist der TMVA-Algorithmus etwas schlechter geeignet. Die Unterschiede sind allerdings nicht signifikant genug, als dass eine Umstellung unumgänglich wäre.
+W\"ahrend der Untersuchungen mit den verschiedenen BDTs stellte sich heraus, dass die besten Ergebnisse, unabh\"angig vom verwendeten Algorithmus, bei einer gro\ss en Anzahl Entscheidungsb\"aumen (etwa 2000) und kleiner Lernrate ($\leq \num{0,01}$) erzielt werden. Allerdings wird es immer M\"oglichkeiten geben die Trennkraft der BDTs zu erh\"ohen. Es gilt abzuw\"agen inwieweit eine marginale Verbesserung die deutlich l\"angeren Trainingszeiten rechtfertigt.
 
-Auf jeden Fall sollte weiterhin getestet werden ob es Klassifikatoren gibt die besser geeignet sind. Es wäre beispielsweise auch interessant komplett andere Klassifikatoren wie Random Forests oder Neuronale Netze zu testen.
+Insgesamt sind in der Kategorie mit mindestens sechs Jets und mindestens vier B-Tags keine signifikanten Unterschiede in den ROC-Kurven und somit in der Trennkraft der Algorithmen zu erkennen. In der Kategorie mit mindestens sechs Jets und zwei B-Tags, die sehr viele Untergrundereignisse und nur wenig Signalereignisse aufweist, ist der TMVA-Algorithmus etwas schlechter als der in Scikit-Learn implementierte und XGBoost. Die Unterschiede sind allerdings nicht signifikant genug, als dass ein Wechsel zu einem der anderen Algorithmen unbedingt n\"otig w\"are.
 
-Weitere Ansätze die Klassifikations zu verbessern wäre es, die eigenständige Version von XGBoost zu testen.
+Auf jeden Fall sollte weiterhin getestet werden, ob es Klassifikatoren gibt, die bessere Ergebnisse erzielen. Es w\"are beispielsweise auch interessant komplett andere Klassifikatoren wie Random Forests oder Neuronale Netze zu testen.
 
-Der nächste Schritt sollte auf jeden Fall sein, weitere multivariate Algorithmen neben TMVA in das CMSSW-Framework zu integrieren, um weitere Tests zu vereinfachen.
+Ein weiterer erfolgsversprechender Ansatz die Klassifikation zu verbessern, ist, die eigenst\"andige Version von XGBoost zu testen, da bei Transformationen immer eine Verschlechterung der Trennkraft zu beobachten war.
+
+Der n\"achste Schritt sollte auf jeden Fall sein, weitere multivariate Algorithmen neben TMVA in das CMSSW-Framework zu integrieren, um weitere Tests zu vereinfachen.

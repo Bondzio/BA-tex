@@ -6,6 +6,16 @@
 \label{ch:Einleitung}
 %% ==============================
 
-\cite{LHC_TDR}
-\dots
+{\bibliographystyle{babunsrt-fl}}
 
+Bei der Untersuchung der Teilchenkollisionen im Large-Hadron-Collider am CERN werden von den Detektoren gewaltige Datenmengen aufgezeichnet. Um diese Datenmengen effizient auszuwerten, ist die Anwendung von multivariaten Datenanalysemethoden n\"otig.
+
+Multivariate Analysealgorithmen sind in vielen Bereichen der Teilchenphysik unumg\"anglich. Eine Anwendung ist die Klassifikation von Ereignissen in Untergr\"unde und gesuchtes Signal. Besonders wichtig ist dies unter anderem bei der Suche nach Higgs-Boson-Produktion in Assoziation mit einem Top-Quark-Antiquark-Paar (\ttH), da bei diesem Prozess aufgrund der Vorhersage des Standardmodells nur wenige Signalereignisse zu erwarten sind. Um Analysen wie diese m\"oglichst effizient zu gestalten, ist es wichtig m\"oglichst gute Algorithmen zu nutzen.
+
+Multivariate Analysemethoden spielen jedoch nicht nur in der Physik eine wichtige Rolle, sondern sind auch bei Problematiken wie der Sprach- oder Schrifterkennung oder Bewertungen des Aktienmarktes einsetzbar. Durch diese Vielzahl von Anwendungsgebieten entstehen viele verschiedene Implementierungen unterschiedlicher Algorithmen. Insbesondere das Interesse der freien Wirtschaft f\"ordert die Weiterentwicklung und Erforschung multivariater Methoden.
+
+In einer Studie vergleicht J. Wainer \cite{DBLP:journals/corr/Wainer16} beispielsweise verschiedene Klassifikations-Algorithmen. Dazu wendet er die Algorithmen auf verschiedene \"offentlicher Datens\"atze an und variiert die Parameter der Klassifikatoren. Allerdings ist dieser Vergleich ziemlich allgemein gehalten und setzt kein klares Anwendungsgebiet f\"ur die Algorithmen voraus.
+
+Um eine m\"ogliche Anwendung in der Teilchenphysik zu pr\"ufen, ist es von Interesse verschiedene Algorithmen im Kontext einer physikalischen Analyse zu untersuchen.
+
+In dieser Arbeit werden drei verschiedene Implementationen des Gradient-Boosting-Algorithmus anhand der Nutzung zur \ttH-Analyse getestet und verglichen. Dazu sind in Kapitel \ref{ch:Theorie} zun\"achst die wichtigsten theoretischen Grundlagen \"uber das Standardmodell der Teilchenphysik und die \ttH-Produktion zusammengefasst. Darauf folgt in Kapitel \ref{ch:experiment} ein kurzer \"Uberblick \"uber das CMS-Experiment und die \ttH-Analyse. Kapitel \ref{ch:algorithmen} handelt von multivariater Datenanalyse im Allgemeinen und Boosted Decision Trees im Speziellen. Der Vergleich der Algorithmen wird in Kapitel \ref{ch:vergleich} beschrieben. Abschlie\ss end folgt in Kapitel \ref{ch:Fazit} ein Fazit mit einem kurzen Ausblick \"uber zuk\"unftig m\"ogliche Entwicklungen.

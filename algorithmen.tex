@@ -9,7 +9,7 @@
 %{\bibliographystyle{babalpha-fl}}	% german style
 {\bibliographystyle{babunsrt-fl}}
 
-Multivariate Datenanalyse spielt in der experimentellen Hochenergiephysik eine entscheidente Rolle, um die gro\ss en gemessenen Datenmengen untersuchen und auswerten zu k\"onnen. In diesem Kapitel werden zun\"achst einige Grundlagen der multivariaten Datenanalyse genannt, um sp\"ater genauer auf verschiedene Algorithmen und ihre Implementierungen einzugehen.
+Multivariate Datenanalyse spielt in der experimentellen Teilchenphysik eine entscheidente Rolle, um die gro\ss en gemessenen Datenmengen untersuchen und auswerten zu k\"onnen. In diesem Kapitel werden zun\"achst einige Grundlagen der multivariaten Datenanalyse genannt, um sp\"ater genauer auf verschiedene Algorithmen und ihre Implementierungen einzugehen.
 
 %% ===========================
 \section{Grundlagen zur multivariaten Datenanalyse}
@@ -17,15 +17,15 @@ Multivariate Datenanalyse spielt in der experimentellen Hochenergiephysik eine e
 %% ===========================
 
 Datenanalyse bezeichnet statistische Verfahren, mit deren Hilfe aus numerischen Daten Informationen gewonnen werden.
-Bei multivariaten Analysemethoden werden mehrere Eingabegr\"o\ss en gleichzeitig statistisch untersucht. Dadurch ist eine Berechnung sehr aufw\"andig und somit manuell praktisch nicht zu bewerkstelligen. Mithilfe der zunehmenden Rechenleistung aktueller Computer ist dies jedoch m\"oglich und wird in vielen Bereichen immer wichtiger. Anwendungen finden MVAs beispielsweise im Finanzwesen, oder der Sprach-, Schrift- und Bilderkennung.\\
+Bei multivariaten Analysemethoden (MVAs) werden mehrere Eingabegr\"o\ss en gleichzeitig statistisch untersucht. Dadurch ist eine Berechnung sehr aufw\"andig und somit manuell praktisch nicht zu bewerkstelligen. Mithilfe der zunehmenden Rechenleistung aktueller Computer ist dies jedoch m\"oglich und wird in vielen Bereichen immer wichtiger. Anwendungen finden MVAs beispielsweise im Finanzwesen, oder der Sprach-, Schrift- und Bilderkennung.\\
 %Da die verwendeten Algorithmen die Eigenschaft haben anhand von bekannten Daten Vorhersagen f\"ur unbekannte Daten zu generieren, spricht man auch von maschinellem Lernen (machine learning).
 %Die dazu verwendeten Algorithmen bezeichnet man auch als maschinelles Lernen (machine learning), da mit ihrer Hilfe versucht wird, die zugrunde liegenden Eigenschaften der Daten zu Lernen und Vorhersagen zu treffen.
 Ziel ist es, mithilfe der Algorithmen aus bekannten Daten zu lernen und so Vorhersagen f\"ur unbekannte Daten zu generieren.
-Man unterscheidet zwischen Regression, bei der eine kontinuierliche Ausgangsgr\"o\ss e gesucht wird und Klassifikation, bei der eine diskrete Antwort gesucht wird \cite{SWB-455193959}.
+Man unterscheidet zwischen Regression, bei der eine kontinuierliche Ausgangsgr\"o\ss e gesucht wird, und Klassifikation, bei der eine diskrete Antwort gesucht wird \cite{SWB-455193959}.
 
 Im Fall der \ttH-Analyse werden Regressionsmodelle verwendet, um physikalische Gr\"o\ss en wie beispielsweise die Higgs-Bosonmasse zu rekonstruieren. Bei der Klassifikation wird dagegen versucht, ein Ereignis einer Klasse zuzuordnen, also entweder Signal oder Untergrund. Im Folgenden werden ausschlie\ss lich Klassifikationsprobleme behandelt.
 
-Die St\"utzvektormethode (engl. support vector machine), Random Forest und Neuronale Netze sind Beispiele f\"ur Ans\"atze von Klassifikationen. 
+Die St\"utzvektormethode (support vector machine), Random Forest und Neuronale Netze sind Beispiele f\"ur Methoden zur Klassifikation. 
 %Es existieren verschiedene Ans\"atze zur Klassifikation. Beispiele sind die St\"utzvektormethode, wobei jedoch die englische Bezeichnung support vector machine (SVM) gebr\"auchlich ist, Random Forest (RF), was zuf\"alliger Wald bedeutet und mehrere zuf\"allig erstellte Entscheidungsb\"aume (Abschnitt \ref{ch:Algorithmen:subsec:Entscheidungsbaum}) bezeichnet, oder Neuronale Netze. 
 Ein weiteres Beispiel sind verst\"arkte Entscheidungsb\"aume (Boosted Decision Trees (BDTs)). Da hiervon verschiedene Implementationen im Kapitel \ref{ch:vergleich} untersucht und getestet werden sollen, werden sie im folgenden Abschnitt \ref{ch:Algorithmen:sec:BDT} genauer beschrieben.
 
@@ -65,11 +65,11 @@ In Abbildung \ref{fig:DecicionTree} ist ein Beispiel eines Baumes mit der Tiefe 
 \begin{figure}[tbp]
 \centering     %%% not \center
 \subfigure[Entscheidungsbaum der Tiefe zwei]{\label{fig:DecicionTree}\includegraphics[width=0.49\textwidth]{graphics/tree_d22.pdf}}
-\subfigure[Klassifiezierung des Baumes]{\label{fig:depht2}\includegraphics[width=0.49\textwidth]{graphics/tree_depht2_1.pdf}}
-\caption{Links ist eine schematische Abbildung eines Entscheidungsbaumes der Tiefe 2 abgebildet. X und Y sind die Variablen anhand denen durch Schnitte (Zahlen nach den Variablen) zwischen Untergrund und Signal unterschieden werden soll. Die rechte Graphik zeigt die Klassifikation die mithilfe des Baumes erstellt wurde. Gr\"o\ss ere Ausgabewerte sind rot gef\"arbt und stehen f\"ur signalartige Ereignisse, kleinere blau und stehen f\"ur untergrundartige Ereignisse.}
+\subfigure[Klassifizierung des Baumes]{\label{fig:depht2}\includegraphics[width=0.49\textwidth]{graphics/tree_depht2_1.pdf}}
+\caption{Links ist eine schematische Abbildung eines Entscheidungsbaumes der Tiefe 2 abgebildet. X und Y sind die Variablen, anhand derer durch Schnitte (Zahlen nach den Variablen) zwischen Untergrund und Signal unterschieden werden soll. Die rechte Graphik zeigt die Klassifikation, die mithilfe des Baumes erstellt wurde. Gr\"o\ss ere Ausgabewerte sind rot gef\"arbt und stehen f\"ur signalartige Ereignisse, kleinere blau und stehen f\"ur untergrundartige Ereignisse.}
 \end{figure}
 
-Die Trennung ist allerdings noch sehr grob, selbst wenn man die Tiefe des Baumes deutlich erh\"oht, wie in \ref{fig:tree_depht100} mit der Tiefe 100 zu sehen, wird diese nicht deutlich besser. Eine Verbesserung ist beispielsweise m\"oglich, indem man mehrere Entscheidungsb\"aume so miteinander verkn\"upft, dass sie zusammen eine starke Klassifikation erm\"oglichen. Eine dieser Methoden ist das Verst\"arken von Entscheidungsb\"aumen (Boosting).
+Die Trennung ist allerdings noch sehr grob, selbst wenn man die Tiefe des Baumes deutlich erh\"oht, wie in Abbildung \ref{fig:tree_depht100} mit der Tiefe 100 zu sehen, wird diese nicht deutlich besser. Eine Verbesserung ist beispielsweise m\"oglich, indem man mehrere Entscheidungsb\"aume so miteinander verkn\"upft, dass sie zusammen eine starke Klassifikation erm\"oglichen. Eine dieser Methoden ist das Verst\"arken von Entscheidungsb\"aumen (Boosting).
 
 
 
@@ -83,30 +83,30 @@ Die Trennung ist allerdings noch sehr grob, selbst wenn man die Tiefe des Baumes
 
 Durch das Verst\"arken von Entscheidungsb\"aumen (Boosting) soll die G\"ute der Gesamtklassifikation gegen\"uber der eines einzelnen Baumes erh\"oht werden. Dazu werden mehrere B\"aume hintereinander trainiert. Damit diese sich voneinander unterscheiden, werden bei nachfolgenden B\"aumen die falsch klassifizierten Ereignisse anders behandelt\\
 Die einfachste Methode ist, das Gewicht jedes falsch klassifizierten Ereignisses auf die gleiche Weise anzupassen. Eine weitere Verbesserung l\"asst sich erzielen, indem man eine Ausgleichsfunktion (loss function) einf\"uhrt. Diese ordnet jedem Ereignis ausgehend von der aktuellen BDT-Ausgabe einen Wert zu, der bei richtiger Klassifikation minimal ist. Dadurch ist es m\"oglich, die Gewichte so anzupassen, dass die Ausgleichsfunktion minimiert wird.\\
-Wenn die zu trennenden Klassen mit $y=\pm1$ bezeichnet werden und $f$ die Vorhersage des BDTs ist, also $sign(f)$ die jeweilige Klasse vorhersagt, so kann man die einfache Methode der Neugewichtung mathematisch mit
+Wenn die zu trennenden Klassen mit $y=\pm1$ bezeichnet werden und $f(x)$ die Vorhersage des BDTs für das Ereignis $x$ ist, also $sign(f)$ die jeweilige Klasse vorhersagt, so kann man die einfache Methode der Neugewichtung mathematisch mit
 \beq
-L = I(sign(f)\neq y)
+L = I(sign(f(x))\neq y)
 \label{eq:missclass_loss}
 \eeq
-beschreiben. Dabei nimmt die Funktion den Wert $1$ an, wenn die Vorhersage nicht der wahren Klasse $y$ entspricht oder $0$, wenn die vorhergesagte mit der wahren Klasse \"ubereinstimmt.\\
-Eine etwas komplexere Ausgleichsfunktion ber\"ucksichtigt die quadratischen Fehler
+beschreiben. Dabei nimmt die Funktion I den Wert $1$ an, wenn die Vorhersage nicht der wahren Klasse $y$ entspricht oder $0$, wenn die vorhergesagte mit der wahren Klasse \"ubereinstimmt.\\
+Eine etwas komplexere Ausgleichsfunktion ber\"ucksichtigt die quadratischen Fehler der BDT-Vorhersage
 \beq
-L = (y-f)^2.
+L = (y-f(x))^2.
 \label{eq:squarederror_loss}
 \eeq
 Diese Funktion bildet eine Parabel um den wahren Wert. Je weiter die Vorhersage davon abweicht, desto h\"oher wird das Ereignis gewichtet. Nachteilig ist dabei, dass positive wie negative Differenzen gleich stark korrigiert werden. So werden beispielsweise f\"ur $y=1$ BDT-Ausgaben von $f=0$ und $f=2$ gleich stark korrigiert, obwohl $f=0$ gar keine Klassifikation zul\"asst, w\"ahrend $f=2$ deutlich auf $y=1$ hinweist. Daher verwendet man meist Funktionen, die negative Abweichungen st\"arker umgewichten, wie beispielsweise die exponentielle Ausgleichsfunktion
 \beq
-L = \exp(-y\cdot f)
-\label{eq:exp_loss}.
+L = \exp(-y\cdot f(x)).
+\label{eq:exp_loss}
 \eeq
-Diese Ausgleichsfunktion wird beispielsweise von AdaBoost (kurz f\"ur Adaptive Boosting) \cite{ADABoost}, dem ersten entwickelten Boosting-Algorithmus, verwendet. Problematisch an der exponentiellen Ausgleichsfunktion ist, dass sie nicht so robust gegen\"uber Ausrei\ss ern ist.\\
-Dieses Problem behebt der Gradient-Boosting-Algorithmus \cite{Friedman00greedyfunction}. Dabei wird eine zus\"atzliche Ausgleichsfunktion definiert, die nicht mithilfe der \"ublichen Vorgehensweise minimiert werden kann, sondern \"uber einen Ansatz der steilsten Abnahme (steepest-descent) minimiert werden muss. Dazu wird zun\"achst der negative Gradient der Ausgleichsfunktion gebildet:
+Diese Ausgleichsfunktion wird beispielsweise von AdaBoost (kurz f\"ur Adaptive Boosting) \cite{ADABoost}, dem ersten entwickelten Boosting-Algorithmus, verwendet. Problematisch an der exponentiellen Ausgleichsfunktion ist, dass sie nicht besonders robust gegen\"uber Ausrei\ss ern ist.\\
+Dieses Problem behebt der Gradient-Boosting-Algorithmus \cite{Friedman00greedyfunction}. Dabei wird eine zus\"atzliche Ausgleichsfunktion $L$ definiert, die nicht mithilfe der \"ublichen Vorgehensweise minimiert werden kann, sondern \"uber einen Ansatz der steilsten Abnahme (steepest-descent) minimiert werden muss. Dazu wird zun\"achst der negative Gradient der Ausgleichsfunktion gebildet:
 \beq
-r_m=\left|\frac{\partial L(y,f(x))}{\partial f(x)}\right|_{f=f_{m-1}}
+r_m=\left|\frac{\partial L(y,f(x))}{\partial f(x)}\right|_{f=f_{m-1}}.
 \label{eq:pseudo_residual}
 \eeq
-Diese nennt man auch Pseudo-Residuen. Hierbei bezeichnet $m$ die jeweilige Boosting-Iteration. Danach wird ein zus\"atzlicher Regressionsbaum trainiert, f\"ur den als Zielwerte die Pseudo-Residuen anstatt der Klassen $y$ verwendet werden \cite{Hocker:2007ht}.\\
-Insgesamt erh\"alt man eine BDT-Ausgabe von
+Die $r_m$ nennt man auch Pseudo-Residuen. Hierbei bezeichnet $m$ die jeweilige Boosting-Iteration. Danach wird ein zus\"atzlicher Regressionsbaum trainiert, f\"ur den als Zielwerte die Pseudo-Residuen anstatt der Klassen $y$ verwendet werden \cite{Hocker:2007ht}.\\
+Die Endknoten des Regressionsbaums bezeichnet man mit $R_{jm}$, wobei $j$ den jeweiligen Knoten und $m$ den aktuellen Klassifikationsbaum numeriert. Insgesamt erh\"alt man eine BDT-Ausgabe von
 \beq
 \hat f(x) = f_M(x),
 \eeq
@@ -115,10 +115,10 @@ wobei jede Iteration wie
 f_m(x) = f_{m-1}+\nu\cdot\sum_{j=1}^J\gamma_{jm}I(x \in R_{jm})
 \eeq
 berechnet wird.\\
-Dabei ist $\gamma_{jm}$ die Stelle, an der die Ausgleichsfunktion minimal wird.
-Der Parameter $\nu$ ist die Lernrate (shrinkage oder learning rate), der Werte von Null bis Eins annehmen kann. Mit diesem Parameter kann die Boosting Prozedur kontrolliert werden. Je kleiner der Wert ist, desto geringer werden die neu trainierten B\"aume gewichtet. Somit kann einem Erlernen von statistischen Fluktuationen entgegengewirkt werden (siehe auch Abschnitt \ref{ch:Algorithmen:subsec:overtraining}). Die Gesamtanzahl der trainierten B\"aume ist M. Bei kleiner Lernrate sollte die Anzahl an B\"aumen h\"oher gew\"ahlt werden als bei gr\"o\ss erer. Die Bezeichnungen dieser und weiterer Optionen mit kurzer Erkl\"arung sind in Abschnitt \ref{ch:Vergleich:sec:Vergleichbarkeit} beschrieben.
+Dabei ist $\gamma_{jm}$ die Stelle, an der die Ausgleichsfunktion minimal wird. Die Funktion $I$ nimmt die Werte $1$ oder $0$ an, je nachdem ob das Ereignis $x$ im entsprechenden Endknoten des Regressionsbaumes liegt oder nicht. Die Gesamtanzahl der trainierten B\"aume ist $M$.
+Der Parameter $\nu$ ist die Lernrate (shrinkage oder learning rate), der Werte von Null bis Eins annehmen kann. Mit diesem Parameter kann die Boosting Prozedur kontrolliert werden. Je kleiner der Wert ist, desto geringer werden die neu trainierten B\"aume gewichtet. Somit kann einem Erlernen von statistischen Fluktuationen entgegengewirkt werden (siehe auch Abschnitt \ref{ch:Algorithmen:subsec:overtraining}). Bei kleiner Lernrate sollte die Anzahl an B\"aumen h\"oher gew\"ahlt werden als bei gr\"o\ss erer. Die Bezeichnungen dieser und weiterer Optionen mit kurzer Erkl\"arung sind in Abschnitt \ref{ch:Vergleich:sec:Vergleichbarkeit} beschrieben.
 
-In Abbildung \ref{fig:boosting} sind zum Vergleich die R\"uckgabewerte von einem einzelnen Entscheidungsbaum der Tiefe 100 (\ref{fig:tree_depht100}) sowie diejenigen von BDTs der Tiefe zwei mit zwei (Abbildung \ref{fig:BDT_nTree2}), zehn (Abbildung \ref{fig:BDT_nTree10}) und hundert (Abbildung \ref{fig:BDT_nTree100}) Boosting-Schritten gezeigt. Alle diese Klassifikationen wurden mit dem Gradient-Boosting-Algorithmus von TMVA (siehe Abschnitt \ref{ch:Algorithmen:subsec:TMVA}) erstellt. Man erkennt, dass bei diesem einfachen Beispiel die Ausgabe der BDTs schon ab zehn Einzelb\"aumen deutlich glatter wird und sie so eine st\"arkere Unterscheidung erm\"oglichen.
+In Abbildung \ref{fig:boosting} sind zum Vergleich die R\"uckgabewerte von einem einzelnen Entscheidungsbaum der Tiefe 100 (Abbildung \ref{fig:tree_depht100}) sowie diejenigen von BDTs der Tiefe zwei mit zwei (Abbildung \ref{fig:BDT_nTree2}), zehn (Abbildung \ref{fig:BDT_nTree10}) und hundert (Abbildung \ref{fig:BDT_nTree100}) Boosting-Schritten gezeigt. Alle diese Klassifikationen wurden mit dem Gradient-Boosting-Algorithmus von TMVA (siehe Abschnitt \ref{ch:Algorithmen:subsec:TMVA}) erstellt. Man erkennt, dass bei diesem einfachen Beispiel die Ausgabe der BDTs schon ab zehn Einzelb\"aumen deutlich glatter wird und sie so eine st\"arkere Unterscheidung erm\"oglichen.
 
 \begin{figure}[tbp]
 \centering     %%% not \center
@@ -143,7 +143,8 @@ In Abbildung \ref{fig:boosting} sind zum Vergleich die R\"uckgabewerte von einem
 \label{ch:Algorithmen:subsec:overtraining}
 %% ===========================
 
-\"Uberanpassung (Overtraining) tritt auf, wenn die MVA-Methode zu wenige Freiheitsgrade zur Verf\"ugung hat, weil zu viele Modellparameter an zu wenige Datenpunkte angepasst werden. So werden Statistische Fluktuationen des Trainingsdatensatzes vom Algorithmus gelernt. Dadurch wird zwar die Klassifikation der Trainingsdaten sehr gut, aber die Vorhersage von unbekannten Daten kann deutlich schlechter werden. Diese Verschlechterung bezeichnet man auch als Generalisierungsfehler.\\
+\"Uberanpassung (Overtraining) tritt auf, wenn die MVA-Methode zu wenige Freiheitsgrade zur Verf\"ugung hat, weil zu viele Modellparameter an zu wenige Datenpunkte angepasst werden. So werden statistische Fluktuationen des Trainingsdatensatzes vom Algorithmus gelernt. Dadurch wird zwar die Klassifikation der Trainingsdaten sehr gut, aber die Vorhersage von unbekannten Daten kann deutlich schlechter werden. Diese Verschlechterung bezeichnet man auch als Generalisierungsfehler.
+
 Dies kann beispielsweise auftreten, wenn nur einzelne Ereignisse auf den Knoten eines Entscheidungsbaumes fallen.\\
 In Abbildung \todo{figure scatterplot overtraining or not in training/testing} ist ein Streudiagramm mit der Klassifikation eines stark \"uberangepassten BDTs im Vergleich zu einer Vorhersage ohne Generalisierungsfehler abgebildet. In Abb... und Abb... \todo{BDT output} sind au\ss erdem die BDT-Ausgaben f\"ur unbekannte Testdaten zu sehen.
 
@@ -173,10 +174,10 @@ In diesem Abschnitt werden kurz verschiedene Implementationen von multivariaten 
 \label{ch:Algorithmen:subsec:TMVA}
 %% ===========================
 
-Das Toolkit f\"ur multivariate Datenanalyse in ROOT (TMVA) \cite{Hocker:2007ht} ist ein Softwarepaket, das ins Analyseframework ROOT \cite{ROOT} integriert ist und eine Vielzahl an multivariaten Analysealgorithmen zur Verf\"ugung stellt. Die TMVA-Algorithmen sind speziell f\"ur eine Anwendung in der Hochenergiephysik ausgelegt.\\
+Das Toolkit f\"ur multivariate Datenanalyse in ROOT (TMVA) \cite{Hocker:2007ht} ist ein Softwarepaket, das ins Analyseframework ROOT \cite{ROOT} integriert ist und eine Vielzahl an multivariaten Analysealgorithmen zur Verf\"ugung stellt. Die TMVA-Algorithmen sind speziell f\"ur eine Anwendung in der Teilchenphysik ausgelegt.\\
 F\"ur die nachfolgenden Untersuchungen wird der BDT-Algorithmus mit stochastischem Gradient-Boosting der TMVA-Version 4.2.0 in ROOT 6.02/05 verwendet. TMVA BDTs nutzen die binomiale Log-Likelihood-Ausgleichsfunktion
 \beq
-L(f,y)=\ln{\left(1+\exp{\left(-2F(x)y\right)}\right)}.
+L(f,y)=\ln{\left(1+\exp{\left(-2f(x)y\right)}\right)}.
 \label{eq:tmva_loss}
 \eeq
 
@@ -187,7 +188,7 @@ L(f,y)=\ln{\left(1+\exp{\left(-2F(x)y\right)}\right)}.
 %% ===========================
 
 Scikit-Learn ist ein Python-Programm-Paket, das eine Gro\ss zahl von multivariaten Algorithmen zur Verf\"ugung stellt. Im Gegensatz zu TMVA ist das Programmpaket Scikit-Learn nicht speziell f\"ur physikalische Problemstellungen entwickelt, sondern ist auf eine breite Nutzergruppe in allen Bereichen des maschinellen Lernens ausgerichtet \cite{DBLP:journals/corr/abs-1201-0490}.\\
-Der in Python 2.7.5 f\"ur die nachfolgenden Untersuchungen verwendete \glqq GradientBoostingClassifier\grqq~der Scikit-Learn-Version 0.18.dev0 nutzt die \glqq Deviance\grqq-Aus-gleichsfunktion
+Der in Python 2.7.5 f\"ur die nachfolgenden Untersuchungen verwendete \glqq GradientBoostingClassifier\grqq~der Scikit-Learn-Version 0.18.dev0 nutzt die \glqq Deviance\grqq-Ausgleichsfunktion
 \beq
 L\left(y,f)\right)=-2\left(y\cdot f-\ln{\left(1+\exp{f}\right)}\right).
 \label{eq:deviance}
@@ -199,8 +200,8 @@ L\left(y,f)\right)=-2\left(y\cdot f-\ln{\left(1+\exp{f}\right)}\right).
 %% ===========================
 
 Extreme Gradient Boosting (XGBoost) \cite{DBLP:journals/corr/ChenG16} ist ein Gradient-Boosting-Algorithmus, der sich stark am theoretischen Modell des Gradient-Boosting von Jerome H. Friedman \cite{Friedman00greedyfunction} orientiert. Er ist f\"ur mehrere Programmierplattformen implementiert, beispielsweise R und Python.\\
-Es werden CART B\"aume verwendet, die in jedem Knoten nicht nur die Trennung der Klassen speichern, sondern jedem Knoten auch einen kontinuierlichen Ausgabewert zuweisen, um die Vorhersage quantitativer zu machen.\\
-XGBoost verwendet als Ausgleichsfunktion die mittleren Fehlerquadrate, au\ss erdem ist ein Zusatzterm mit Regularisierungsfunktion implementiert. Insgesamt erh\"alt man f\"ur jeden Boosting-Schritt $t$ eine zu minimierende Zielfunktion mit der Vorhersage $\hat y_i^{t-1}$ des letzten Schrittes von
+Es werden CART-B\"aume verwendet, die in jedem Knoten nicht nur die Trennung der Klassen speichern, sondern jedem Knoten auch einen kontinuierlichen Ausgabewert zuweisen, um die Vorhersage quantitativer zu machen.\\
+XGBoost verwendet als Ausgleichsfunktion die mittleren Fehlerquadrate, au\ss erdem ist ein Zusatzterm mit Regularisierungsfunktion implementiert. Insgesamt erh\"alt man f\"ur jeden Boosting-Schritt $t$ eine zu minimierende Zielfunktion mit der Vorhersage $\hat y_i^{t-1}$ des letzten Schrittes und der Summe \"uber alle Trainingsereignisse $i$ von
 \beq
 F=\sum_{i=1}^n\left[2\left(\hat y_i^{t-1}-y_i\right)f_t+f_t^2\right]+\Omega\left(f_t\right)+Konstante.
 \label{eq:xgb_zielfkt}
@@ -210,5 +211,5 @@ Dabei ist
 \Omega\left(f_t\right)=\gamma T+\frac12\lambda\sum_{j_1}^T w_t^2
 \label{eq:complexity}
 \eeq
-die Komplexit\"at des Baumes mit der Anzahl Endknoten T und den kontinuierlichen Ausgabewerten der B\"aume $w_t$. Die beiden frei w\"ahlbaren Parameter $\lambda$ und $\gamma$ dienen zur Regulierung des Boosting-Algorithmus. Durch Festlegen eines Wertes f\"ur $\gamma$ fordert man eine Mindestreduktion der Ausgleichsfunktion. Wird diese nicht erreicht, wird an diesem Knoten des Baumes keine weitere Unterteilung vorgenommen \cite{xgb_skl_wrapper}. Der Parameter $\lambda$ wird genutzt, um unrentable \"Aste der Entscheidungsb\"aume zu verwerfen. Jedesmal, wenn ein Knoten geteilt werden soll, wird ein Verh\"altnis der Gewichte vor und nach dem Trennen des Knotens berechnet. Ist dieses Verh\"altnis kleiner als $\lambda$, so wird der Ast verworfen \cite{xgb_tree}.\\
+die Komplexit\"at des Baumes mit der Anzahl Endknoten $T$ und den kontinuierlichen Ausgabewerten der B\"aume $w_t$. Die beiden frei w\"ahlbaren Parameter $\lambda$ und $\gamma$ dienen zur Regulierung des Boosting-Algorithmus. Durch Festlegen eines Wertes f\"ur $\gamma$ fordert man eine Mindestreduktion der Ausgleichsfunktion. Wird diese nicht erreicht, wird an diesem Knoten des Baumes keine weitere Unterteilung vorgenommen \cite{xgb_skl_wrapper}. Der Parameter $\lambda$ wird genutzt, um unrentable \"Aste der Entscheidungsb\"aume zu verwerfen. Jedesmal, wenn ein Knoten geteilt werden soll, wird ein Verh\"altnis der Gewichte vor und nach dem Trennen des Knotens berechnet. Ist dieses Verh\"altnis kleiner als $\lambda$, so wird der Ast verworfen \cite{xgb_tree}.\\
 Die zu den nachfolgenden Untersuchungen genutzte Version 0.4 von XGBoost wird mit Python 2.7.5 verwendet und wird mithilfe eines Transformationsskriptes f\"ur Scikit-Learn aufgerufen.
