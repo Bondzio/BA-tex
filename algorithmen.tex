@@ -34,9 +34,18 @@ Ein weiteres Beispiel sind verst\"arkte Entscheidungsb\"aume (Boosted Decision T
 \label{ch:Algorithmen:sec:BDT}
 %% ===========================
 
-Verst\"arkte Entscheidungsb\"aume (Boosted Decision Trees, BDTs) sind eine h\"aufig genutze Methode der multivariaten Datenanalyse. Im Folgenden werden sie anhand eines Beispiels erkl\"art. Bei diesem handelt es sich um zwei zweidimensionale Gau\ss verteilungen die sich \"uberlappen. Eine stellt das Signal dar, die andere dient als Untergrund. Der Erwartungswert der Signalverteilung ist bei $\mu_X=\mu_Y=0$, der der Untergrundverteilung bei $\mu_X=\mu_Y=1$. Beide haben eine Standardabweichung von $\sigma=1$. In Abbildung \ref{fig:2dgauss_scat} ist ein Streudiagramm der Datenpunkte dargestellt.\\
+Verst\"arkte Entscheidungsb\"aume (Boosted Decision Trees, BDTs) sind eine h\"aufig genutze Methode der multivariaten Datenanalyse. Im Folgenden werden sie anhand eines Beispiels erkl\"art. Bei diesem handelt es sich um zwei zweidimensionale Gau\ss verteilungen die sich \"uberlappen. Eine stellt das Signal dar, die andere dient als Untergrund. Der Erwartungswert der Signalverteilung ist bei $\mu_X=\mu_Y=0$, der der Untergrundverteilung bei $\mu_X=\mu_Y=1$. Beide haben eine Standardabweichung von $\sigma=1$. In Abbildung \ref{fig:2dgauss_scat} ist ein Streudiagramm mit Trainings-Datenpunkten dargestellt. Insgesamt haben sowohl Signal als auch Untergrund 10001 Ereignisse, zur besseren \"Ubersicht sind allerdings nur jeweils 1000 dargestellt.\\
 Die folgenden Abschnitte sind gr\"o\ss tenteils an \cite{SWB-307748006} angelehnt.
-\todo{scatterplot einf\"ugen}
+
+\begin{figure}[tbp]
+ \begin{center}
+   \includegraphics[width=\textwidth]{graphics/2d_scatter.pdf}
+   \parbox[b]{12cm}{
+     \caption[Streudiagramm mit Trainings-Datenpunkten]
+             {\label{fig:2dgauss_scat}Ein Streudiagramm mit je 1000 Signal- und Untergrundereignissen. Signalereignisse sind rot, Untergrundereignisse blau dargestellt.}
+   }
+ \end{center}
+\end{figure}
 
 %% ===========================
 \subsection{Entscheidungsb\"aume}
@@ -64,9 +73,11 @@ In Abbildung \ref{fig:DecicionTree} ist ein Beispiel eines Baumes mit der Tiefe 
 
 \begin{figure}[tbp]
 \centering     %%% not \center
-\subfigure[Entscheidungsbaum der Tiefe zwei]{\label{fig:DecicionTree}\includegraphics[width=0.49\textwidth]{graphics/tree_d22.pdf}}
-\subfigure[Klassifizierung des Baumes]{\label{fig:depht2}\includegraphics[width=0.49\textwidth]{graphics/tree_depht2_1.pdf}}
-\caption{Links ist eine schematische Abbildung eines Entscheidungsbaumes der Tiefe 2 abgebildet. X und Y sind die Variablen, anhand derer durch Schnitte (Zahlen nach den Variablen) zwischen Untergrund und Signal unterschieden werden soll. Die rechte Graphik zeigt die Klassifikation, die mithilfe des Baumes erstellt wurde. Gr\"o\ss ere Ausgabewerte sind rot gef\"arbt und stehen f\"ur signalartige Ereignisse, kleinere blau und stehen f\"ur untergrundartige Ereignisse.}
+\subfigure[Entscheidungsbaum der Tiefe zwei]{\label{fig:DecicionTree}\includegraphics[width=0.7\textwidth]{graphics/tree_d22.pdf}}
+\subfigure[Klassifizierung des Baumes]{\label{fig:depht2}\includegraphics[width=0.85\textwidth]{graphics/tree_depht2_1.pdf}}
+\parbox[b]{12cm}{
+\caption{Oben ist eine schematische Abbildung eines Entscheidungsbaumes der Tiefe 2 abgebildet. X und Y sind die Variablen, anhand derer durch Schnitte (Zahlen nach den Variablen) zwischen Untergrund und Signal unterschieden werden soll. Die untere Graphik zeigt die Klassifikation, die mithilfe des Baumes erstellt wurde. Gr\"o\ss ere Ausgabewerte sind rot gef\"arbt und stehen f\"ur signalartige Ereignisse, kleinere blau und stehen f\"ur untergrundartige Ereignisse.}
+}
 \end{figure}
 
 Die Trennung ist allerdings noch sehr grob, selbst wenn man die Tiefe des Baumes deutlich erh\"oht, wie in Abbildung \ref{fig:tree_depht100} mit der Tiefe 100 zu sehen, wird diese nicht deutlich besser. Eine Verbesserung ist beispielsweise m\"oglich, indem man mehrere Entscheidungsb\"aume so miteinander verkn\"upft, dass sie zusammen eine starke Klassifikation erm\"oglichen. Eine dieser Methoden ist das Verst\"arken von Entscheidungsb\"aumen (Boosting).
@@ -83,7 +94,7 @@ Die Trennung ist allerdings noch sehr grob, selbst wenn man die Tiefe des Baumes
 
 Durch das Verst\"arken von Entscheidungsb\"aumen (Boosting) soll die G\"ute der Gesamtklassifikation gegen\"uber der eines einzelnen Baumes erh\"oht werden. Dazu werden mehrere B\"aume hintereinander trainiert. Damit diese sich voneinander unterscheiden, werden bei nachfolgenden B\"aumen die falsch klassifizierten Ereignisse anders behandelt\\
 Die einfachste Methode ist, das Gewicht jedes falsch klassifizierten Ereignisses auf die gleiche Weise anzupassen. Eine weitere Verbesserung l\"asst sich erzielen, indem man eine Ausgleichsfunktion (loss function) einf\"uhrt. Diese ordnet jedem Ereignis ausgehend von der aktuellen BDT-Ausgabe einen Wert zu, der bei richtiger Klassifikation minimal ist. Dadurch ist es m\"oglich, die Gewichte so anzupassen, dass die Ausgleichsfunktion minimiert wird.\\
-Wenn die zu trennenden Klassen mit $y=\pm1$ bezeichnet werden und $f(x)$ die Vorhersage des BDTs für das Ereignis $x$ ist, also $sign(f)$ die jeweilige Klasse vorhersagt, so kann man die einfache Methode der Neugewichtung mathematisch mit
+Wenn die zu trennenden Klassen mit $y=\pm1$ bezeichnet werden und $f(x)$ die Vorhersage des BDTs f\"ur das Ereignis $x$ ist, also $sign(f)$ die jeweilige Klasse vorhersagt, so kann man die einfache Methode der Neugewichtung mathematisch mit
 \beq
 L = I(sign(f(x))\neq y)
 \label{eq:missclass_loss}
@@ -122,11 +133,21 @@ In Abbildung \ref{fig:boosting} sind zum Vergleich die R\"uckgabewerte von einem
 
 \begin{figure}[tbp]
 \centering     %%% not \center
-\subfigure[Klassifikation eines Baumes der Tiefe 100]{\label{fig:tree_depht100}\includegraphics[width=0.49\textwidth]{graphics/tree_depht100.pdf}}
-\subfigure[BDT Klassifikation mit 2 Trees]{\label{fig:BDT_nTree2}\includegraphics[width=0.49\textwidth]{graphics/tree_depht2_2.pdf}}
-\subfigure[BDT Klassifikation mit 10 Trees]{\label{fig:BDT_nTree10}\includegraphics[width=0.49\textwidth]{graphics/tree_depht2_3.pdf}}
-\subfigure[BDT Klassifikation mit 100 Trees]{\label{fig:BDT_nTree100}\includegraphics[width=0.49\textwidth]{graphics/tree_depht2_4.pdf}}
-\caption{(a) zeigt die Klassifikation, die mit einem einzelnen Entscheidungsbaum der Tiefe 100 erreicht wird. Signalartige Regionen sind mit positiver Ausgabe in Rott\"onen dargestellt, untergrundartige ergeben eine negative Ausgabe und sind in Blaut\"onen dargestellt. In den \"ubrigen Grafiken ist jeweils die Klassifikation eines BDT mit (b) zwei B\"aumen, (c) zehn B\"aumen und (d) hundert B\"aumen und der Tiefe zwei zu sehen.}
+\subfigure[Klassifikation eines Baumes der Tiefe 100]{\label{fig:tree_depht100}\includegraphics[width=0.85\textwidth]{graphics/tree_depht100.pdf}}
+\subfigure[BDT Klassifikation mit 2 Trees]{\label{fig:BDT_nTree2}\includegraphics[width=0.85\textwidth]{graphics/tree_depht2_2.pdf}}
+\parbox[b]{12cm}{
+\caption{Die obere Grafik zeigt die Klassifikation, die mit einem einzelnen Entscheidungsbaum der Tiefe 100 erreicht wird. Signalartige Regionen sind mit positiver Ausgabe in Rott\"onen dargestellt, untergrundartige ergeben eine negative Ausgabe und sind in Blaut\"onen dargestellt. In der unteren Abbildung ist die Klassifikation eines BDT mit zwei B\"aumen der Tiefe zwei zu sehen.}
+}
+\label{fig:boosting}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering     %%% not \center
+\subfigure[BDT Klassifikation mit 10 Trees]{\label{fig:BDT_nTree10}\includegraphics[width=0.85\textwidth]{graphics/tree_depht2_3.pdf}}
+\subfigure[BDT Klassifikation mit 100 Trees]{\label{fig:BDT_nTree100}\includegraphics[width=0.85\textwidth]{graphics/tree_depht2_4.pdf}}
+\parbox[b]{12cm}{
+\caption{Oben ist die Klassifikation eines BDT mit zehn B\"aumen der Tiefe zwei, unten die eines BDT mit 100 B\"aumen der Tiefe zwei abgebildet. Signalartige Regionen sind mit positiver Ausgabe in Rott\"onen dargestellt, untergrundartige ergeben eine negative Ausgabe und sind in Blaut\"onen dargestellt.}
+}
 \label{fig:boosting}
 \end{figure}
 
@@ -146,7 +167,29 @@ In Abbildung \ref{fig:boosting} sind zum Vergleich die R\"uckgabewerte von einem
 \"Uberanpassung (Overtraining) tritt auf, wenn die MVA-Methode zu wenige Freiheitsgrade zur Verf\"ugung hat, weil zu viele Modellparameter an zu wenige Datenpunkte angepasst werden. So werden statistische Fluktuationen des Trainingsdatensatzes vom Algorithmus gelernt. Dadurch wird zwar die Klassifikation der Trainingsdaten sehr gut, aber die Vorhersage von unbekannten Daten kann deutlich schlechter werden. Diese Verschlechterung bezeichnet man auch als Generalisierungsfehler.
 
 Dies kann beispielsweise auftreten, wenn nur einzelne Ereignisse auf den Knoten eines Entscheidungsbaumes fallen.\\
-In Abbildung \todo{figure scatterplot overtraining or not in training/testing} ist ein Streudiagramm mit der Klassifikation eines stark \"uberangepassten BDTs im Vergleich zu einer Vorhersage ohne Generalisierungsfehler abgebildet. In Abb... und Abb... \todo{BDT output} sind au\ss erdem die BDT-Ausgaben f\"ur unbekannte Testdaten zu sehen.
+
+\begin{figure}[tbp]
+\centering     %%% not \center
+\subfigure[Streudiagramm von Trainingsdaten]{\label{fig:scat_train_01}\includegraphics[width=0.85\textwidth]{graphics/2d_train_01.pdf}}
+\subfigure[Streudiagramm von Testdaten]{\label{fig:scat_test_01}\includegraphics[width=0.85\textwidth]{graphics/2d_test_01.pdf}}
+\parbox[b]{12cm}{
+\caption{Die vier Streudiagramme zeigen jeweils die Vorhersage auf Trainings- und Testdaten eines Scikit-Learn-BDTs. Richtig klassifizierte Signale sind gelb dargestellt, falsch klassifizierte rot. Richtig identifizierter Untergrund ist t\"urkis gef\"arbt, falsch erkannter lila. In (a) und (b) wurde der BDT mit \num{500} Einzelb\"aumen der Tiefe \num{2} und einer Lernrate von \num{0,05} trainiert, in (c) und (d) mit \num{5000} B\"aumen der Tiefe \num{5} und einer Lernrate von \num{0,5}.}
+}
+\label{fig:boosting}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering     %%% not \center
+\subfigure[Streudiagramm von Trainingsdaten]{\label{fig:scat_train_02}\includegraphics[width=0.85\textwidth]{graphics/2d_train_02.pdf}}
+\subfigure[Streudiagramm von Testdaten]{\label{fig:scat_test_02}\includegraphics[width=0.85\textwidth]{graphics/2d_test_02.pdf}}
+\parbox[b]{12cm}{
+\caption{Die vier Streudiagramme zeigen jeweils die Vorhersage auf Trainings- und Testdaten eines Scikit-Learn-BDTs. Richtig klassifizierte Signale sind gelb dargestellt, falsch klassifizierte rot. Richtig identifizierter Untergrund ist t\"urkis gef\"arbt, falsch erkannter lila. In (a) und (b) wurde der BDT mit \num{500} Einzelb\"aumen der Tiefe \num{2} und einer Lernrate von \num{0,05} trainiert, in (c) und (d) mit \num{5000} B\"aumen der Tiefe \num{5} und einer Lernrate von \num{0,5}.}
+}
+\label{fig:boosting}
+\end{figure}
+
+In den Abbildungen \ref{fig:scat_train_01} bis \ref{fig:scat_test_02} sind Streudiagramme mit den Klassifikationen von 2 verschiedenen Scikit-Learn-BDT zu sehen. Die Optionen des einen BDTs wurden so gew\"ahlt, dass ein gro\ss er Generalisierungsfehler zu erwarten war (Abbildungen \ref{fig:scat_train_02} und \ref{fig:scat_test_02}). Man erkennt, dass die Vorhersage auf den Trainingsdatensatz besser wurde (Vergleich der Abbildungen \ref{fig:scat_train_01} und \ref{fig:scat_train_02}), die Vorhersage auf den Testdatensatz jedoch deutlich schlechter wurde (Vergleich der Abbildungen \ref{fig:scat_test_01} und \ref{fig:scat_test_02}). Au\ss erdem sind die falsch klassifizierten Ereignisse weit gestreut und nicht mehr in einzelnen Regionen zu finden.
+%ist ein Streudiagramm mit der Klassifikation eines stark \"uberangepassten BDTs im Vergleich zu einer Vorhersage ohne Generalisierungsfehler abgebildet. In Abb... und Abb... \todo{BDT output} sind au\ss erdem die BDT-Ausgaben f\"ur unbekannte Testdaten zu sehen.
 
 Es gibt verschiedene Ans\"atze, \"Uberanpassung zu vermeiden. Dazu z\"ahlt das Verwerfen von Entscheidungsbaum\"asten mit zu wenigen Eintr\"agen, gewisserma\ss en das \glqq Abschneiden\grqq~(pruning) des Astes am letzten Knoten mit gen\"ugend Ereignissen. Au\ss erdem ist es \"ublich, den Trainingsdatensatz nochmals in zwei Teile zu spalten. Man spricht dann von Trainings- und Validierungsdatensatz. Mithilfe des Trainingsdatensatzes wird der MVA-Algorithmus trainiert, dann wird die G\"ute des Trainings anhand des Validierungsdatensatzes bestimmt. Sobald man mit der G\"ute der Klassifikation zufrieden ist, kann man den trainierten Algorithmus nutzen, um Vorhersagen f\"ur unbekannte Daten, zum Beispiel die experimentell gemessenen Daten, zu machen.
 
