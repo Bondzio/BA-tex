@@ -173,7 +173,7 @@ Dies kann beispielsweise auftreten, wenn nur einzelne Ereignisse auf den Knoten 
 \subfigure[Streudiagramm von Trainingsdaten]{\label{fig:scat_train_01}\includegraphics[width=0.85\textwidth]{graphics/2d_train_01.pdf}}
 \subfigure[Streudiagramm von Testdaten]{\label{fig:scat_test_01}\includegraphics[width=0.85\textwidth]{graphics/2d_test_01.pdf}}
 \parbox[b]{12cm}{
-\caption{Die vier Streudiagramme zeigen jeweils die Vorhersage auf Trainings- und Testdaten eines Scikit-Learn-BDTs. Richtig klassifizierte Signale sind gelb dargestellt, falsch klassifizierte rot. Richtig identifizierter Untergrund ist t\"urkis gef\"arbt, falsch erkannter lila. In (a) und (b) wurde der BDT mit \num{500} Einzelb\"aumen der Tiefe \num{2} und einer Lernrate von \num{0,05} trainiert, in (c) und (d) mit \num{5000} B\"aumen der Tiefe \num{5} und einer Lernrate von \num{0,5}.}
+\caption{Die Streudiagramme zeigen die Vorhersage eines BDTs auf die Trainingsdaten (oben) und auf unabh\"angige Testdaten (unten). Richtig klassifizierte Signale sind gelb dargestellt, falsch klassifizierte rot. Richtig identifizierter Untergrund ist t\"urkis gef\"arbt, falsch erkannter lila. Der BDT wurde mit \num{500} Einzelb\"aumen der Tiefe \num{2} und einer Lernrate von \num{0,05} trainiert.}
 }
 \label{fig:boosting}
 \end{figure}
@@ -183,12 +183,12 @@ Dies kann beispielsweise auftreten, wenn nur einzelne Ereignisse auf den Knoten 
 \subfigure[Streudiagramm von Trainingsdaten]{\label{fig:scat_train_02}\includegraphics[width=0.85\textwidth]{graphics/2d_train_02.pdf}}
 \subfigure[Streudiagramm von Testdaten]{\label{fig:scat_test_02}\includegraphics[width=0.85\textwidth]{graphics/2d_test_02.pdf}}
 \parbox[b]{12cm}{
-\caption{Die vier Streudiagramme zeigen jeweils die Vorhersage auf Trainings- und Testdaten eines Scikit-Learn-BDTs. Richtig klassifizierte Signale sind gelb dargestellt, falsch klassifizierte rot. Richtig identifizierter Untergrund ist t\"urkis gef\"arbt, falsch erkannter lila. In (a) und (b) wurde der BDT mit \num{500} Einzelb\"aumen der Tiefe \num{2} und einer Lernrate von \num{0,05} trainiert, in (c) und (d) mit \num{5000} B\"aumen der Tiefe \num{5} und einer Lernrate von \num{0,5}.}
+\caption{Die Streudiagramme zeigen die Vorhersage eines BDTs auf die Trainingsdaten (oben) und auf unabh\"angige Testdaten (unten). Richtig klassifizierte Signale sind gelb dargestellt, falsch klassifizierte rot. Richtig identifizierter Untergrund ist t\"urkis gef\"arbt, falsch erkannter lila. Der BDT wurde mit \num{5000} B\"aumen der Tiefe \num{5} und einer Lernrate von \num{0,5} trainiert.}
 }
 \label{fig:boosting}
 \end{figure}
 
-In den Abbildungen \ref{fig:scat_train_01} bis \ref{fig:scat_test_02} sind Streudiagramme mit den Klassifikationen von 2 verschiedenen Scikit-Learn-BDT zu sehen. Die Optionen des einen BDTs wurden so gew\"ahlt, dass ein gro\ss er Generalisierungsfehler zu erwarten war (Abbildungen \ref{fig:scat_train_02} und \ref{fig:scat_test_02}). Man erkennt, dass die Vorhersage auf den Trainingsdatensatz besser wurde (Vergleich der Abbildungen \ref{fig:scat_train_01} und \ref{fig:scat_train_02}), die Vorhersage auf den Testdatensatz jedoch deutlich schlechter wurde (Vergleich der Abbildungen \ref{fig:scat_test_01} und \ref{fig:scat_test_02}). Au\ss erdem sind die falsch klassifizierten Ereignisse weit gestreut und nicht mehr in einzelnen Regionen zu finden.
+In den Abbildungen \ref{fig:scat_train_01} bis \ref{fig:scat_test_02} sind Streudiagramme mit den Klassifikationen von zwei verschiedenen BDTs zu sehen. Beide Klassifikationen wurden mit dem Gradient-Boosting-Classifier von Scikit-Learn (siehe Abschnitt \ref{ch:Algorithmen:subsec:sklearn}) erstellt. Die Optionen des einen BDTs wurden so gew\"ahlt, dass ein gro\ss er Generalisierungsfehler zu erwarten war (Abbildungen \ref{fig:scat_train_02} und \ref{fig:scat_test_02}). Man erkennt, dass die Vorhersage auf den Trainingsdatensatz besser wurde (Vergleich der Abbildungen \ref{fig:scat_train_01} und \ref{fig:scat_train_02}), die Vorhersage auf den Testdatensatz jedoch deutlich schlechter wurde (Vergleich der Abbildungen \ref{fig:scat_test_01} und \ref{fig:scat_test_02}). Au\ss erdem sind die falsch klassifizierten Ereignisse weit gestreut und nicht mehr in einzelnen Regionen zu finden.
 %ist ein Streudiagramm mit der Klassifikation eines stark \"uberangepassten BDTs im Vergleich zu einer Vorhersage ohne Generalisierungsfehler abgebildet. In Abb... und Abb... \todo{BDT output} sind au\ss erdem die BDT-Ausgaben f\"ur unbekannte Testdaten zu sehen.
 
 Es gibt verschiedene Ans\"atze, \"Uberanpassung zu vermeiden. Dazu z\"ahlt das Verwerfen von Entscheidungsbaum\"asten mit zu wenigen Eintr\"agen, gewisserma\ss en das \glqq Abschneiden\grqq~(pruning) des Astes am letzten Knoten mit gen\"ugend Ereignissen. Au\ss erdem ist es \"ublich, den Trainingsdatensatz nochmals in zwei Teile zu spalten. Man spricht dann von Trainings- und Validierungsdatensatz. Mithilfe des Trainingsdatensatzes wird der MVA-Algorithmus trainiert, dann wird die G\"ute des Trainings anhand des Validierungsdatensatzes bestimmt. Sobald man mit der G\"ute der Klassifikation zufrieden ist, kann man den trainierten Algorithmus nutzen, um Vorhersagen f\"ur unbekannte Daten, zum Beispiel die experimentell gemessenen Daten, zu machen.
@@ -245,13 +245,17 @@ L\left(y,f)\right)=-2\left(y\cdot f-\ln{\left(1+\exp{f}\right)}\right).
 Extreme Gradient Boosting (XGBoost) \cite{DBLP:journals/corr/ChenG16} ist ein Gradient-Boosting-Algorithmus, der sich stark am theoretischen Modell des Gradient-Boosting von Jerome H. Friedman \cite{Friedman00greedyfunction} orientiert. Er ist f\"ur mehrere Programmierplattformen implementiert, beispielsweise R und Python.\\
 Es werden CART-B\"aume verwendet, die in jedem Knoten nicht nur die Trennung der Klassen speichern, sondern jedem Knoten auch einen kontinuierlichen Ausgabewert zuweisen, um die Vorhersage quantitativer zu machen.\\
 XGBoost verwendet als Ausgleichsfunktion die mittleren Fehlerquadrate, au\ss erdem ist ein Zusatzterm mit Regularisierungsfunktion implementiert. Insgesamt erh\"alt man f\"ur jeden Boosting-Schritt $t$ eine zu minimierende Zielfunktion mit der Vorhersage $\hat y_i^{t-1}$ des letzten Schrittes und der Summe \"uber alle Trainingsereignisse $i$ von
+%\beq
+%F=\sum_{i=1}^n\left[2\left(\hat y_i^{t-1}-y_i\right)f_t+f_t^2\right]+\Omega\left(f_t\right)+Konstante.
+%\label{eq:xgb_zielfkt}
+%\eeq
 \beq
-F=\sum_{i=1}^n\left[2\left(\hat y_i^{t-1}-y_i\right)f_t+f_t^2\right]+\Omega\left(f_t\right)+Konstante.
+F=\sum_{i=1}^n\left(y_i-\left(\hat y_i^{\left(t-1\right)}+f_t\left(x_i\right)\right)\right)^2+\sum_{i=1}^t\Omega\left(f_i\right)
 \label{eq:xgb_zielfkt}
-\eeq
+\eeq	
 Dabei ist
 \beq
-\Omega\left(f_t\right)=\gamma T+\frac12\lambda\sum_{j_1}^T w_t^2
+\Omega\left(f_t\right)=\gamma T+\frac12\lambda\sum_{j=1}^T w_j^2
 \label{eq:complexity}
 \eeq
 die Komplexit\"at des Baumes mit der Anzahl Endknoten $T$ und den kontinuierlichen Ausgabewerten der B\"aume $w_t$. Die beiden frei w\"ahlbaren Parameter $\lambda$ und $\gamma$ dienen zur Regulierung des Boosting-Algorithmus. Durch Festlegen eines Wertes f\"ur $\gamma$ fordert man eine Mindestreduktion der Ausgleichsfunktion. Wird diese nicht erreicht, wird an diesem Knoten des Baumes keine weitere Unterteilung vorgenommen \cite{xgb_skl_wrapper}. Der Parameter $\lambda$ wird genutzt, um unrentable \"Aste der Entscheidungsb\"aume zu verwerfen. Jedesmal, wenn ein Knoten geteilt werden soll, wird ein Verh\"altnis der Gewichte vor und nach dem Trennen des Knotens berechnet. Ist dieses Verh\"altnis kleiner als $\lambda$, so wird der Ast verworfen \cite{xgb_tree}.\\

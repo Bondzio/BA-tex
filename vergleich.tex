@@ -71,12 +71,13 @@ Die schlechtest m\"ogliche Klassifikation w\"urde eine Gerade zwischen diesen be
 
 \begin{figure}[tbp]
 \centering     %%% not \center
-\subfigure[ROC-Kurve eines Baumes der Tiefe zwei]{\label{fig:ROC_1}\includegraphics[width=0.49\textwidth]{graphics/ROC_1.pdf}}
-\subfigure[ROC-Kurve eines BDT mit 1000 B\"aumen der Tiefe zwei]{\label{fig:ROC_1000}\includegraphics[width=0.49\textwidth]{graphics/ROC_1000.pdf}}
-\caption{Links sieht man die ROC-Kurve einer Klassifikation mit einem einzelnen Baum der Tiefe zwei. Rechts ist eine ROC-Kurve eines BDTs mit 1000 B\"aumen der Tiefe zwei abgebildet.}
+\subfigure[ROC-Kurve eines Baumes der Tiefe zwei]{\label{fig:ROC_1}\includegraphics[width=0.85\textwidth]{graphics/ROC_1.pdf}}
+\subfigure[ROC-Kurve eines BDT mit 1000 B\"aumen der Tiefe zwei]{\label{fig:ROC_1000}\includegraphics[width=0.85\textwidth]{graphics/ROC_1000.pdf}}
+\parbox[b]{12cm}{
+\caption{Oben sieht man die ROC-Kurve einer Klassifikation mit einem einzelnen Baum der Tiefe zwei. Darunter ist eine ROC-Kurve eines BDTs mit 1000 B\"aumen der Tiefe zwei abgebildet.}}
 \end{figure}
 
-In Abbildung \ref{fig:ROC_1} ist eine ROC-Kurve der Klassifikation eines einzelnen Entscheidungsbaumes zu sehen. In Abbildung \ref{fig:ROC_1000} ist eine ROC-Kurve der Klassifikation eines BDTs mit 1000 B\"aumen der Tiefe zwei zu sehen. Die Kurve wird deutlich runder, da mehr Unterscheidungen getroffen werden k\"onnen und somit mehr Wertepaare f\"ur die ROC-Kurve erzeugt werden. Au\ss erdem wird die Fl\"ache unter der Kurve gr\"o\ss er, was auf die bessere Klassifikation hinweist.
+In Abbildung \ref{fig:ROC_1} ist eine ROC-Kurve der Klassifikation eines einzelnen Entscheidungsbaumes zu sehen, man erkennt die drei Punkte der ROC-Kurve. In Abbildung \ref{fig:ROC_1000} ist eine ROC-Kurve der Klassifikation eines BDTs mit 1000 B\"aumen der Tiefe zwei zu sehen. Die Kurve wird deutlich runder, da mehr Unterscheidungen getroffen werden k\"onnen und somit mehr Wertepaare f\"ur die ROC-Kurve erzeugt werden. Au\ss erdem wird die Fl\"ache unter der Kurve gr\"o\ss er, was auf die bessere Klassifikation hinweist.
 Erzeugt wurden beide ROC-Kurven mit einer Pythonfunktion anhand einer Klassifikation des Beispiels aus Abschnitt \ref{ch:Algorithmen:sec:BDT} mit Scikit-Learn.
 
 %% ===========================
@@ -105,18 +106,18 @@ Oft wird auch die Wahrscheinlichkeit berechnet, einen Wert $\leq t_0$ f\"ur die 
 \label{ch:Vergleich:sec:Daten}
 %% ===========================
 
-Um die multivariaten Algorithmen zu vergleichen werden diese auf CMS-Simulationsdaten angewendet. Als Untergrunddatensatz wird ein Datensatz mit simulierten \ttb-Ereignissen, mit in Powheg \cite{Frixione:2007vw} simuliertem Matrixelement und mit Pythia \cite{Sjostrand2015159} simuliertem Partonschauer, verwendet. Die offizielle Bezeichnung des Simulationsdatensatzes lautet {\it/TT TuneCUETP8M1 13TeV-powheg-pythia8/RunIIFall15MiniAODv2-PU25nsData2015v1-76X mcRun2 asymptotic RunIIFall15DR76 v0 ext3-v1}.\\
+Um die multivariaten Algorithmen zu vergleichen werden diese auf CMS-Simulationsdaten angewendet. Als Untergrunddatensatz wird ein Datensatz mit simulierten \ttb-Ereignissen, mit in Powheg \cite{Frixione:2007vw} simuliertem Matrixelement und mit Pythia \cite{Sjostrand2015159} simuliertem Partonschauer, verwendet. Die offizielle Bezeichnung des Simulationsdatensatzes lautet {\it/TT TuneCUETP8M1 13TeV-powheg-pythia8/RunIIFall15MiniAODv2-PU25nsData2015v1-76X mcRun2 asymptotic RunIIFall15DR76 v0 ext3-v1/MINIAODSIM }.\\
 Als Signaldatensatz wird ein simulierter \ttH-Datensatz verwendet, bei dem das Matrixelement ebenfalls mit Powheg und der Partonschauer mit Pythia simuliert wurde. Die offizielle Bezeichnung lautet \begin{it}/ttHTobb M125 13TeV powheg pythia8/RunIIFall15MiniAODv1-PU25nsData2015v1 76X mcRun2 asymptotic v12v1/MINIAODSIM\end{it}.\\
 Beide Datens\"atze wurden f\"ur eine Schwerpunktsenergie von \num{13} \si{\tera\electronvolt} simuliert. Danach wurden die Prozesse auf ihre Standardmodell-Wirkungsquerschnitte umgewichtet.
 
-Wie in Abschnitt \ref{ch:Experiment:sec:ttH} beschrieben, unterteilt man die \ttH-Analyse in verschiedene Kategorien. Der Vergleich der multivariaten Algorithmen wird f\"ur zwei dieser Kategorien durchgef\"uhrt. F\"ur die erste Auswahl wird genau ein Lepton mit einem Transversalimpuls von $p_T\geq \num{30}~\si{\giga\electronvolt}$ und mindestens sechs Jets mit $p_T\geq \num{30}~\si{\giga\electronvolt}$, von denen vier oder mehr als b-Quark identifiziert wurden, gefordert (6 Jets und 4 B-Tags). Alle Ereignisse mit gerader Ereignisidentifikationsnummer werden zum Trainieren der BDTs verwendet, die mit ungerader zum Testen der Klassifikation. Dadurch erh\"alt man einen \ttH-Trainingsdatensatz mit 17026 Ereignissen und einen \ttb-Trainingsdatensatz mit 42378 Ereignissen.
+Wie in Abschnitt \ref{ch:Experiment:sec:ttH} beschrieben, unterteilt man die \ttH-Analyse in verschiedene Kategorien. Der Vergleich der multivariaten Algorithmen wird f\"ur zwei dieser Kategorien durchgef\"uhrt. F\"ur die erste Auswahl wird genau ein Lepton mit einem Transversalimpuls von $p_T\geq \num{30}~\si{\giga\electronvolt}$ und mindestens sechs Jets mit $p_T\geq \num{30}~\si{\giga\electronvolt}$, von denen vier oder mehr als b-Quark identifiziert wurden, gefordert (6-Jet-4-B-Tag). Alle Ereignisse mit gerader Ereignisidentifikationsnummer werden zum Trainieren der BDTs verwendet, die mit ungerader zum Testen der Klassifikation. Dadurch erh\"alt man einen \ttH-Trainingsdatensatz mit 17026 Ereignissen und einen \ttb-Trainingsdatensatz mit 42378 Ereignissen.
 
-F\"ur die zweite Auswahl wird ebenfalls genau ein Lepton mit $p_T\geq \num{30} \si{\giga\electronvolt}$ und mindestens sechs Jets mit $p_T\geq \num{30}~\si{\giga\electronvolt}$ gefordert, allerdings sollen nur zwei der Jets zu b-Quarks geh\"oren (6 Jets und 2 B-Tags). Trainings- und Testdatens\"atze werden wieder anhand gerader und ungerader Ereignisse unterschieden. Dadurch erh\"alt man insgesamt 1901054 Untergrundereignisse und 38074 Signalereignisse als Trainingsdaten, damit ist das Signal zu Untergrundverh\"altnis viel kleiner als in der Kategorie mit 6 Jets unf 4 B-Tags. Allerdings wurden nur 2364 Signalereignisse und 119823 Untergrundereignisse verwendet, um das Verhalten der Algorithmen bei geringer Statistik zu untersuchen. 
+F\"ur die zweite Auswahl wird ebenfalls genau ein Lepton mit $p_T\geq \num{30} \si{\giga\electronvolt}$ und mindestens sechs Jets mit $p_T\geq \num{30}~\si{\giga\electronvolt}$ gefordert, allerdings sollen nur zwei der Jets zu b-Quarks geh\"oren (6 Jets und 2 B-Tags). Trainings- und Testdatens\"atze werden wieder anhand gerader und ungerader Ereignisse unterschieden. Dadurch erh\"alt man insgesamt 1901054 Untergrundereignisse und 38074 Signalereignisse als Trainingsdaten, damit ist das Signal zu Untergrundverh\"altnis viel kleiner als in der Kategorie mit sechs Jets und mindestens vier B-Tags. Allerdings wurden nur 2364 Signalereignisse und 119823 Untergrundereignisse verwendet, um das Verhalten der Algorithmen bei geringer Statistik zu untersuchen. 
 
-Als trennende Variablen werden in der Kategorie mit 6 Jets und 4 B-Tags\\
+Als trennende Variablen werden in der Kategorie mit sechs Jets und mindestens vier B-Tags\\
 {\it Evt\_Deta\_JetsAverage, avg\_btag\_disc\_btags, avg\_dr\_tagged\_jets, dEta\_fn, h3, maxeta\_jet\_tag, pt\_all\_jets\_over\_E\_all\_jets, sphericity, BDT\_common5\_output, Evt\_CSV\_Average\_Tagged} und {\it Evt\_Deta\_TaggedJetsAverage}\\verwendet.
 
-In der Kategorie mit 6 Jets und 2 B-Tags werden \\ {\it h1, avg\_dr\_tagged\_jets, sphericity, third\_highest\_btag, h3, HT, Mlb, fifth\_highest\_CSV} und {\it fourth\_highest\_btag} als trennende Variablen verwendet.\\
+In der Kategorie mit sechs Jets und zwei B-Tags werden \\ {\it h1, avg\_dr\_tagged\_jets, sphericity, third\_highest\_btag, h3, HT, Mlb, fifth\_highest\_CSV} und {\it fourth\_highest\_btag} als trennende Variablen verwendet.\\
 %{\it Evt\_Deta\_JetsAverage,avg\_btag\_disc\_btags,avg\_dr\_tagged\_jets, dEta\_fn, h3, maxeta\_jet\_tag, pt\_all\_jets\_over\_E\_all\_jets, \\sphericity, \\BDT\_common5\_output, Evt\_CSV\_Average\_Tagged und Evt\_Deta\_TaggedJetsAverage}\\verwendet.st\_btag}\\als trennende Variablen verwendet.
 Alle diese Variablen haben eine physikalische Bedeutung, auf diese wird hier allerdings nicht n\"aher eingegangen, da sie f\"ur den Vergleich der multivariaten Algorithmen nicht relevant sind. Details k\"onnen in \cite{CMS-PAS-HIG-16-004} nachgeschlagen werden.
 
@@ -125,7 +126,7 @@ Alle diese Variablen haben eine physikalische Bedeutung, auf diese wird hier all
 \label{ch:Vergleich:sec:Vorgehensweise}
 %% ===========================
 
-Wie in Tabelle \ref{tab:parameter} gezeigt, gibt es f\"ur den TMVA-Parameter nCuts keine Entsprechung in Scikit-Learn und XGBoost. Daher soll zun\"achst untersucht werden welchen Einfluss dieser Parameter hat. Dazu wird der TMVA-Algorithmus mehrfach auf den ersten Datensatz angewendet und nur der Parameter nCuts variiert. Die \"ubrigen Parameter sind jeweils NTrees=1000, MinNodeSize=2.5\%, Shrinkage=0.01, BaggedSampleFraction=0.6 und MaxDepth=2.
+Wie in Tabelle \ref{tab:parameter} gezeigt, gibt es f\"ur den TMVA-Parameter nCuts keine Entsprechung in Scikit-Learn und XGBoost. Daher soll zun\"achst untersucht werden welchen Einfluss dieser Parameter hat. Dazu wird der TMVA-Algorithmus mehrfach auf den Simulationsdatensatz der 6-Jet-4-B-Tag-Kategorie angewendet und nur der Parameter nCuts variiert. Die \"ubrigen Parameter sind jeweils NTrees=1000, MinNodeSize=2.5\%, Shrinkage=0.01, BaggedSampleFraction=0.6 und MaxDepth=2.
 In Tabelle \ref{tab:nCuts} sind die Ergebnisse dieser Trainings dargestellt.
 
 \begin{table}[tbp]\parbox{12cm}{
@@ -203,14 +204,15 @@ Auch XGBoost erreicht die besten Ergebnisse mit gr\"o\ss eren Lernraten und viel
 
 \begin{figure}[tbp]
 \centering     %%% not \center
-\subfigure[ROC-Kurven der jeweils besten Trainings]{\label{fig:ROC_6j4t}\includegraphics[width=0.49\textwidth]{graphics/ROC_6j4t.pdf}}
-\subfigure[RBDT-Ausgabe der jeweils besten Trainings]{\label{fig:BDTout_6j4t}\includegraphics[width=0.49\textwidth]{graphics/BDToutput_6j4t.pdf}}
-\caption{Links sind die ROC-Kurven der jeweils besten Trainings in der Kategorie mit mindestens sechs Jets und mindestens vier B-Tags abgebildet, rechts jeweils die BDT-Ausgaben.}
+\subfigure[ROC-Kurven der jeweils besten Trainings]{\label{fig:ROC_6j4t}\includegraphics[width=0.85\textwidth]{graphics/ROC_6j4t.pdf}}
+\subfigure[BDT-Ausgabe der jeweils besten Trainings]{\label{fig:BDTout_6j4t}\includegraphics[width=0.85\textwidth]{graphics/BDToutput_6j4t.pdf}}
+\parbox[b]{12cm}{
+\caption{Oben sind die ROC-Kurven der jeweils besten Trainings in der Kategorie mit mindestens sechs Jets und mindestens vier B-Tags abgebildet, darunter jeweils die BDT-Ausgaben.}}
 \end{figure}
 
 In Abbildung \ref{fig:ROC_6j4t} sind die ROC-Kurven der jeweils besten Trainings abgebildet. Sie sind nahezu identisch. In Abbildung \ref{fig:BDTout_6j4t} sind die BDT-Ausgaben der besten Training zu sehen. Man sieht, dass f\"ur jeden Klassifikator die BDT-Ausgabe etwas anders definiert ist. XGBoost gibt beispielsweise die Signalwahrscheinlichkeit f\"ur ein Ereignis zur\"uck, w\"ahrend TMVA einen Wert zwischen $\pm1$ zur\"uckgibt.
 
-Generell sind die ROC-Integrale in der Kategorie mit 6 Jets und 4 B-Tags kleiner als in der Kategorie mit 6 Jets und 4 B-Tags. Dies liegt vor allem daran, dass die Kategorie stark untergrunddominiert ist, also nur wenige Signalereignisse auf viele Untergrundereignisse fallen.
+Generell sind die ROC-Integrale in der Kategorie mit sechs Jets und zwei B-Tags kleiner als in der Kategorie mit sechs Jets und vier B-Tags. Dies liegt vor allem daran, dass die Kategorie stark untergrunddominiert ist, also nur wenige Signalereignisse auf viele Untergrundereignisse fallen.
 
 Die Fl\"ache unter der ROC-Kurve ist in dieser Kategorie mit Scikit-Learn immer etwa \num{0,01} gr\"o\ss er als bei TMVA. Allerdings f\"allt der Kolmogorov-Smirnov-Test sehr schlecht aus, allerdings kann dies \"uber andere Einstellungen, beispielsweise bei min\_samples\_leaf, noch verbessert werden.
 
@@ -218,9 +220,10 @@ XGBoost schneidet in dieser Kategorie ebenfalls besser ab als TMVA und der Kolmo
 
 \begin{figure}[tbp]
 \centering     %%% not \center
-\subfigure[ROC-Kurven der jeweils besten Trainings]{\label{fig:ROC_6j4t}\includegraphics[width=0.49\textwidth]{graphics/ROC_6j2t.pdf}}
-\subfigure[BDT-Ausgabe der jeweils besten Trainings]{\label{fig:BDTout_6j4t}\includegraphics[width=0.49\textwidth]{graphics/BDToutput_6j2t.pdf}}
-\caption{Links sind die ROC-Kurven der jeweils besten Trainings in der Kategorie mit mindestens sechs Jets und zwei B-Tags abgebildet, rechts jeweils die normierten BDT-Ausgaben.}
+\subfigure[ROC-Kurven der jeweils besten Trainings]{\label{fig:ROC_6j4t}\includegraphics[width=0.85\textwidth]{graphics/ROC_6j2t.pdf}}
+\subfigure[BDT-Ausgabe der jeweils besten Trainings]{\label{fig:BDTout_6j4t}\includegraphics[width=0.85\textwidth]{graphics/BDToutput_6j2t.pdf}}
+\parbox[b]{12cm}{
+\caption{In der oberen Grafik sind die ROC-Kurven der jeweils besten Trainings in der Kategorie mit mindestens sechs Jets und zwei B-Tags abgebildet, in der unteren jeweils die normierten BDT-Ausgaben.}}
 \end{figure}
 
 In Abbildung \ref{fig:ROC_6j4t} sind die ROC-Kurven der jeweils besten Trainings gezeigt. In der Kategorie mit mindestens sechs Jets und zwei B-Tags ist ein Unterschied zwischen den ROC-Kurven zu erkennen. In Abbildung \ref{fig:BDTout_6j4t} sind die BDT-Ausgaben abgebildet. Aufgrund des geringen Signal-zu-Untergrund-Verh\"altnisses wurden die Verteilungen normiert.
