@@ -24,6 +24,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[latin1]{inputenc} % Input in ISO 8859-1 (Latin1)
 %\usepackage[utf8]{inputenc}
+\usepackage{microtype}% verbesserter Randausgleich
 
 \usepackage{ae}               % Almost european, virtual T1-Font
 \usepackage[pdftex]{graphicx}

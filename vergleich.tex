@@ -106,8 +106,8 @@ Oft wird auch die Wahrscheinlichkeit berechnet, einen Wert $\leq t_0$ f\"ur die 
 \label{ch:Vergleich:sec:Daten}
 %% ===========================
 
-Um die multivariaten Algorithmen zu vergleichen werden diese auf CMS-Simulationsdaten angewendet. Als Untergrunddatensatz wird ein Datensatz mit simulierten \ttb-Ereignissen, mit in Powheg \cite{Frixione:2007vw} simuliertem Matrixelement und mit Pythia \cite{Sjostrand2015159} simuliertem Partonschauer, verwendet. Die offizielle Bezeichnung des Simulationsdatensatzes lautet {\it/TT\_TuneCUETP8M1\_13TeV-powheg-pythia8/RunIIFall15MiniAODv2-PU25nsData2015v1-76X\_mcRun2\_asymptotic\_RunIIFall15DR76\_v0\_ext3-v1/MINIAODSIM }.\\
-Als Signaldatensatz wird ein simulierter \ttH-Datensatz verwendet, bei dem das Matrixelement ebenfalls mit Powheg und der Partonschauer mit Pythia simuliert wurde. Die offizielle Bezeichnung lautet \begin{it}/ttHTobb\_M125\_13TeV\_powheg\_pythia8/RunIIFall15MiniAODv1-PU25nsData2015v1\_76X\_mcRun2\_asymptotic\_v12v1/MINIAODSIM\end{it}.\\
+Um die multivariaten Algorithmen zu vergleichen werden diese auf CMS-Simulationsdaten angewendet. Als Untergrunddatensatz wird ein Datensatz mit simulierten \ttb-Ereignissen, mit in Powheg \cite{Frixione:2007vw} simuliertem Matrixelement und mit Pythia \cite{Sjostrand2015159} simuliertem Partonschauer, verwendet. Die offizielle Bezeichnung des Simulationsdatensatzes lautet\\ {\it/TT\_TuneCUETP8M1\_13TeV-powheg-pythia8/RunIIFall15MiniAODv2-PU25nsData2015v1-76X\_mcRun2\_asymptotic\_RunIIFall15DR76\_v0\_ext3-v1/MINIAODSIM}.\\
+Als Signaldatensatz wird ein simulierter \ttH-Datensatz verwendet, bei dem das Matrixelement ebenfalls mit Powheg und der Partonschauer mit Pythia simuliert wurde. Die offizielle Bezeichnung lautet  \begin{it}/ttHTobb\_M125\_13TeV\_powheg\_pythia8/RunIIFall15MiniAODv1-PU25nsData2015v1\_76X\_mcRun2\_asymptotic\_v12v1/MINIAODSIM\end{it}.\\
 Beide Datens\"atze wurden f\"ur eine Schwerpunktsenergie von \num{13} \si{\tera\electronvolt} simuliert. Danach wurden die Prozesse auf ihre Standardmodell-Wirkungsquerschnitte umgewichtet.
 
 Wie in Abschnitt \ref{ch:Experiment:sec:ttH} beschrieben, unterteilt man die \ttH-Analyse in verschiedene Kategorien. Der Vergleich der multivariaten Algorithmen wird f\"ur zwei dieser Kategorien durchgef\"uhrt. F\"ur die erste Auswahl wird genau ein Lepton mit einem Transversalimpuls von $p_T\geq \num{30}~\si{\giga\electronvolt}$ und mindestens sechs Jets mit $p_T\geq \num{30}~\si{\giga\electronvolt}$, von denen vier oder mehr als b-Quark identifiziert wurden (B-Tags), gefordert. Alle Ereignisse mit gerader Ereignisidentifikationsnummer werden zum Trainieren der BDTs verwendet, die mit ungerader zum Testen der Klassifikation. Dadurch erh\"alt man einen \ttH-Trainingsdatensatz mit 17026 Ereignissen und einen \ttb-Trainingsdatensatz mit 42378 Ereignissen.
@@ -126,12 +126,13 @@ Alle diese Variablen haben eine physikalische Bedeutung, auf diese wird hier all
 \label{ch:Vergleich:sec:Vorgehensweise}
 %% ===========================
 
-Wie in Tabelle \ref{tab:parameter} gezeigt, gibt es f\"ur den TMVA-Parameter nCuts keine Entsprechung in Scikit-Learn und XGBoost. Daher soll zun\"achst untersucht werden welchen Einfluss dieser Parameter hat. Dazu wird der TMVA-Algorithmus mehrfach auf den Simulationsdatensatz der Kategorie mit mindestens 6 Jets und vier oder mehr B-Tags angewendet und nur der Parameter nCuts variiert. Die \"ubrigen Parameter sind jeweils NTrees=1000, MinNodeSize=2.5\%, Shrinkage=0.01, BaggedSampleFraction=0.6 und MaxDepth=2.
-In Tabelle \ref{tab:nCuts} sind die Ergebnisse dieser Trainings dargestellt.
+Wie in Tabelle \ref{tab:parameter} gezeigt, gibt es f\"ur den TMVA-Parameter nCuts keine Entsprechung in Scikit-Learn und XGBoost. Daher soll zun\"achst untersucht werden welchen Einfluss dieser Parameter hat. Dazu wird der TMVA-Algorithmus mehrfach auf den Simulationsdatensatz der Kategorie mit mindestens sechs Jets und vier oder mehr B-Tags angewendet und nur der Parameter nCuts variiert. Die \"ubrigen Parameter sind jeweils NTrees=1000, MinNodeSize=2.5\%, Shrinkage=0.01, BaggedSampleFraction=0.6 und MaxDepth=2.
+In Tabelle 5.2 sind die Ergebnisse dieser Trainings dargestellt.
 
 \begin{table}[tbp]\parbox{12cm}{
   \caption[Variation des TMVA-nCuts-Parameters]{Tabelle mit ROC-Integral und Wahrscheinlichkeit des Kolmogorov-Smirnov-Test f\"ur Signal- und Untergrundverteilung von TMVA-Trainings mit den festen Einstellungen NTrees=1000, MinNodeSize=2.5\%, Shrinkage=0.01, BaggedSampleFraction=0.6, MaxDepth=2 und in Abh\"angigkeit des Parameters nCuts}% {\rm \cite{Agashe:2014kda}}
-  }\label{tab:nCuts}
+  }
+  \label{tab:nCuts}
   \begin{center}
   \begin{tabular}{llll}
   \hline
@@ -158,7 +159,8 @@ Obwohl diese beiden Parameter in den drei Implementierungen der Algorithmen glei
 
 \begin{table}[tbp]\parbox{12cm}{
   \caption[TMVA 6j4t Ergebnisse]{Tabelle mit Ergebnissen des TMVA-Algorithmus f\"ur verschiedene Parametereinstellungen in der Kategorie mit sechs oder mehr Jets und mindestens vier B-Tags.\\In den ersten beiden Spalten sind die verwendete Anzahl der B\"aume und die verwendete Lernrate, in den weiteren Spalten ROC-Integral und die Wahrscheinlichkeiten des Kolmogorov-Smirnov-Tests f\"ur Signal- und Untergrundverteilung eingetragen.}% {\rm \cite{Agashe:2014kda}}
-  }\label{tab:tmva_6j4t}
+  }
+  \label{tab:tmva_6j4t}
   \begin{center}
   \begin{tabular}{lllll}
   \hline
