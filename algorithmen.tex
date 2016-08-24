@@ -244,19 +244,19 @@ L\left(y,f)\right)=-2\left(y\cdot f-\ln{\left(1+\exp{f}\right)}\right).
 
 Extreme Gradient Boosting (XGBoost) \cite{DBLP:journals/corr/ChenG16} ist ein Gradient-Boosting-Algorithmus, der sich stark am theoretischen Modell des Gradient-Boosting von Jerome H. Friedman \cite{Friedman00greedyfunction} orientiert. Er ist f\"ur mehrere Programmierplattformen implementiert, beispielsweise R und Python.\\
 Es werden CART-B\"aume verwendet, die in jedem Knoten nicht nur die Trennung der Klassen speichern, sondern jedem Knoten auch einen kontinuierlichen Ausgabewert zuweisen, um die Vorhersage quantitativer zu machen.\\
-XGBoost verwendet als Ausgleichsfunktion die mittleren Fehlerquadrate, au\ss erdem ist ein Zusatzterm mit Regularisierungsfunktion implementiert. Insgesamt erh\"alt man f\"ur jeden Boosting-Schritt $t$ eine zu minimierende Zielfunktion mit der Vorhersage $\hat y_i^{t-1}$ des letzten Schrittes und der Summe \"uber alle Trainingsereignisse $i$ von
+XGBoost verwendet als Ausgleichsfunktion die mittleren Fehlerquadrate, au\ss erdem ist ein Zusatzterm mit Regularisierungsfunktion implementiert. Insgesamt erh\"alt man f\"ur jeden Boosting-Schritt $t$ eine zu minimierende Zielfunktion mit der Vorhersage $\hat y_i^{t-1}$ des letzten Schrittes, der Vorhersage des aktuellen Baumes $f_t\left(x_i\right)$ und der Summe \"uber alle Trainingsereignisse $i$ von
 %\beq
 %F=\sum_{i=1}^n\left[2\left(\hat y_i^{t-1}-y_i\right)f_t+f_t^2\right]+\Omega\left(f_t\right)+Konstante.
 %\label{eq:xgb_zielfkt}
 %\eeq
 \beq
-F=\sum_{i=1}^n\left(y_i-\left(\hat y_i^{\left(t-1\right)}+f_t\left(x_i\right)\right)\right)^2+\sum_{i=1}^t\Omega\left(f_i\right)
+L=\sum_{i=1}^n\left(y_i-\left(\hat y_i^{\left(t-1\right)}+f_t\left(x_i\right)\right)\right)^2+\sum_{i=1}^t\Omega\left(f_i\right)
 \label{eq:xgb_zielfkt}
 \eeq	
 Dabei ist
 \beq
-\Omega\left(f_t\right)=\gamma T+\frac12\lambda\sum_{j=1}^T w_j^2
+\sum_{i=1}^t\Omega\left(f_i\right)=\Omega\left(f_t\right)=\gamma T+\frac12\lambda\sum_{j=1}^J w_j^2
 \label{eq:complexity}
 \eeq
-die Komplexit\"at des Baumes mit der Anzahl Endknoten $T$ und den kontinuierlichen Ausgabewerten der B\"aume $w_t$. Die beiden frei w\"ahlbaren Parameter $\lambda$ und $\gamma$ dienen zur Regulierung des Boosting-Algorithmus. Durch Festlegen eines Wertes f\"ur $\gamma$ fordert man eine Mindestreduktion der Ausgleichsfunktion. Wird diese nicht erreicht, wird an diesem Knoten des Baumes keine weitere Unterteilung vorgenommen \cite{xgb_skl_wrapper}. Der Parameter $\lambda$ wird genutzt, um unrentable \"Aste der Entscheidungsb\"aume zu verwerfen. Jedesmal, wenn ein Knoten geteilt werden soll, wird ein Verh\"altnis der Gewichte vor und nach dem Trennen des Knotens berechnet. Ist dieses Verh\"altnis kleiner als $\lambda$, so wird der Ast verworfen \cite{xgb_tree}.\\
+die Komplexit\"at des Baumes mit der Anzahl Endknoten $J$ und den kontinuierlichen Ausgabewerten der Knoten $w_j$. Die beiden frei w\"ahlbaren Parameter $\lambda$ und $\gamma$ dienen zur Regulierung des Boosting-Algorithmus. Durch Festlegen eines Wertes f\"ur $\gamma$ fordert man eine Mindestreduktion der Ausgleichsfunktion. Wird diese nicht erreicht, wird an diesem Knoten des Baumes keine weitere Unterteilung vorgenommen \cite{xgb_skl_wrapper}. Der Parameter $\lambda$ wird genutzt, um unrentable \"Aste der Entscheidungsb\"aume zu verwerfen. Jedesmal, wenn ein Knoten geteilt werden soll, wird ein Verh\"altnis der Gewichte vor und nach dem Trennen des Knotens berechnet. Ist dieses Verh\"altnis kleiner als $\lambda$, so wird der Ast verworfen \cite{xgb_tree}.\\
 Die zu den nachfolgenden Untersuchungen genutzte Version 0.4 von XGBoost wird mit Python 2.7.5 verwendet und wird mithilfe eines Transformationsskriptes f\"ur Scikit-Learn aufgerufen.
